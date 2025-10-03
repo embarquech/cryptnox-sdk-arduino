@@ -1,30 +1,32 @@
-name: Autopep8 Check
+name: Lint Python code
 
 on:
-  pull_request:
-    branches:
-      - main
   push:
     branches:
-      - main
+      - '**'  # Toutes les branches
+  pull_request:
+    branches:
+      - '**'
 
 jobs:
-  lint:
+  flake8-lint:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
+    - name: Checkout repository
       uses: actions/checkout@v3
 
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: "3.x"
+        python-version: '3.11'  # à ajuster selon ton projet
 
-    - name: Install autopep8
-      run: pip install autopep8
-
-    - name: Check formatting
+    - name: Install dependencies
       run: |
-        echo "Checking Python files with autopep8..."
-        autopep8 --diff --recursive .
+        python -m pip install --upgrade pip
+        pip install flake8
+
+    - name: Run Flake8
+      run: |
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=88 --statistics
