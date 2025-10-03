@@ -5,7 +5,7 @@ def ma_fonction(  a,b ):
   if(a>0):
      print("a est positif")
   else:
-      print("a est négatif ou nul")  
+      print("a est négatif ou nul.")  
 
 x=  5
 y=10
