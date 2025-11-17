@@ -1,19 +1,15 @@
 name: OSV Scanner
 
 on:
-  pull_request:
   push:
+  pull_request:
 
 jobs:
   osv-scan:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Run OSV-Scanner
-        uses: google/osv-scanner-action@v2.2.4
-        with:
-          scan-args: |
-            -r .
+    uses: google/osv-scanner-action/.github/workflows/osv-scanner-reusable.yml@main
+    permissions:
+      contents: read
+      security-events: write
+    with:
+      scan-args: |
+        --recursive .
