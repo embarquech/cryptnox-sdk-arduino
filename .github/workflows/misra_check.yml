@@ -20,8 +20,8 @@ jobs:
         run: |
           cppcheck \
             --enable=all \
-            --std=c99 \
-            --language=c \
+            --std=c++11 \
+            --language=c++ \
             --addon=misra \
             --inline-suppr \
             --error-exitcode=1 \
@@ -29,4 +29,4 @@ jobs:
             --suppress=missingIncludeSystem \
             --force \
             -DSTATIC_ANALYSIS=1 \
-            examples
+            .
