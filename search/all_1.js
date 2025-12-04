@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['getfirmwareversion_0',['getfirmwareversion',['../classPN532Base.html#a3f96089bcefcaadff21fafc2904bea14',1,'PN532Base::getFirmwareVersion()'],['../classPN532I2C.html#a9548811fb3780a8de1e897e35a6f9d9d',1,'PN532I2C::getFirmwareVersion()']]]
+  ['cardhandler_0',['cardhandler',['../classCardHandler.html',1,'CardHandler'],['../classCardHandler.html#af561f085eab545edc9f01bbaebb63313',1,'CardHandler::CardHandler()']]],
+  ['cardhandler_2ecpp_1',['CardHandler.cpp',['../CardHandler_8cpp.html',1,'']]],
+  ['cardhandler_2eh_2',['CardHandler.h',['../CardHandler_8h.html',1,'']]]
 ];

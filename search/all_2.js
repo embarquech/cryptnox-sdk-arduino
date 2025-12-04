@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['inlistpassivetarget_0',['inlistpassivetarget',['../classPN532Base.html#a2a789e5b56969b3c7c4742cb23d3c325',1,'PN532Base::inListPassiveTarget()'],['../classPN532I2C.html#a80fb202f947b17310884f9c6bc12c520',1,'PN532I2C::inListPassiveTarget()']]]
+  ['getcertificate_0',['getCertificate',['../classCardHandler.html#a24cf51992656f29cb8462e36ad320648',1,'CardHandler']]],
+  ['getfirmwareversion_1',['getfirmwareversion',['../classPN532Base.html#a3f96089bcefcaadff21fafc2904bea14',1,'PN532Base::getFirmwareVersion()'],['../classPN532I2C.html#a9548811fb3780a8de1e897e35a6f9d9d',1,'PN532I2C::getFirmwareVersion()']]]
 ];
