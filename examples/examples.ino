@@ -8,24 +8,10 @@
  */
 
 #include <Arduino.h>
-#include "PN532I2C.h"
-#include "CardHandler.h"
-
-/** @brief I2C SDA pin used for PN532 communication */
-#define SDA_PIN A4 
-
-/** @brief I2C SCL pin used for PN532 communication */
-#define SCL_PIN A5 
-
-/**
- * @brief Pointer to the PN532 NFC/RFID interface.
- * 
- * Uses the abstract base class PN532Base to allow swapping interfaces easily.
- */
-PN532Base* nfc = new PN532I2C(SDA_PIN, SCL_PIN);
+#include "CryptnoxWallet.h"
 
 /** @brief CardHandler instance for Cryptnox card operations */
-CardHandler* card = new CardHandler(nfc);
+CryptnoxWallet* wallet;
 
 /**
  * @brief Arduino setup function.
@@ -37,13 +23,8 @@ CardHandler* card = new CardHandler(nfc);
 void setup() {
     Serial.begin(115200);
 
-    /** @brief Initialize the PN532 module */
-    if (!nfc->begin()) {
-        Serial.println("Failed to start PN532!");
-        while (1);
-    }
-
-    Serial.println("PN532 ready");
+    /** @brief Create CardHandler and initialize the card */
+    wallet = new CryptnoxWallet();
 }
 
 /**
@@ -55,24 +36,8 @@ void setup() {
  * the UID to Serial.
  */
 void loop() {
-    uint8_t uid[7];
-    uint8_t uidLength;
-
     /** @brief ISO-DEP card detected */
-    if (nfc->inListPassiveTarget()) {
-        /** @brief Initialize the card (SELECT APDU) */
-        if (card->init()) {
-            Serial.println("Card initialized (SELECT APDU sent)");
-        } else {
-            Serial.println("Card init failed");
-        }
-
-    /** @brief Fallback MIFARE/NTAG card detected */
-    } else if (nfc->readUID(uid, uidLength)) {
-        Serial.print("Card UID: ");
-        for (int i = 0; i < uidLength; i++) Serial.print(uid[i], HEX);
-        Serial.println();
-    }
+    (void)wallet->processCard();
 
     delay(1000);
 }

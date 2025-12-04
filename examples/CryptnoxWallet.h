@@ -1,5 +1,5 @@
-#ifndef CARDHANDLER_H
-#define CARDHANDLER_H
+#ifndef CRYPTNOXWALLET_H
+#define CRYPTNOXWALLET_H
 
 #include <Arduino.h>
 #include "PN532Base.h"
@@ -12,21 +12,19 @@
  * 
  * Encapsulates APDU commands like SELECT and getCertificate.
  */
-class CardHandler {
+class CryptnoxWallet {
 public:
     /**
-     * @brief Construct a new CardHandler object.
-     * 
-     * @param nfcInterface Pointer to a PN532Base instance (I2C/SPI/HSU).
+     * @brief Construct a new CryptnoxWallet object.
      */
-    CardHandler(PN532Base* nfcInterface);
+    CryptnoxWallet();
 
     /**
      * @brief Initialize the card (sends SELECT APDU).
      * 
      * @return true if the card responded correctly.
      */
-    bool init();
+    bool processCard();
 
     /**
      * @brief Retrieve certificate from card.
