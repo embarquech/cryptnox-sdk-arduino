@@ -43,6 +43,31 @@ Before using `cryptnox-sdk-arduino`, you must install the following libraries vi
 2. Copy the `cryptnox-sdk-arduino` folder into your Arduino `libraries` directory.  
 3. Restart the Arduino IDE to detect the library.
 
+## Hardware setup
+
+
+###  Arduino Uno and PN532 NFC (I²C)
+
+- The PN532 module supports multiple interfaces (I²C, SPI, UART). This setup specifically uses **I²C**.  
+- Always double-check the wiring before powering the Arduino to prevent damage.
+
+> ⚠️ Important: Make sure the I²C switches on the PN532 module are configured correctly for I²C communication:
+>
+> - **Switch 1** → LOW  
+> - **Switch 2** → HIGH
+
+<img width="800" alt="arduino_uno_pn532_i2c_bb" src="https://github.com/user-attachments/assets/48ca89ec-05b9-423a-ab0f-ab6f4ed7e823" />
+
+| PN532 Pin | Arduino Pin | Wire Color |
+|-----------|------------|------------|
+| VCC       | 5V         | Red        |
+| GND       | GND        | Black      |
+| SDA       | A4         | Yellow     |
+| SCL       | A5         | Blue       |
+
+
+
+
 ---
 
 ## Basic Example
