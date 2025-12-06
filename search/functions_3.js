@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['inlistpassivetarget_0',['inlistpassivetarget',['../classPN532Base.html#a2a789e5b56969b3c7c4742cb23d3c325',1,'PN532Base::inListPassiveTarget()'],['../classPN532I2C.html#a80fb202f947b17310884f9c6bc12c520',1,'PN532I2C::inListPassiveTarget()']]]
+  ['printfirmwareversion_0',['printFirmwareVersion',['../classPN532Base.html#a4c49b74ef88c3a2ab2c7a1db582c20ee',1,'PN532Base']]],
+  ['printpn532firmwareversion_1',['printPN532FirmwareVersion',['../classCryptnoxWallet.html#a9342637fe7352965de1aefb74f082a6c',1,'CryptnoxWallet']]],
+  ['processcard_2',['processCard',['../classCryptnoxWallet.html#aa4ce170f582927c6e8e8d4e9dc4d412d',1,'CryptnoxWallet']]]
 ];

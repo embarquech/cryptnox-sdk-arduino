@@ -89,101 +89,17 @@ $(document).ready(function(){initNavTree('CryptnoxWallet_8cpp.html',''); initRes
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#define-members">Macros</a>  </div>
   <div class="headertitle"><div class="title">CryptnoxWallet.cpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="CryptnoxWallet_8h_source.html">CryptnoxWallet.h</a>&quot;</code><br />
 <code>#include &lt;Arduino.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="PN532I2C_8h_source.html">PN532I2C.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for CryptnoxWallet.cpp:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="CryptnoxWallet_8cpp__incl.svg" width="447" height="256"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="CryptnoxWallet_8cpp__incl.svg" width="254" height="256"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
-</div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:a526d580d324bce60a3e964066fae77e3" id="r_a526d580d324bce60a3e964066fae77e3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="CryptnoxWallet_8cpp.html#a526d580d324bce60a3e964066fae77e3">SDA_PIN</a>&#160;&#160;&#160;A4</td></tr>
-<tr class="memdesc:a526d580d324bce60a3e964066fae77e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">I2C SDA pin used for PN532 communication.  <br /></td></tr>
-<tr class="separator:a526d580d324bce60a3e964066fae77e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a06c967e78bcedcee909a70764f879433" id="r_a06c967e78bcedcee909a70764f879433"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="CryptnoxWallet_8cpp.html#a06c967e78bcedcee909a70764f879433">SCL_PIN</a>&#160;&#160;&#160;A5</td></tr>
-<tr class="memdesc:a06c967e78bcedcee909a70764f879433"><td class="mdescLeft">&#160;</td><td class="mdescRight">I2C SCL pin used for PN532 communication.  <br /></td></tr>
-<tr class="separator:a06c967e78bcedcee909a70764f879433"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acb40e3f45b74adb1740f65e64551a89d" id="r_acb40e3f45b74adb1740f65e64551a89d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="CryptnoxWallet_8cpp.html#acb40e3f45b74adb1740f65e64551a89d">RESPONSE_LENGHT_IN_BYTES</a>&#160;&#160;&#160;64</td></tr>
-<tr class="memdesc:acb40e3f45b74adb1740f65e64551a89d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Length of the response buffer in bytes.  <br /></td></tr>
-<tr class="separator:acb40e3f45b74adb1740f65e64551a89d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af1f0cb989a33a574c24035af703f414a" id="r_af1f0cb989a33a574c24035af703f414a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="CryptnoxWallet_8cpp.html#af1f0cb989a33a574c24035af703f414a">RANDOM_BYTES</a>&#160;&#160;&#160;8</td></tr>
-<tr class="memdesc:af1f0cb989a33a574c24035af703f414a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of random bytes to generate for card certificate.  <br /></td></tr>
-<tr class="separator:af1f0cb989a33a574c24035af703f414a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="af1f0cb989a33a574c24035af703f414a" name="af1f0cb989a33a574c24035af703f414a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af1f0cb989a33a574c24035af703f414a">&#9670;&#160;</a></span>RANDOM_BYTES</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define RANDOM_BYTES&#160;&#160;&#160;8</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Number of random bytes to generate for card certificate. </p>
-
-</div>
-</div>
-<a id="acb40e3f45b74adb1740f65e64551a89d" name="acb40e3f45b74adb1740f65e64551a89d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acb40e3f45b74adb1740f65e64551a89d">&#9670;&#160;</a></span>RESPONSE_LENGHT_IN_BYTES</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define RESPONSE_LENGHT_IN_BYTES&#160;&#160;&#160;64</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Length of the response buffer in bytes. </p>
-
-</div>
-</div>
-<a id="a06c967e78bcedcee909a70764f879433" name="a06c967e78bcedcee909a70764f879433"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a06c967e78bcedcee909a70764f879433">&#9670;&#160;</a></span>SCL_PIN</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SCL_PIN&#160;&#160;&#160;A5</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>I2C SCL pin used for PN532 communication. </p>
-
-</div>
-</div>
-<a id="a526d580d324bce60a3e964066fae77e3" name="a526d580d324bce60a3e964066fae77e3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a526d580d324bce60a3e964066fae77e3">&#9670;&#160;</a></span>SDA_PIN</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SDA_PIN&#160;&#160;&#160;A4</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>I2C SDA pin used for PN532 communication. </p>
-
-</div>
-</div>
-</div><!-- contents -->
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

@@ -1,5 +1,0 @@
-<map id="PN532I2C" name="PN532I2C">
-<area shape="rect" id="Node000001" title="Concrete PN532 class using I2C communication." alt="" coords="11,79,96,104"/>
-<area shape="rect" id="Node000002" href="$classPN532Base.html" title="Abstract base class for PN532 NFC/RFID modules." alt="" coords="5,5,101,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="56,44,56,79,51,79,51,44"/>
-</map>

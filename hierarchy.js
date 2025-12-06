@@ -1,7 +1,7 @@
 var hierarchy =
 [
-    [ "CryptnoxWallet", "classCryptnoxWallet.html", null ],
-    [ "PN532Base", "classPN532Base.html", [
-      [ "PN532I2C", "classPN532I2C.html", null ]
-    ] ]
+    [ "Adafruit_PN532", null, [
+      [ "PN532Base", "classPN532Base.html", null ]
+    ] ],
+    [ "CryptnoxWallet", "classCryptnoxWallet.html", null ]
 ];

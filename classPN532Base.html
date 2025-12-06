@@ -92,182 +92,144 @@ $(document).ready(function(){initNavTree('classPN532Base.html',''); initResizabl
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classPN532Base-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">PN532Base Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div></div>
+  <div class="headertitle"><div class="title">PN532Base Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Abstract base class for PN532 NFC/RFID modules.  
+<p>Wrapper around Adafruit_PN532 providing extended utility functions for NFC card operations.  
  <a href="classPN532Base.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="PN532Base_8h_source.html">PN532Base.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for PN532Base:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classPN532Base__inherit__graph.svg" width="107" height="110"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classPN532Base__inherit__graph.svg" width="134" height="110"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
+<div class="dynheader">
+Collaboration diagram for PN532Base:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classPN532Base__coll__graph.svg" width="134" height="110"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aae68de942bff3db0a4bde2f97e9f14c9" id="r_aae68de942bff3db0a4bde2f97e9f14c9"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPN532Base.html#aae68de942bff3db0a4bde2f97e9f14c9">begin</a> ()=0</td></tr>
-<tr class="memdesc:aae68de942bff3db0a4bde2f97e9f14c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the PN532 module.  <br /></td></tr>
-<tr class="separator:aae68de942bff3db0a4bde2f97e9f14c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a63d73542f50b418e0f5db6288ee67134" id="r_a63d73542f50b418e0f5db6288ee67134"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPN532Base.html#a63d73542f50b418e0f5db6288ee67134">readUID</a> (uint8_t *uidBuffer, uint8_t &amp;uidLength)=0</td></tr>
-<tr class="memdesc:a63d73542f50b418e0f5db6288ee67134"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the UID of a detected NFC card.  <br /></td></tr>
-<tr class="separator:a63d73542f50b418e0f5db6288ee67134"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3f96089bcefcaadff21fafc2904bea14" id="r_a3f96089bcefcaadff21fafc2904bea14"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPN532Base.html#a3f96089bcefcaadff21fafc2904bea14">getFirmwareVersion</a> (uint32_t &amp;version)=0</td></tr>
-<tr class="memdesc:a3f96089bcefcaadff21fafc2904bea14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the firmware version of the PN532 module.  <br /></td></tr>
-<tr class="separator:a3f96089bcefcaadff21fafc2904bea14"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af5cad073c3ee0b404fcba3880068359b" id="r_af5cad073c3ee0b404fcba3880068359b"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPN532Base.html#af5cad073c3ee0b404fcba3880068359b">sendAPDU</a> (const uint8_t *apdu, uint8_t apduLength, uint8_t *response, uint8_t &amp;responseLength)=0</td></tr>
-<tr class="memdesc:af5cad073c3ee0b404fcba3880068359b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send an APDU command to an ISO14443-4 compliant tag.  <br /></td></tr>
-<tr class="separator:af5cad073c3ee0b404fcba3880068359b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2a789e5b56969b3c7c4742cb23d3c325" id="r_a2a789e5b56969b3c7c4742cb23d3c325"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPN532Base.html#a2a789e5b56969b3c7c4742cb23d3c325">inListPassiveTarget</a> ()=0</td></tr>
-<tr class="memdesc:a2a789e5b56969b3c7c4742cb23d3c325"><td class="mdescLeft">&#160;</td><td class="mdescRight">Put the card in active ISO-DEP mode for APDU exchange.  <br /></td></tr>
-<tr class="separator:a2a789e5b56969b3c7c4742cb23d3c325"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8b5e53f2ee1a907753c8d50d3d4861b0" id="r_a8b5e53f2ee1a907753c8d50d3d4861b0"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPN532Base.html#a8b5e53f2ee1a907753c8d50d3d4861b0">~PN532Base</a> ()</td></tr>
-<tr class="memdesc:a8b5e53f2ee1a907753c8d50d3d4861b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor.  <br /></td></tr>
-<tr class="separator:a8b5e53f2ee1a907753c8d50d3d4861b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5753c35c1d94b9724016a0394455e200" id="r_a5753c35c1d94b9724016a0394455e200"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPN532Base.html#a5753c35c1d94b9724016a0394455e200">begin</a> (void)</td></tr>
+<tr class="memdesc:a5753c35c1d94b9724016a0394455e200"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the PN532 module and configure it for normal operation.  <br /></td></tr>
+<tr class="separator:a5753c35c1d94b9724016a0394455e200"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72201197b549a93016234387f255cf7b" id="r_a72201197b549a93016234387f255cf7b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPN532Base.html#a72201197b549a93016234387f255cf7b">readUID</a> (uint8_t *uidBuffer, uint8_t &amp;uidLength)</td></tr>
+<tr class="memdesc:a72201197b549a93016234387f255cf7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the UID of a detected NFC card.  <br /></td></tr>
+<tr class="separator:a72201197b549a93016234387f255cf7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add4e2322124c66364b26f9d019ba0959" id="r_add4e2322124c66364b26f9d019ba0959"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPN532Base.html#add4e2322124c66364b26f9d019ba0959">getFirmwareVersion</a> (uint32_t &amp;version)</td></tr>
+<tr class="memdesc:add4e2322124c66364b26f9d019ba0959"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve the firmware version of the PN532 module.  <br /></td></tr>
+<tr class="separator:add4e2322124c66364b26f9d019ba0959"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c49b74ef88c3a2ab2c7a1db582c20ee" id="r_a4c49b74ef88c3a2ab2c7a1db582c20ee"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPN532Base.html#a4c49b74ef88c3a2ab2c7a1db582c20ee">printFirmwareVersion</a> ()</td></tr>
+<tr class="memdesc:a4c49b74ef88c3a2ab2c7a1db582c20ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print detailed firmware information of the PN532 module.  <br /></td></tr>
+<tr class="separator:a4c49b74ef88c3a2ab2c7a1db582c20ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ca0113b0bdc930bbcdc0b85d6e31f22" id="r_a0ca0113b0bdc930bbcdc0b85d6e31f22"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPN532Base.html#a0ca0113b0bdc930bbcdc0b85d6e31f22">sendAPDU</a> (const uint8_t *apdu, uint8_t apduLength, uint8_t *response, uint8_t &amp;responseLength)</td></tr>
+<tr class="memdesc:a0ca0113b0bdc930bbcdc0b85d6e31f22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send an APDU command to an ISO14443-4 (Type 4) NFC card.  <br /></td></tr>
+<tr class="separator:a0ca0113b0bdc930bbcdc0b85d6e31f22"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Abstract base class for PN532 NFC/RFID modules. </p>
-<p>This class defines a common interface for different communication methods (I2C, SPI, HSU). Derived classes implement the specific protocol details. </p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a8b5e53f2ee1a907753c8d50d3d4861b0" name="a8b5e53f2ee1a907753c8d50d3d4861b0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8b5e53f2ee1a907753c8d50d3d4861b0">&#9670;&#160;</a></span>~PN532Base()</h2>
+<div class="textblock"><p>Wrapper around Adafruit_PN532 providing extended utility functions for NFC card operations. </p>
+<p>This class inherits all constructors from Adafruit_PN532, allowing initialization via I2C, SPI, Software SPI, or UART. It adds convenience methods for reading UID, retrieving firmware version, and sending APDU commands to ISO14443-4 cards. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a5753c35c1d94b9724016a0394455e200" name="a5753c35c1d94b9724016a0394455e200"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5753c35c1d94b9724016a0394455e200">&#9670;&#160;</a></span>begin()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual PN532Base::~PN532Base </td>
+          <td class="memname">bool PN532Base::begin </td>
           <td>(</td>
+          <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p>Virtual destructor. </p>
+<p>Initialize the PN532 module and configure it for normal operation. </p>
+<p>Starts the internal PN532 hardware, reads the firmware version, and performs SAM configuration. Prints debug messages to Serial.</p>
+<dl class="section return"><dt>Returns</dt><dd>true if the PN532 module was successfully initialized, false otherwise.</dd></dl>
+<p>Calls the base Adafruit_PN532 <code><a class="el" href="classPN532Base.html#a5753c35c1d94b9724016a0394455e200" title="Initialize the PN532 module and configure it for normal operation.">begin()</a></code>, reads the firmware version, prints a detailed status message, and performs SAM configuration.</p>
+<dl class="section return"><dt>Returns</dt><dd>true if the PN532 module was successfully initialized and detected, false otherwise. </dd></dl>
 
 </div>
 </div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="aae68de942bff3db0a4bde2f97e9f14c9" name="aae68de942bff3db0a4bde2f97e9f14c9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aae68de942bff3db0a4bde2f97e9f14c9">&#9670;&#160;</a></span>begin()</h2>
+<a id="add4e2322124c66364b26f9d019ba0959" name="add4e2322124c66364b26f9d019ba0959"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#add4e2322124c66364b26f9d019ba0959">&#9670;&#160;</a></span>getFirmwareVersion()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual bool PN532Base::begin </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Initialize the PN532 module. </p>
-<p>Performs necessary startup routines for the module.</p>
-<dl class="section return"><dt>Returns</dt><dd>true if initialization was successful, false otherwise. </dd></dl>
-
-<p>Implemented in <a class="el" href="classPN532I2C.html#a396e005eda48f4237335bbb4c783359f">PN532I2C</a>.</p>
-
-</div>
-</div>
-<a id="a3f96089bcefcaadff21fafc2904bea14" name="a3f96089bcefcaadff21fafc2904bea14"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3f96089bcefcaadff21fafc2904bea14">&#9670;&#160;</a></span>getFirmwareVersion()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual bool PN532Base::getFirmwareVersion </td>
+          <td class="memname">bool PN532Base::getFirmwareVersion </td>
           <td>(</td>
           <td class="paramtype">uint32_t &amp;&#160;</td>
           <td class="paramname"><em>version</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p>Get the firmware version of the PN532 module. </p>
+<p>Retrieve the firmware version of the PN532 module. </p>
+<p>The firmware version is returned as a 32-bit value where:</p><ul>
+<li>Bits 31:24 = IC type</li>
+<li>Bits 23:16 = Major firmware version</li>
+<li>Bits 15:8 = Minor firmware version</li>
+<li>Bits 7:0 = Supported feature flags</li>
+</ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">version</td><td>Reference to a variable that will store the firmware version as a 32-bit value. </td></tr>
+    <tr><td class="paramname">version</td><td>Reference to a uint32_t variable to store the firmware version. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true if firmware version was successfully retrieved, false otherwise. </dd></dl>
-
-<p>Implemented in <a class="el" href="classPN532I2C.html#a9548811fb3780a8de1e897e35a6f9d9d">PN532I2C</a>.</p>
+<dl class="section return"><dt>Returns</dt><dd>true if the firmware version was successfully retrieved, false otherwise.</dd></dl>
+<p>The version is returned as a 32-bit value: Bits 31:24 = IC type Bits 23:16 = Major firmware version Bits 15:8 = Minor firmware version Bits 7:0 = Feature flags</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">version</td><td>Reference to variable to store the firmware version. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if the firmware version was successfully retrieved, false otherwise. </dd></dl>
 
 </div>
 </div>
-<a id="a2a789e5b56969b3c7c4742cb23d3c325" name="a2a789e5b56969b3c7c4742cb23d3c325"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2a789e5b56969b3c7c4742cb23d3c325">&#9670;&#160;</a></span>inListPassiveTarget()</h2>
+<a id="a4c49b74ef88c3a2ab2c7a1db582c20ee" name="a4c49b74ef88c3a2ab2c7a1db582c20ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4c49b74ef88c3a2ab2c7a1db582c20ee">&#9670;&#160;</a></span>printFirmwareVersion()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual bool PN532Base::inListPassiveTarget </td>
+          <td class="memname">bool PN532Base::printFirmwareVersion </td>
           <td>(</td>
+          <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p>Put the card in active ISO-DEP mode for APDU exchange. </p>
-<dl class="section return"><dt>Returns</dt><dd>true if a card was successfully activated, false otherwise. </dd></dl>
-
-<p>Implemented in <a class="el" href="classPN532I2C.html#a80fb202f947b17310884f9c6bc12c520">PN532I2C</a>.</p>
+<p>Print detailed firmware information of the PN532 module. </p>
+<p>Retrieves the firmware version, parses IC type, major/minor versions, supported features, and prints all details to the Serial console. Also configures the PN532 using SAMConfig().</p>
+<dl class="section return"><dt>Returns</dt><dd>true if the PN532 module was detected and information printed, false otherwise.</dd></dl>
+<p>Retrieves the firmware version from the PN532 via the underlying driver, parses the IC type, major and minor firmware versions, and supported features, then prints all this information to the Serial console. Also performs SAM configuration.</p>
+<dl class="section return"><dt>Returns</dt><dd>true if the PN532 module was detected and firmware information printed, false otherwise. </dd></dl>
 
 </div>
 </div>
-<a id="a63d73542f50b418e0f5db6288ee67134" name="a63d73542f50b418e0f5db6288ee67134"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a63d73542f50b418e0f5db6288ee67134">&#9670;&#160;</a></span>readUID()</h2>
+<a id="a72201197b549a93016234387f255cf7b" name="a72201197b549a93016234387f255cf7b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a72201197b549a93016234387f255cf7b">&#9670;&#160;</a></span>readUID()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual bool PN532Base::readUID </td>
+          <td class="memname">bool PN532Base::readUID </td>
           <td>(</td>
           <td class="paramtype">uint8_t *&#160;</td>
           <td class="paramname"><em>uidBuffer</em>, </td>
@@ -284,38 +246,36 @@ Public Member Functions</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Read the UID of a detected NFC card. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">uidBuffer</td><td>Pointer to a buffer to store the UID. </td></tr>
-    <tr><td class="paramname">uidLength</td><td>Reference to a variable to store the UID length. </td></tr>
+    <tr><td class="paramname">uidBuffer</td><td>Pointer to a buffer where the UID will be stored. </td></tr>
+    <tr><td class="paramname">uidLength</td><td>Reference to a variable that will hold the length of the UID. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if a card was detected and UID read successfully, false otherwise.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">uidBuffer</td><td>Pointer to buffer to store the UID. </td></tr>
+    <tr><td class="paramname">uidLength</td><td>Reference to variable to store the UID length. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if a card was detected and UID read successfully, false otherwise. </dd></dl>
 
-<p>Implemented in <a class="el" href="classPN532I2C.html#aff02e0b1395fb60fc81a0e15b8075e94">PN532I2C</a>.</p>
-
 </div>
 </div>
-<a id="af5cad073c3ee0b404fcba3880068359b" name="af5cad073c3ee0b404fcba3880068359b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af5cad073c3ee0b404fcba3880068359b">&#9670;&#160;</a></span>sendAPDU()</h2>
+<a id="a0ca0113b0bdc930bbcdc0b85d6e31f22" name="a0ca0113b0bdc930bbcdc0b85d6e31f22"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0ca0113b0bdc930bbcdc0b85d6e31f22">&#9670;&#160;</a></span>sendAPDU()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual bool PN532Base::sendAPDU </td>
+          <td class="memname">bool PN532Base::sendAPDU </td>
           <td>(</td>
           <td class="paramtype">const uint8_t *&#160;</td>
           <td class="paramname"><em>apdu</em>, </td>
@@ -344,32 +304,37 @@ Public Member Functions</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p>Send an APDU command to an ISO14443-4 compliant tag. </p>
-<p>Base method to allow APDU exchange with Type 4 NFC tags. Implementations may return false if the interface does not support APDUs.</p>
+<p>Send an APDU command to an ISO14443-4 (Type 4) NFC card. </p>
+<p>Send an APDU command to an ISO14443-4 card and read the response.</p>
+<p>This method exchanges raw APDU bytes with a card and retrieves the response.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">apdu</td><td>Pointer to the APDU command data. </td></tr>
-    <tr><td class="paramname">apduLength</td><td>Size of the APDU command. </td></tr>
-    <tr><td class="paramname">response</td><td>Pointer to a buffer that will store the APDU response. </td></tr>
-    <tr><td class="paramname">responseLength</td><td>Reference that receives the length of the response. </td></tr>
+    <tr><td class="paramname">apdu</td><td>Pointer to the APDU command buffer to send. </td></tr>
+    <tr><td class="paramname">apduLength</td><td>Length of the APDU command buffer in bytes. </td></tr>
+    <tr><td class="paramname">response</td><td>Pointer to a buffer where the card's response will be stored. </td></tr>
+    <tr><td class="paramname">responseLength</td><td>Reference to a variable that will hold the length of the response. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true if the APDU was successfully exchanged, false otherwise. </dd></dl>
-
-<p>Implemented in <a class="el" href="classPN532I2C.html#a441bb840c4915ed24506831ed2e0ebe5">PN532I2C</a>.</p>
+<dl class="section return"><dt>Returns</dt><dd>true if the APDU exchange was successful, false otherwise.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">apdu</td><td>Pointer to APDU command buffer. </td></tr>
+    <tr><td class="paramname">apduLength</td><td>Length of the APDU command in bytes. </td></tr>
+    <tr><td class="paramname">response</td><td>Pointer to buffer to store the card response. </td></tr>
+    <tr><td class="paramname">responseLength</td><td>Reference to variable for response length. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if the APDU exchange succeeded, false otherwise. </dd></dl>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following file:<ul>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>examples/<a class="el" href="PN532Base_8h_source.html">PN532Base.h</a></li>
+<li>examples/<a class="el" href="PN532Base_8cpp.html">PN532Base.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

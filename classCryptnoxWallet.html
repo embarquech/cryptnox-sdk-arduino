@@ -96,70 +96,74 @@ $(document).ready(function(){initNavTree('classCryptnoxWallet.html',''); initRes
 </div><!--header-->
 <div class="contents">
 
-<p>High-level handler for Cryptnox ISO-DEP card.  
+<p>High-level interface for interacting with a PN532-based wallet.  
  <a href="classCryptnoxWallet.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="CryptnoxWallet_8h_source.html">CryptnoxWallet.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a8fbf8d5e38ab9f35def1b0d34b8123dd" id="r_a8fbf8d5e38ab9f35def1b0d34b8123dd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a8fbf8d5e38ab9f35def1b0d34b8123dd">CryptnoxWallet</a> ()</td></tr>
-<tr class="memdesc:a8fbf8d5e38ab9f35def1b0d34b8123dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="classCryptnoxWallet.html" title="High-level handler for Cryptnox ISO-DEP card.">CryptnoxWallet</a> object.  <br /></td></tr>
-<tr class="separator:a8fbf8d5e38ab9f35def1b0d34b8123dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af35119491a036609cf251a9bf92ef154" id="r_af35119491a036609cf251a9bf92ef154"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#af35119491a036609cf251a9bf92ef154">CryptnoxWallet</a> (uint8_t irq, uint8_t reset, TwoWire *theWire=&amp;Wire)</td></tr>
+<tr class="memdesc:af35119491a036609cf251a9bf92ef154"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a <a class="el" href="classCryptnoxWallet.html" title="High-level interface for interacting with a PN532-based wallet.">CryptnoxWallet</a> over I2C.  <br /></td></tr>
+<tr class="separator:af35119491a036609cf251a9bf92ef154"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2275c4d8e65abc791159ffc9c3b3dc9" id="r_aa2275c4d8e65abc791159ffc9c3b3dc9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#aa2275c4d8e65abc791159ffc9c3b3dc9">CryptnoxWallet</a> (uint8_t ss, SPIClass *theSPI=&amp;SPI)</td></tr>
+<tr class="memdesc:aa2275c4d8e65abc791159ffc9c3b3dc9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a <a class="el" href="classCryptnoxWallet.html" title="High-level interface for interacting with a PN532-based wallet.">CryptnoxWallet</a> over hardware SPI.  <br /></td></tr>
+<tr class="separator:aa2275c4d8e65abc791159ffc9c3b3dc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63b023ee36ddb72da641167a0f5b68c7" id="r_a63b023ee36ddb72da641167a0f5b68c7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a63b023ee36ddb72da641167a0f5b68c7">CryptnoxWallet</a> (uint8_t clk, uint8_t miso, uint8_t mosi, uint8_t ss)</td></tr>
+<tr class="memdesc:a63b023ee36ddb72da641167a0f5b68c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a <a class="el" href="classCryptnoxWallet.html" title="High-level interface for interacting with a PN532-based wallet.">CryptnoxWallet</a> over software SPI.  <br /></td></tr>
+<tr class="separator:a63b023ee36ddb72da641167a0f5b68c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19a5f98679f52f688c279cdb087b4f27" id="r_a19a5f98679f52f688c279cdb087b4f27"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a19a5f98679f52f688c279cdb087b4f27">CryptnoxWallet</a> (uint8_t reset, HardwareSerial *theSer)</td></tr>
+<tr class="memdesc:a19a5f98679f52f688c279cdb087b4f27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a <a class="el" href="classCryptnoxWallet.html" title="High-level interface for interacting with a PN532-based wallet.">CryptnoxWallet</a> over UART.  <br /></td></tr>
+<tr class="separator:a19a5f98679f52f688c279cdb087b4f27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa394fe6bc19d57c4a9d89a303f7e664d" id="r_aa394fe6bc19d57c4a9d89a303f7e664d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#aa394fe6bc19d57c4a9d89a303f7e664d">begin</a> ()</td></tr>
+<tr class="memdesc:aa394fe6bc19d57c4a9d89a303f7e664d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the PN532 module via the underlying driver.  <br /></td></tr>
+<tr class="separator:aa394fe6bc19d57c4a9d89a303f7e664d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa4ce170f582927c6e8e8d4e9dc4d412d" id="r_aa4ce170f582927c6e8e8d4e9dc4d412d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#aa4ce170f582927c6e8e8d4e9dc4d412d">processCard</a> ()</td></tr>
-<tr class="memdesc:aa4ce170f582927c6e8e8d4e9dc4d412d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the card (sends SELECT APDU).  <br /></td></tr>
+<tr class="memdesc:aa4ce170f582927c6e8e8d4e9dc4d412d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Detect and process an NFC card for Cryptnox wallet operations.  <br /></td></tr>
 <tr class="separator:aa4ce170f582927c6e8e8d4e9dc4d412d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1fd47ac378f45bafd0b5e2df6290ce84" id="r_a1fd47ac378f45bafd0b5e2df6290ce84"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a1fd47ac378f45bafd0b5e2df6290ce84">getCertificate</a> (uint8_t *certBuffer, uint8_t &amp;certLength)</td></tr>
-<tr class="memdesc:a1fd47ac378f45bafd0b5e2df6290ce84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve certificate from card.  <br /></td></tr>
-<tr class="separator:a1fd47ac378f45bafd0b5e2df6290ce84"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a67b951c652d29c940a16867e9a0d8c3d" id="r_a67b951c652d29c940a16867e9a0d8c3d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a67b951c652d29c940a16867e9a0d8c3d">selectApdu</a> ()</td></tr>
+<tr class="memdesc:a67b951c652d29c940a16867e9a0d8c3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send the SELECT APDU to select the wallet application.  <br /></td></tr>
+<tr class="separator:a67b951c652d29c940a16867e9a0d8c3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2ffb5c8f2c667283b9ad4153285c268" id="r_ad2ffb5c8f2c667283b9ad4153285c268"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#ad2ffb5c8f2c667283b9ad4153285c268">getCardCertificate</a> ()</td></tr>
+<tr class="memdesc:ad2ffb5c8f2c667283b9ad4153285c268"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send the GET CARD CERTIFICATE APDU.  <br /></td></tr>
+<tr class="separator:ad2ffb5c8f2c667283b9ad4153285c268"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e90b4ce65336ba84d371deab5144274" id="r_a2e90b4ce65336ba84d371deab5144274"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a2e90b4ce65336ba84d371deab5144274">readUID</a> (uint8_t *uidBuffer, uint8_t &amp;uidLength)</td></tr>
+<tr class="memdesc:a2e90b4ce65336ba84d371deab5144274"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the UID of a detected card.  <br /></td></tr>
+<tr class="separator:a2e90b4ce65336ba84d371deab5144274"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9342637fe7352965de1aefb74f082a6c" id="r_a9342637fe7352965de1aefb74f082a6c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a9342637fe7352965de1aefb74f082a6c">printPN532FirmwareVersion</a> ()</td></tr>
+<tr class="memdesc:a9342637fe7352965de1aefb74f082a6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print detailed firmware information of the PN532 module.  <br /></td></tr>
+<tr class="separator:a9342637fe7352965de1aefb74f082a6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>High-level handler for Cryptnox ISO-DEP card. </p>
-<p>Encapsulates APDU commands like SELECT and getCertificate. </p>
+<div class="textblock"><p>High-level interface for interacting with a PN532-based wallet. </p>
+<p>This class encapsulates NFC card operations specific to the Cryptnox wallet, including sending APDUs, retrieving the card certificate, and reading the UID. It supports all bus types provided by Adafruit_PN532 (I2C, SPI, Software SPI, UART) via constructor overloading. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a8fbf8d5e38ab9f35def1b0d34b8123dd" name="a8fbf8d5e38ab9f35def1b0d34b8123dd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8fbf8d5e38ab9f35def1b0d34b8123dd">&#9670;&#160;</a></span>CryptnoxWallet()</h2>
+<a id="af35119491a036609cf251a9bf92ef154" name="af35119491a036609cf251a9bf92ef154"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af35119491a036609cf251a9bf92ef154">&#9670;&#160;</a></span>CryptnoxWallet() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">CryptnoxWallet::CryptnoxWallet </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Construct a new <a class="el" href="classCryptnoxWallet.html" title="High-level handler for Cryptnox ISO-DEP card.">CryptnoxWallet</a> object. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">nfcInterface</td><td>Pointer to a <a class="el" href="classPN532Base.html" title="Abstract base class for PN532 NFC/RFID modules.">PN532Base</a> instance for NFC communication. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="a1fd47ac378f45bafd0b5e2df6290ce84" name="a1fd47ac378f45bafd0b5e2df6290ce84"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1fd47ac378f45bafd0b5e2df6290ce84">&#9670;&#160;</a></span>getCertificate()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool CryptnoxWallet::getCertificate </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>certBuffer</em>, </td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>irq</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint8_t &amp;&#160;</td>
-          <td class="paramname"><em>certLength</em>&#160;</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>reset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TwoWire *&#160;</td>
+          <td class="paramname"><em>theWire</em> = <code>&amp;Wire</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -167,26 +171,246 @@ Public Member Functions</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
-<p>Retrieve certificate from card. </p>
-<p>Retrieve the card certificate.</p>
+<p>Construct a <a class="el" href="classCryptnoxWallet.html" title="High-level interface for interacting with a PN532-based wallet.">CryptnoxWallet</a> over I2C. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">certBuffer</td><td>Buffer to store certificate. </td></tr>
-    <tr><td class="paramname">certLength</td><td>Reference to variable to store length. </td></tr>
+    <tr><td class="paramname">irq</td><td>Pin number for PN532 IRQ (use -1 if unused). </td></tr>
+    <tr><td class="paramname">reset</td><td>Pin number for PN532 RESET (use -1 if unused). </td></tr>
+    <tr><td class="paramname">theWire</td><td>TwoWire instance (default is &amp;Wire). </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true if certificate successfully retrieved.</dd></dl>
+
+</div>
+</div>
+<a id="aa2275c4d8e65abc791159ffc9c3b3dc9" name="aa2275c4d8e65abc791159ffc9c3b3dc9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa2275c4d8e65abc791159ffc9c3b3dc9">&#9670;&#160;</a></span>CryptnoxWallet() <span class="overload">[2/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">CryptnoxWallet::CryptnoxWallet </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>ss</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SPIClass *&#160;</td>
+          <td class="paramname"><em>theSPI</em> = <code>&amp;SPI</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Construct a <a class="el" href="classCryptnoxWallet.html" title="High-level interface for interacting with a PN532-based wallet.">CryptnoxWallet</a> over hardware SPI. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">certBuffer</td><td>Pointer to buffer to store the certificate (currently unused). </td></tr>
-    <tr><td class="paramname">certLength</td><td>Reference to variable to store certificate length (currently unused). </td></tr>
+    <tr><td class="paramname">ss</td><td>SPI slave select pin. </td></tr>
+    <tr><td class="paramname">theSPI</td><td>SPIClass instance (default is &amp;SPI). </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true if the certificate retrieval succeeded, false otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="a63b023ee36ddb72da641167a0f5b68c7" name="a63b023ee36ddb72da641167a0f5b68c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a63b023ee36ddb72da641167a0f5b68c7">&#9670;&#160;</a></span>CryptnoxWallet() <span class="overload">[3/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">CryptnoxWallet::CryptnoxWallet </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>clk</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>miso</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>mosi</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>ss</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Construct a <a class="el" href="classCryptnoxWallet.html" title="High-level interface for interacting with a PN532-based wallet.">CryptnoxWallet</a> over software SPI. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">clk</td><td>Clock pin. </td></tr>
+    <tr><td class="paramname">miso</td><td>MISO pin. </td></tr>
+    <tr><td class="paramname">mosi</td><td>MOSI pin. </td></tr>
+    <tr><td class="paramname">ss</td><td>SPI slave select pin. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a19a5f98679f52f688c279cdb087b4f27" name="a19a5f98679f52f688c279cdb087b4f27"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a19a5f98679f52f688c279cdb087b4f27">&#9670;&#160;</a></span>CryptnoxWallet() <span class="overload">[4/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">CryptnoxWallet::CryptnoxWallet </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>reset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">HardwareSerial *&#160;</td>
+          <td class="paramname"><em>theSer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Construct a <a class="el" href="classCryptnoxWallet.html" title="High-level interface for interacting with a PN532-based wallet.">CryptnoxWallet</a> over UART. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">reset</td><td>Reset pin for PN532 (use -1 if unused). </td></tr>
+    <tr><td class="paramname">theSer</td><td>HardwareSerial instance. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="aa394fe6bc19d57c4a9d89a303f7e664d" name="aa394fe6bc19d57c4a9d89a303f7e664d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa394fe6bc19d57c4a9d89a303f7e664d">&#9670;&#160;</a></span>begin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool CryptnoxWallet::begin </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Initialize the PN532 module via the underlying driver. </p>
+<p>Performs SAM configuration and checks firmware version.</p>
+<dl class="section return"><dt>Returns</dt><dd>true if the module was successfully initialized, false otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="ad2ffb5c8f2c667283b9ad4153285c268" name="ad2ffb5c8f2c667283b9ad4153285c268"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad2ffb5c8f2c667283b9ad4153285c268">&#9670;&#160;</a></span>getCardCertificate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool CryptnoxWallet::getCardCertificate </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Send the GET CARD CERTIFICATE APDU. </p>
+<p>Sends the GET CARD CERTIFICATE APDU with random bytes for challenge.</p>
+<p>Generates RANDOM_BYTES random bytes for challenge and sends the APDU.</p>
+<dl class="section return"><dt>Returns</dt><dd>true if the APDU exchange succeeded, false otherwise.</dd></dl>
+<p>Generates RANDOM_BYTES random bytes, sends the APDU to the card, and prints the APDU and response for debugging.</p>
+<dl class="section return"><dt>Returns</dt><dd>true if the APDU exchange succeeded, false otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="a9342637fe7352965de1aefb74f082a6c" name="a9342637fe7352965de1aefb74f082a6c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9342637fe7352965de1aefb74f082a6c">&#9670;&#160;</a></span>printPN532FirmwareVersion()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool CryptnoxWallet::printPN532FirmwareVersion </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Print detailed firmware information of the PN532 module. </p>
+<p>Retrieves the firmware version, parses IC type, major/minor versions, and supported features, then prints all details to the Serial console.</p>
+<dl class="section return"><dt>Returns</dt><dd>true if the PN532 module was detected and information printed, false otherwise. </dd></dl>
 
 </div>
 </div>
@@ -205,11 +429,80 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Initialize the card (sends SELECT APDU). </p>
-<p>Initialize the card by sending a SELECT APDU and retrieving a certificate.</p>
-<dl class="section return"><dt>Returns</dt><dd>true if the card responded correctly.</dd>
-<dd>
-true if the card was successfully initialized, false otherwise. </dd></dl>
+<p>Detect and process an NFC card for Cryptnox wallet operations. </p>
+<p>Detects an ISO-DEP or passive NFC card and processes wallet APDUs.</p>
+<p>If an ISO-DEP card is detected, SELECT APDU is sent and certificate is retrieved. If only a passive card is detected, the UID is printed.</p>
+<dl class="section return"><dt>Returns</dt><dd>true if a card was successfully processed, false otherwise.</dd></dl>
+<p>If an ISO-DEP card is detected, the SELECT APDU is sent and the certificate is retrieved. If only a passive card is detected, the UID is printed.</p>
+<dl class="section return"><dt>Returns</dt><dd>true if a card was successfully processed, false otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="a2e90b4ce65336ba84d371deab5144274" name="a2e90b4ce65336ba84d371deab5144274"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2e90b4ce65336ba84d371deab5144274">&#9670;&#160;</a></span>readUID()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool CryptnoxWallet::readUID </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>uidBuffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t &amp;&#160;</td>
+          <td class="paramname"><em>uidLength</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Read the UID of a detected card. </p>
+<p>Reads the UID of a detected card via the underlying driver.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">uidBuffer</td><td>Pointer to buffer to store the UID. </td></tr>
+    <tr><td class="paramname">uidLength</td><td>Reference to variable to store UID length. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if the UID was read successfully, false otherwise.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">uidBuffer</td><td>Pointer to buffer to store the UID. </td></tr>
+    <tr><td class="paramname">uidLength</td><td>Reference to variable to store the UID length. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if a UID was read successfully, false otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="a67b951c652d29c940a16867e9a0d8c3d" name="a67b951c652d29c940a16867e9a0d8c3d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a67b951c652d29c940a16867e9a0d8c3d">&#9670;&#160;</a></span>selectApdu()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool CryptnoxWallet::selectApdu </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Send the SELECT APDU to select the wallet application. </p>
+<p>Sends the SELECT APDU to select the wallet application.</p>
+<dl class="section return"><dt>Returns</dt><dd>true if the APDU exchange succeeded, false otherwise. </dd></dl>
 
 </div>
 </div>

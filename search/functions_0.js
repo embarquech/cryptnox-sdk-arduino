@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['begin_0',['begin',['../classPN532Base.html#aae68de942bff3db0a4bde2f97e9f14c9',1,'PN532Base::begin()'],['../classPN532I2C.html#a396e005eda48f4237335bbb4c783359f',1,'PN532I2C::begin()']]]
+  ['begin_0',['begin',['../classCryptnoxWallet.html#aa394fe6bc19d57c4a9d89a303f7e664d',1,'CryptnoxWallet::begin()'],['../classPN532Base.html#a5753c35c1d94b9724016a0394455e200',1,'PN532Base::begin()']]]
 ];
