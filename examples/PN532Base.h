@@ -1,69 +1,83 @@
-// PN532Base.h
 #ifndef PN532BASE_H
 #define PN532BASE_H
 
-#include <Arduino.h>
+#include <Adafruit_PN532.h>
 
 /**
- * @brief Abstract base class for PN532 NFC/RFID modules.
- * 
- * This class defines a common interface for different communication
- * methods (I2C, SPI, HSU). Derived classes implement the specific
- * protocol details.
+ * @class PN532Base
+ * @brief Wrapper around Adafruit_PN532 providing extended utility functions for NFC card operations.
+ *
+ * This class inherits all constructors from Adafruit_PN532, allowing initialization
+ * via I2C, SPI, Software SPI, or UART. It adds convenience methods for reading UID,
+ * retrieving firmware version, and sending APDU commands to ISO14443-4 cards.
  */
-class PN532Base {
+class PN532Base : public Adafruit_PN532 {
 public:
     /**
-     * @brief Initialize the PN532 module.
-     * 
-     * Performs necessary startup routines for the module.
-     * 
-     * @return true if initialization was successful, false otherwise.
+     * @brief Inherit all constructors from Adafruit_PN532.
+     *
+     * Allows initialization using any supported bus with the same parameters
+     * as the original Adafruit_PN532 constructors.
      */
-    virtual bool begin() = 0;
+    using Adafruit_PN532::Adafruit_PN532;
+
+    /**
+     * @brief Initialize the PN532 module and configure it for normal operation.
+     *
+     * Starts the internal PN532 hardware, reads the firmware version,
+     * and performs SAM configuration. Prints debug messages to Serial.
+     *
+     * @return true if the PN532 module was successfully initialized, false otherwise.
+     */
+    bool begin(void);
 
     /**
      * @brief Read the UID of a detected NFC card.
-     * 
-     * @param uidBuffer Pointer to a buffer to store the UID.
-     * @param uidLength Reference to a variable to store the UID length.
+     *
+     * @param uidBuffer Pointer to a buffer where the UID will be stored.
+     * @param uidLength Reference to a variable that will hold the length of the UID.
      * @return true if a card was detected and UID read successfully, false otherwise.
      */
-    virtual bool readUID(uint8_t* uidBuffer, uint8_t &uidLength) = 0;
+    bool readUID(uint8_t* uidBuffer, uint8_t &uidLength);
 
     /**
-     * @brief Get the firmware version of the PN532 module.
-     * 
-     * @param version Reference to a variable that will store the firmware version as a 32-bit value.
-     * @return true if firmware version was successfully retrieved, false otherwise.
-     */
-    virtual bool getFirmwareVersion(uint32_t &version) = 0;
-
-    /**
-     * @brief Send an APDU command to an ISO14443-4 compliant tag.
-     *
-     * Base method to allow APDU exchange with Type 4 NFC tags.
-     * Implementations may return false if the interface does not support APDUs.
-     *
-     * @param apdu Pointer to the APDU command data.
-     * @param apduLength Size of the APDU command.
-     * @param response Pointer to a buffer that will store the APDU response.
-     * @param responseLength Reference that receives the length of the response.
-     * @return true if the APDU was successfully exchanged, false otherwise.
-     */
-    virtual bool sendAPDU(const uint8_t* apdu, uint8_t apduLength,
-                          uint8_t* response, uint8_t &responseLength) = 0;
-
-    /**
-    * @brief Put the card in active ISO-DEP mode for APDU exchange.
-    * @return true if a card was successfully activated, false otherwise.
+    * @brief Retrieve the firmware version of the PN532 module.
+    *
+    * The firmware version is returned as a 32-bit value where:
+    * - Bits 31:24 = IC type
+    * - Bits 23:16 = Major firmware version
+    * - Bits 15:8  = Minor firmware version
+    * - Bits 7:0   = Supported feature flags
+    *
+    * @param version Reference to a uint32_t variable to store the firmware version.
+    * @return true if the firmware version was successfully retrieved, false otherwise.
     */
-    virtual bool inListPassiveTarget() = 0;
+    bool getFirmwareVersion(uint32_t &version);
 
     /**
-     * @brief Virtual destructor.
+    * @brief Print detailed firmware information of the PN532 module.
+    *
+    * Retrieves the firmware version, parses IC type, major/minor versions, 
+    * supported features, and prints all details to the Serial console.
+    * Also configures the PN532 using SAMConfig().
+    *
+    * @return true if the PN532 module was detected and information printed, false otherwise.
+    */
+    bool printFirmwareVersion();
+
+    /**
+     * @brief Send an APDU command to an ISO14443-4 (Type 4) NFC card.
+     *
+     * This method exchanges raw APDU bytes with a card and retrieves the response.
+     *
+     * @param apdu Pointer to the APDU command buffer to send.
+     * @param apduLength Length of the APDU command buffer in bytes.
+     * @param response Pointer to a buffer where the card's response will be stored.
+     * @param responseLength Reference to a variable that will hold the length of the response.
+     * @return true if the APDU exchange was successful, false otherwise.
      */
-    virtual ~PN532Base() {}
+    bool sendAPDU(const uint8_t* apdu, uint8_t apduLength,
+                  uint8_t* response, uint8_t &responseLength);
 };
 
-#endif
+#endif // PN532BASE_H

@@ -1,55 +1,33 @@
 #include "CryptnoxWallet.h"
 #include <Arduino.h>
-#include "PN532I2C.h"
-
-/** @brief I2C SDA pin used for PN532 communication */
-#define SDA_PIN A4 
-
-/** @brief I2C SCL pin used for PN532 communication */
-#define SCL_PIN A5 
-
-/** @brief Length of the response buffer in bytes */
-#define RESPONSE_LENGHT_IN_BYTES    64
-
-/** @brief Number of random bytes to generate for card certificate */
-#define RANDOM_BYTES    8  
 
 /**
- * @brief Construct a new CryptnoxWallet object.
- * 
- * @param nfcInterface Pointer to a PN532Base instance for NFC communication.
- */
-CryptnoxWallet::CryptnoxWallet() {
-    nfc = new PN532I2C(SDA_PIN, SCL_PIN);
-
-    if (!nfc->begin()) {
-        Serial.println("Failed to start PN532!");
-    }
-    else{
-        Serial.println("PN532 ready");
-    }
-}
-
-/**
- * @brief Initialize the card by sending a SELECT APDU and retrieving a certificate.
- * 
- * @return true if the card was successfully initialized, false otherwise.
+ * @brief Detects an ISO-DEP or passive NFC card and processes wallet APDUs.
+ *
+ * If an ISO-DEP card is detected, the SELECT APDU is sent and the certificate
+ * is retrieved. If only a passive card is detected, the UID is printed.
+ *
+ * @return true if a card was successfully processed, false otherwise.
  */
 bool CryptnoxWallet::processCard() {
     bool ret = false;
     uint8_t uid[7];
     uint8_t uidLength;
 
-    if (nfc->inListPassiveTarget()) {
-
+    if (driver.inListPassiveTarget()) {
         if (selectApdu()) {
-            Serial.println("Sending select APDU...");
+            Serial.println("Card selected. Retrieving certificate...");
             getCardCertificate();
             ret = true;
         }
-    } else if (nfc->readUID(uid, uidLength)) {
+    }
+    else if (driver.readUID(uid, uidLength)) {
         Serial.print("Card UID: ");
-        for (int i = 0; i < uidLength; i++) Serial.print(uid[i], HEX);
+        for (uint8_t i = 0; i < uidLength; i++) {
+            if (uid[i] < 16) Serial.print("0");
+            Serial.print(uid[i], HEX);
+            Serial.print(" ");
+        }
         Serial.println();
     }
 
@@ -57,19 +35,31 @@ bool CryptnoxWallet::processCard() {
 }
 
 /**
- * @brief Retrieve the card certificate.
- * 
- * @param certBuffer Pointer to buffer to store the certificate (currently unused).
- * @param certLength Reference to variable to store certificate length (currently unused).
- * @return true if the certificate retrieval succeeded, false otherwise.
+ * @brief Reads the UID of a detected card via the underlying driver.
+ *
+ * @param uidBuffer Pointer to buffer to store the UID.
+ * @param uidLength Reference to variable to store the UID length.
+ * @return true if a UID was read successfully, false otherwise.
  */
-bool CryptnoxWallet::getCertificate(uint8_t* certBuffer, uint8_t &certLength) {
-    return getCardCertificate();
+bool CryptnoxWallet::readUID(uint8_t* uidBuffer, uint8_t &uidLength) {
+    return driver.readUID(uidBuffer, uidLength);
 }
 
 /**
- * @brief Send a SELECT APDU to select a specific application on the card.
- * 
+ * @brief Print detailed firmware information of the PN532 module.
+ *
+ * Retrieves the firmware version, parses IC type, major/minor versions,
+ * and supported features, then prints all details to the Serial console.
+ *
+ * @return true if the PN532 module was detected and information printed, false otherwise.
+ */
+bool CryptnoxWallet::printPN532FirmwareVersion() {
+    return driver.printFirmwareVersion();
+}
+
+/**
+ * @brief Sends the SELECT APDU to select the wallet application.
+ *
  * @return true if the APDU exchange succeeded, false otherwise.
  */
 bool CryptnoxWallet::selectApdu() {
@@ -80,26 +70,26 @@ bool CryptnoxWallet::selectApdu() {
         0xA0, 0x00, 0x00, 0x10, 0x00, 0x01, 0x12
     };
 
-    uint8_t response[RESPONSE_LENGHT_IN_BYTES];
+    uint8_t response[RESPONSE_LENGTH_IN_BYTES];
     uint8_t responseLength = sizeof(response);
 
-    Serial.println("Sending select APDU...");
+    Serial.println("Sending Select APDU...");
 
-    if (nfc->sendAPDU(selectApdu, sizeof(selectApdu), response, responseLength)) {
+    if (driver.sendAPDU(selectApdu, sizeof(selectApdu), response, responseLength)) {
         ret = true;
     } else {
-        Serial.println("APDU select: failed.");
+        Serial.println("APDU select failed.");
     }
 
     return ret;
 }
 
 /**
- * @brief Send a GET CARD CERTIFICATE APDU with random bytes.
- * 
- * Generates RANDOM_BYTES random bytes, sends the APDU to the card, 
- * and prints the APDU and response for debugging.
- * 
+ * @brief Sends the GET CARD CERTIFICATE APDU with random bytes for challenge.
+ *
+ * Generates RANDOM_BYTES random bytes, sends the APDU to the card, and prints
+ * the APDU and response for debugging.
+ *
  * @return true if the APDU exchange succeeded, false otherwise.
  */
 bool CryptnoxWallet::getCardCertificate() {
@@ -110,18 +100,14 @@ bool CryptnoxWallet::getCardCertificate() {
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
     };
 
-    uint8_t response[RESPONSE_LENGHT_IN_BYTES];
+    uint8_t response[RESPONSE_LENGTH_IN_BYTES];
     uint8_t responseLength = sizeof(response);
 
-    /** @brief Seed random generator */
     randomSeed(analogRead(0));
-
-    /** @brief Fill the last RANDOM_BYTES bytes with random values */
     for (int i = sizeof(getCardCertificateApdu) - RANDOM_BYTES; i < sizeof(getCardCertificateApdu); i++) {
         getCardCertificateApdu[i] = random(0, 256);
     }
 
-    /** @brief Print APDU for verification */
     Serial.print("APDU to send: ");
     for (int i = 0; i < sizeof(getCardCertificateApdu); i++) {
         if (getCardCertificateApdu[i] < 16) Serial.print("0");
@@ -130,13 +116,13 @@ bool CryptnoxWallet::getCardCertificate() {
     }
     Serial.println();
 
-    Serial.println("Sending APDU...");
+    Serial.println("Sending getCardCertificate APDU...");
 
-    if (nfc->sendAPDU(getCardCertificateApdu, sizeof(getCardCertificateApdu), response, responseLength)) {
+    if (driver.sendAPDU(getCardCertificateApdu, sizeof(getCardCertificateApdu), response, responseLength)) {
         Serial.println("APDU exchange successful!");
         ret = true;
     } else {
-        Serial.println("APDU getCardCertificate: failed.");
+        Serial.println("APDU getCardCertificate failed.");
     }
 
     return ret;
