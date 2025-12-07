@@ -62,59 +62,59 @@ bool PN532Base::printFirmwareVersion(void)
         uint8_t flags    =  versionData        & 0xFFU;
         bool first       = true;
 
-        Serial.println("PN532 detected");
-        Serial.print(" ├─ Raw firmware: 0x");
+        Serial.println(F("PN532 detected"));
+        Serial.print(F(" ├─ Raw firmware: 0x"));
         Serial.println(versionData, HEX);
 
-        Serial.print(" ├─ IC Chip: ");
+        Serial.print(F(" ├─ IC Chip: "));
         if (ic == 0x32U)
         {
-            Serial.println("PN532");
+            Serial.println(F("PN532"));
         }
         else
         {
-            Serial.println("Unknown");
+            Serial.println(F("Unknown"));
         }
 
-        Serial.print(" ├─ Firmware: ");
+        Serial.print(F(" ├─ Firmware: "));
         Serial.print(verMajor);
-        Serial.print(".");
+        Serial.print(F("."));
         Serial.println(verMinor);
 
-        Serial.print(" └─ Features: ");
+        Serial.print(F(" └─ Features: "));
         if ((flags & 0x01U) != 0U) {
-            Serial.print("MIFARE");
+            Serial.print(F("MIFARE"));
             first = false;
         }
         if ((flags & 0x02U) != 0U) {
             if (!first)
             {
-                Serial.print(" + ");
+                Serial.print(F(" + "));
             }
-            Serial.print("ISO-DEP");
+            Serial.print(F("ISO-DEP"));
             first = false;
         }
         if ((flags & 0x04U) != 0U) {
             if (!first)
             {
-                Serial.print(" + ");
+                Serial.print(F(" + "));
             }
-            Serial.print("FeliCa");
+            Serial.print(F("FeliCa"));
             first = false;
         }
         if (first) {
-            Serial.print("Unknown");
+            Serial.print(F("Unknown"));
         }
 
-        Serial.print(" (0x");
+        Serial.print(F(" (0x"));
         Serial.print(flags, HEX);
-        Serial.println(")");
+        Serial.println(F(")"));
 
         SAMConfig(); /* Configure the PN532 for normal operation */
         result = true;
     }
     else {
-        Serial.println("PN532 not found!");
+        Serial.println(F("PN532 not found!"));
         result = false;
     }
 
@@ -140,18 +140,18 @@ bool PN532Base::sendAPDU(const uint8_t* apdu, uint8_t apduLength,
     );
 
     if (success == false) {
-        Serial.println("APDU exchange failed!");
+        Serial.println(F("APDU exchange failed!"));
         return false;
     }
 
-    Serial.print("APDU response (");
+    Serial.print(F("APDU response ("));
     Serial.print(responseLength);
-    Serial.println(" bytes):");
+    Serial.println(F(" bytes):"));
 
     for (uint8_t i = 0; i < responseLength; i++) {
-        Serial.print("0x");
+        Serial.print(F("0x"));
         Serial.print(response[i], HEX);
-        Serial.print(" ");
+        Serial.print(F(" "));
     }
     Serial.println();
 
