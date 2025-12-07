@@ -103,66 +103,70 @@ $(document).ready(function(){initNavTree('CryptnoxWallet_8h_source.html',''); in
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;<a class="code" href="PN532Base_8h.html">PN532Base.h</a>&quot;</span></div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;Arduino.h&gt;</span></div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno"><a class="line" href="CryptnoxWallet_8h.html#a6bad2df700d914062abd5236a7f513b2">    7</a></span><span class="preprocessor">#define RESPONSE_LENGTH_IN_BYTES 64</span></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno"><a class="line" href="CryptnoxWallet_8h.html#af1f0cb989a33a574c24035af703f414a">    8</a></span><span class="preprocessor">#define RANDOM_BYTES 8</span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
-<div class="foldopen" id="foldopen00019" data-start="{" data-end="};">
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="classCryptnoxWallet.html">   19</a></span><span class="keyword">class </span><a class="code hl_class" href="classCryptnoxWallet.html">CryptnoxWallet</a> {</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="keyword">public</span>:</div>
-<div class="foldopen" id="foldopen00028" data-start="{" data-end="}">
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="classCryptnoxWallet.html#af35119491a036609cf251a9bf92ef154">   28</a></span>    <a class="code hl_function" href="classCryptnoxWallet.html#af35119491a036609cf251a9bf92ef154">CryptnoxWallet</a>(uint8_t irq, uint8_t reset, TwoWire *theWire = &amp;Wire)</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>        : driver(irq, reset, theWire) {}</div>
+<div class="foldopen" id="foldopen00016" data-start="{" data-end="};">
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="classCryptnoxWallet.html">   16</a></span><span class="keyword">class </span><a class="code hl_class" href="classCryptnoxWallet.html">CryptnoxWallet</a> {</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="keyword">public</span>:</div>
+<div class="foldopen" id="foldopen00025" data-start="{" data-end="}">
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="classCryptnoxWallet.html#af35119491a036609cf251a9bf92ef154">   25</a></span>    <a class="code hl_function" href="classCryptnoxWallet.html#af35119491a036609cf251a9bf92ef154">CryptnoxWallet</a>(uint8_t irq, uint8_t reset, TwoWire *theWire = &amp;Wire)</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>        : driver(irq, reset, theWire) {}</div>
 </div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
-<div class="foldopen" id="foldopen00037" data-start="{" data-end="}">
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="classCryptnoxWallet.html#aa2275c4d8e65abc791159ffc9c3b3dc9">   37</a></span>    <a class="code hl_function" href="classCryptnoxWallet.html#aa2275c4d8e65abc791159ffc9c3b3dc9">CryptnoxWallet</a>(uint8_t ss, SPIClass *theSPI = &amp;SPI)</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        : driver(ss, theSPI) {}</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="foldopen" id="foldopen00034" data-start="{" data-end="}">
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="classCryptnoxWallet.html#aa2275c4d8e65abc791159ffc9c3b3dc9">   34</a></span>    <a class="code hl_function" href="classCryptnoxWallet.html#aa2275c4d8e65abc791159ffc9c3b3dc9">CryptnoxWallet</a>(uint8_t ss, SPIClass *theSPI = &amp;SPI)</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>        : driver(ss, theSPI) {}</div>
 </div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
-<div class="foldopen" id="foldopen00048" data-start="{" data-end="}">
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="classCryptnoxWallet.html#a63b023ee36ddb72da641167a0f5b68c7">   48</a></span>    <a class="code hl_function" href="classCryptnoxWallet.html#a63b023ee36ddb72da641167a0f5b68c7">CryptnoxWallet</a>(uint8_t clk, uint8_t miso, uint8_t mosi, uint8_t ss)</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        : driver(clk, miso, mosi, ss) {}</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
+<div class="foldopen" id="foldopen00045" data-start="{" data-end="}">
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="classCryptnoxWallet.html#a63b023ee36ddb72da641167a0f5b68c7">   45</a></span>    <a class="code hl_function" href="classCryptnoxWallet.html#a63b023ee36ddb72da641167a0f5b68c7">CryptnoxWallet</a>(uint8_t clk, uint8_t miso, uint8_t mosi, uint8_t ss)</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        : driver(clk, miso, mosi, ss) {}</div>
 </div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
-<div class="foldopen" id="foldopen00057" data-start="{" data-end="}">
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno"><a class="line" href="classCryptnoxWallet.html#a19a5f98679f52f688c279cdb087b4f27">   57</a></span>    <a class="code hl_function" href="classCryptnoxWallet.html#a19a5f98679f52f688c279cdb087b4f27">CryptnoxWallet</a>(uint8_t reset, HardwareSerial *theSer)</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        : driver(reset, theSer) {}</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
+<div class="foldopen" id="foldopen00054" data-start="{" data-end="}">
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="classCryptnoxWallet.html#a19a5f98679f52f688c279cdb087b4f27">   54</a></span>    <a class="code hl_function" href="classCryptnoxWallet.html#a19a5f98679f52f688c279cdb087b4f27">CryptnoxWallet</a>(uint8_t reset, HardwareSerial *theSer)</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>        : driver(reset, theSer) {}</div>
 </div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
-<div class="foldopen" id="foldopen00067" data-start="{" data-end="}">
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno"><a class="line" href="classCryptnoxWallet.html#aa394fe6bc19d57c4a9d89a303f7e664d">   67</a></span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classCryptnoxWallet.html#aa394fe6bc19d57c4a9d89a303f7e664d">begin</a>() {</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        <span class="keywordflow">return</span> driver.<a class="code hl_function" href="classPN532Base.html#a5753c35c1d94b9724016a0394455e200">begin</a>();</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    }</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
+<div class="foldopen" id="foldopen00064" data-start="{" data-end="}">
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno"><a class="line" href="classCryptnoxWallet.html#aa394fe6bc19d57c4a9d89a303f7e664d">   64</a></span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classCryptnoxWallet.html#aa394fe6bc19d57c4a9d89a303f7e664d">begin</a>() {</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        <span class="keywordflow">return</span> driver.<a class="code hl_function" href="classPN532Base.html#a5753c35c1d94b9724016a0394455e200">begin</a>();</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    }</div>
 </div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classCryptnoxWallet.html#aa4ce170f582927c6e8e8d4e9dc4d412d">processCard</a>();</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classCryptnoxWallet.html#a67b951c652d29c940a16867e9a0d8c3d">selectApdu</a>();</div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> </div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classCryptnoxWallet.html#ad2ffb5c8f2c667283b9ad4153285c268">getCardCertificate</a>();</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span> </div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classCryptnoxWallet.html#a2e90b4ce65336ba84d371deab5144274">readUID</a>(uint8_t* uidBuffer, uint8_t &amp;uidLength);</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span> </div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classCryptnoxWallet.html#a9342637fe7352965de1aefb74f082a6c">printPN532FirmwareVersion</a>();</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classCryptnoxWallet.html#aa4ce170f582927c6e8e8d4e9dc4d412d">processCard</a>();</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classCryptnoxWallet.html#a67b951c652d29c940a16867e9a0d8c3d">selectApdu</a>();</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> </div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classCryptnoxWallet.html#ad2ffb5c8f2c667283b9ad4153285c268">getCardCertificate</a>();</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span> </div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classCryptnoxWallet.html#a2e90b4ce65336ba84d371deab5144274">readUID</a>(uint8_t* uidBuffer, uint8_t &amp;uidLength);</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span> </div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classCryptnoxWallet.html#a9342637fe7352965de1aefb74f082a6c">printPN532FirmwareVersion</a>();</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span> </div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span> </div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classCryptnoxWallet.html#a7aceec616afcc2eaf23890d2319b7d62">openSecureChannel</a>();</div>
 <div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span> </div>
 <div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span><span class="keyword">private</span>:</div>
 <div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>    <a class="code hl_class" href="classPN532Base.html">PN532Base</a> driver; </div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>};</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>    <span class="keyword">static</span> <span class="keywordtype">int</span> uECC_RNG(uint8_t *dest, <span class="keywordtype">unsigned</span> size);</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>    <span class="keywordtype">void</span> initECC_RNG();</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span> </div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>};</div>
 </div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span> </div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span><span class="preprocessor">#endif </span><span class="comment">// CRYPTNOXWALLET_H</span></div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span> </div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span><span class="preprocessor">#endif </span><span class="comment">// CRYPTNOXWALLET_H</span></div>
 <div class="ttc" id="aPN532Base_8h_html"><div class="ttname"><a href="PN532Base_8h.html">PN532Base.h</a></div></div>
-<div class="ttc" id="aclassCryptnoxWallet_html"><div class="ttname"><a href="classCryptnoxWallet.html">CryptnoxWallet</a></div><div class="ttdoc">High-level interface for interacting with a PN532-based wallet.</div><div class="ttdef"><b>Definition</b> CryptnoxWallet.h:19</div></div>
-<div class="ttc" id="aclassCryptnoxWallet_html_a19a5f98679f52f688c279cdb087b4f27"><div class="ttname"><a href="classCryptnoxWallet.html#a19a5f98679f52f688c279cdb087b4f27">CryptnoxWallet::CryptnoxWallet</a></div><div class="ttdeci">CryptnoxWallet(uint8_t reset, HardwareSerial *theSer)</div><div class="ttdoc">Construct a CryptnoxWallet over UART.</div><div class="ttdef"><b>Definition</b> CryptnoxWallet.h:57</div></div>
+<div class="ttc" id="aclassCryptnoxWallet_html"><div class="ttname"><a href="classCryptnoxWallet.html">CryptnoxWallet</a></div><div class="ttdoc">High-level interface for interacting with a PN532-based wallet.</div><div class="ttdef"><b>Definition</b> CryptnoxWallet.h:16</div></div>
+<div class="ttc" id="aclassCryptnoxWallet_html_a19a5f98679f52f688c279cdb087b4f27"><div class="ttname"><a href="classCryptnoxWallet.html#a19a5f98679f52f688c279cdb087b4f27">CryptnoxWallet::CryptnoxWallet</a></div><div class="ttdeci">CryptnoxWallet(uint8_t reset, HardwareSerial *theSer)</div><div class="ttdoc">Construct a CryptnoxWallet over UART.</div><div class="ttdef"><b>Definition</b> CryptnoxWallet.h:54</div></div>
 <div class="ttc" id="aclassCryptnoxWallet_html_a2e90b4ce65336ba84d371deab5144274"><div class="ttname"><a href="classCryptnoxWallet.html#a2e90b4ce65336ba84d371deab5144274">CryptnoxWallet::readUID</a></div><div class="ttdeci">bool readUID(uint8_t *uidBuffer, uint8_t &amp;uidLength)</div><div class="ttdoc">Read the UID of a detected card.</div><div class="ttdef"><b>Definition</b> CryptnoxWallet.cpp:44</div></div>
-<div class="ttc" id="aclassCryptnoxWallet_html_a63b023ee36ddb72da641167a0f5b68c7"><div class="ttname"><a href="classCryptnoxWallet.html#a63b023ee36ddb72da641167a0f5b68c7">CryptnoxWallet::CryptnoxWallet</a></div><div class="ttdeci">CryptnoxWallet(uint8_t clk, uint8_t miso, uint8_t mosi, uint8_t ss)</div><div class="ttdoc">Construct a CryptnoxWallet over software SPI.</div><div class="ttdef"><b>Definition</b> CryptnoxWallet.h:48</div></div>
-<div class="ttc" id="aclassCryptnoxWallet_html_a67b951c652d29c940a16867e9a0d8c3d"><div class="ttname"><a href="classCryptnoxWallet.html#a67b951c652d29c940a16867e9a0d8c3d">CryptnoxWallet::selectApdu</a></div><div class="ttdeci">bool selectApdu()</div><div class="ttdoc">Send the SELECT APDU to select the wallet application.</div><div class="ttdef"><b>Definition</b> CryptnoxWallet.cpp:65</div></div>
-<div class="ttc" id="aclassCryptnoxWallet_html_a9342637fe7352965de1aefb74f082a6c"><div class="ttname"><a href="classCryptnoxWallet.html#a9342637fe7352965de1aefb74f082a6c">CryptnoxWallet::printPN532FirmwareVersion</a></div><div class="ttdeci">bool printPN532FirmwareVersion()</div><div class="ttdoc">Print detailed firmware information of the PN532 module.</div><div class="ttdef"><b>Definition</b> CryptnoxWallet.cpp:56</div></div>
-<div class="ttc" id="aclassCryptnoxWallet_html_aa2275c4d8e65abc791159ffc9c3b3dc9"><div class="ttname"><a href="classCryptnoxWallet.html#aa2275c4d8e65abc791159ffc9c3b3dc9">CryptnoxWallet::CryptnoxWallet</a></div><div class="ttdeci">CryptnoxWallet(uint8_t ss, SPIClass *theSPI=&amp;SPI)</div><div class="ttdoc">Construct a CryptnoxWallet over hardware SPI.</div><div class="ttdef"><b>Definition</b> CryptnoxWallet.h:37</div></div>
-<div class="ttc" id="aclassCryptnoxWallet_html_aa394fe6bc19d57c4a9d89a303f7e664d"><div class="ttname"><a href="classCryptnoxWallet.html#aa394fe6bc19d57c4a9d89a303f7e664d">CryptnoxWallet::begin</a></div><div class="ttdeci">bool begin()</div><div class="ttdoc">Initialize the PN532 module via the underlying driver.</div><div class="ttdef"><b>Definition</b> CryptnoxWallet.h:67</div></div>
+<div class="ttc" id="aclassCryptnoxWallet_html_a63b023ee36ddb72da641167a0f5b68c7"><div class="ttname"><a href="classCryptnoxWallet.html#a63b023ee36ddb72da641167a0f5b68c7">CryptnoxWallet::CryptnoxWallet</a></div><div class="ttdeci">CryptnoxWallet(uint8_t clk, uint8_t miso, uint8_t mosi, uint8_t ss)</div><div class="ttdoc">Construct a CryptnoxWallet over software SPI.</div><div class="ttdef"><b>Definition</b> CryptnoxWallet.h:45</div></div>
+<div class="ttc" id="aclassCryptnoxWallet_html_a67b951c652d29c940a16867e9a0d8c3d"><div class="ttname"><a href="classCryptnoxWallet.html#a67b951c652d29c940a16867e9a0d8c3d">CryptnoxWallet::selectApdu</a></div><div class="ttdeci">bool selectApdu()</div><div class="ttdoc">Send the SELECT APDU to select the wallet application.</div><div class="ttdef"><b>Definition</b> CryptnoxWallet.cpp:54</div></div>
+<div class="ttc" id="aclassCryptnoxWallet_html_a7aceec616afcc2eaf23890d2319b7d62"><div class="ttname"><a href="classCryptnoxWallet.html#a7aceec616afcc2eaf23890d2319b7d62">CryptnoxWallet::openSecureChannel</a></div><div class="ttdeci">bool openSecureChannel()</div><div class="ttdef"><b>Definition</b> CryptnoxWallet.cpp:120</div></div>
+<div class="ttc" id="aclassCryptnoxWallet_html_a9342637fe7352965de1aefb74f082a6c"><div class="ttname"><a href="classCryptnoxWallet.html#a9342637fe7352965de1aefb74f082a6c">CryptnoxWallet::printPN532FirmwareVersion</a></div><div class="ttdeci">bool printPN532FirmwareVersion()</div><div class="ttdoc">Print detailed firmware information of the PN532 module.</div><div class="ttdef"><b>Definition</b> CryptnoxWallet.cpp:49</div></div>
+<div class="ttc" id="aclassCryptnoxWallet_html_aa2275c4d8e65abc791159ffc9c3b3dc9"><div class="ttname"><a href="classCryptnoxWallet.html#aa2275c4d8e65abc791159ffc9c3b3dc9">CryptnoxWallet::CryptnoxWallet</a></div><div class="ttdeci">CryptnoxWallet(uint8_t ss, SPIClass *theSPI=&amp;SPI)</div><div class="ttdoc">Construct a CryptnoxWallet over hardware SPI.</div><div class="ttdef"><b>Definition</b> CryptnoxWallet.h:34</div></div>
+<div class="ttc" id="aclassCryptnoxWallet_html_aa394fe6bc19d57c4a9d89a303f7e664d"><div class="ttname"><a href="classCryptnoxWallet.html#aa394fe6bc19d57c4a9d89a303f7e664d">CryptnoxWallet::begin</a></div><div class="ttdeci">bool begin()</div><div class="ttdoc">Initialize the PN532 module via the underlying driver.</div><div class="ttdef"><b>Definition</b> CryptnoxWallet.h:64</div></div>
 <div class="ttc" id="aclassCryptnoxWallet_html_aa4ce170f582927c6e8e8d4e9dc4d412d"><div class="ttname"><a href="classCryptnoxWallet.html#aa4ce170f582927c6e8e8d4e9dc4d412d">CryptnoxWallet::processCard</a></div><div class="ttdeci">bool processCard()</div><div class="ttdoc">Detect and process an NFC card for Cryptnox wallet operations.</div><div class="ttdef"><b>Definition</b> CryptnoxWallet.cpp:12</div></div>
-<div class="ttc" id="aclassCryptnoxWallet_html_ad2ffb5c8f2c667283b9ad4153285c268"><div class="ttname"><a href="classCryptnoxWallet.html#ad2ffb5c8f2c667283b9ad4153285c268">CryptnoxWallet::getCardCertificate</a></div><div class="ttdeci">bool getCardCertificate()</div><div class="ttdoc">Send the GET CARD CERTIFICATE APDU.</div><div class="ttdef"><b>Definition</b> CryptnoxWallet.cpp:95</div></div>
-<div class="ttc" id="aclassCryptnoxWallet_html_af35119491a036609cf251a9bf92ef154"><div class="ttname"><a href="classCryptnoxWallet.html#af35119491a036609cf251a9bf92ef154">CryptnoxWallet::CryptnoxWallet</a></div><div class="ttdeci">CryptnoxWallet(uint8_t irq, uint8_t reset, TwoWire *theWire=&amp;Wire)</div><div class="ttdoc">Construct a CryptnoxWallet over I2C.</div><div class="ttdef"><b>Definition</b> CryptnoxWallet.h:28</div></div>
+<div class="ttc" id="aclassCryptnoxWallet_html_ad2ffb5c8f2c667283b9ad4153285c268"><div class="ttname"><a href="classCryptnoxWallet.html#ad2ffb5c8f2c667283b9ad4153285c268">CryptnoxWallet::getCardCertificate</a></div><div class="ttdeci">bool getCardCertificate()</div><div class="ttdoc">Send the GET CARD CERTIFICATE APDU.</div><div class="ttdef"><b>Definition</b> CryptnoxWallet.cpp:79</div></div>
+<div class="ttc" id="aclassCryptnoxWallet_html_af35119491a036609cf251a9bf92ef154"><div class="ttname"><a href="classCryptnoxWallet.html#af35119491a036609cf251a9bf92ef154">CryptnoxWallet::CryptnoxWallet</a></div><div class="ttdeci">CryptnoxWallet(uint8_t irq, uint8_t reset, TwoWire *theWire=&amp;Wire)</div><div class="ttdoc">Construct a CryptnoxWallet over I2C.</div><div class="ttdef"><b>Definition</b> CryptnoxWallet.h:25</div></div>
 <div class="ttc" id="aclassPN532Base_html"><div class="ttname"><a href="classPN532Base.html">PN532Base</a></div><div class="ttdoc">Wrapper around Adafruit_PN532 providing extended utility functions for NFC card operations.</div><div class="ttdef"><b>Definition</b> PN532Base.h:14</div></div>
 <div class="ttc" id="aclassPN532Base_html_a5753c35c1d94b9724016a0394455e200"><div class="ttname"><a href="classPN532Base.html#a5753c35c1d94b9724016a0394455e200">PN532Base::begin</a></div><div class="ttdeci">bool begin(void)</div><div class="ttdoc">Initialize the PN532 module and configure it for normal operation.</div><div class="ttdef"><b>Definition</b> PN532Base.cpp:12</div></div>
 </div><!-- fragment --></div><!-- contents -->

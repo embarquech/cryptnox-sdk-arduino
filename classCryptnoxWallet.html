@@ -133,6 +133,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a9342637fe7352965de1aefb74f082a6c" id="r_a9342637fe7352965de1aefb74f082a6c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a9342637fe7352965de1aefb74f082a6c">printPN532FirmwareVersion</a> ()</td></tr>
 <tr class="memdesc:a9342637fe7352965de1aefb74f082a6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print detailed firmware information of the PN532 module.  <br /></td></tr>
 <tr class="separator:a9342637fe7352965de1aefb74f082a6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7aceec616afcc2eaf23890d2319b7d62" id="r_a7aceec616afcc2eaf23890d2319b7d62"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a7aceec616afcc2eaf23890d2319b7d62">openSecureChannel</a> ()</td></tr>
+<tr class="separator:a7aceec616afcc2eaf23890d2319b7d62"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>High-level interface for interacting with a PN532-based wallet. </p>
@@ -385,11 +387,25 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Send the GET CARD CERTIFICATE APDU. </p>
-<p>Sends the GET CARD CERTIFICATE APDU with random bytes for challenge.</p>
 <p>Generates RANDOM_BYTES random bytes for challenge and sends the APDU.</p>
-<dl class="section return"><dt>Returns</dt><dd>true if the APDU exchange succeeded, false otherwise.</dd></dl>
-<p>Generates RANDOM_BYTES random bytes, sends the APDU to the card, and prints the APDU and response for debugging.</p>
 <dl class="section return"><dt>Returns</dt><dd>true if the APDU exchange succeeded, false otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="a7aceec616afcc2eaf23890d2319b7d62" name="a7aceec616afcc2eaf23890d2319b7d62"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7aceec616afcc2eaf23890d2319b7d62">&#9670;&#160;</a></span>openSecureChannel()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool CryptnoxWallet::openSecureChannel </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -430,10 +446,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Detect and process an NFC card for Cryptnox wallet operations. </p>
-<p>Detects an ISO-DEP or passive NFC card and processes wallet APDUs.</p>
 <p>If an ISO-DEP card is detected, SELECT APDU is sent and certificate is retrieved. If only a passive card is detected, the UID is printed.</p>
-<dl class="section return"><dt>Returns</dt><dd>true if a card was successfully processed, false otherwise.</dd></dl>
-<p>If an ISO-DEP card is detected, the SELECT APDU is sent and the certificate is retrieved. If only a passive card is detected, the UID is printed.</p>
 <dl class="section return"><dt>Returns</dt><dd>true if a card was successfully processed, false otherwise. </dd></dl>
 
 </div>
@@ -465,7 +478,6 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Read the UID of a detected card. </p>
-<p>Reads the UID of a detected card via the underlying driver.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">uidBuffer</td><td>Pointer to buffer to store the UID. </td></tr>
@@ -473,15 +485,7 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true if the UID was read successfully, false otherwise.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">uidBuffer</td><td>Pointer to buffer to store the UID. </td></tr>
-    <tr><td class="paramname">uidLength</td><td>Reference to variable to store the UID length. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>true if a UID was read successfully, false otherwise. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>true if the UID was read successfully, false otherwise. </dd></dl>
 
 </div>
 </div>
@@ -501,7 +505,6 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Send the SELECT APDU to select the wallet application. </p>
-<p>Sends the SELECT APDU to select the wallet application.</p>
 <dl class="section return"><dt>Returns</dt><dd>true if the APDU exchange succeeded, false otherwise. </dd></dl>
 
 </div>
