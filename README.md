@@ -28,18 +28,18 @@ Get your cards here: [shop.cryptnox.com](https://shop.cryptnox.com)
 
 Before using `cryptnox-sdk-arduino`, you must install the following libraries via the **Arduino Library Manager**:
 
-- **AESLib**
-- **Adafruit_BusIO**
-- **Adafruit_PN532**
-- **Crypto**
-- **micro-ecc**
+- **AESLib** (v2.3.6)
+- **Adafruit_BusIO** (v1.17.4)
+- **Adafruit_PN532** (v1.34.0)
+- **Crypto** (v0.4.0)
+- **micro-ecc** (v1.0.0)
 
 ---
 
 ## Adafruit_PN532 customization
 
 > [!IMPORTANT]  
-> To ensure compatibility with this SDK, you **must manually modify** the following modification.
+> To ensure compatibility with this SDK, you **must** modify Adafruit_PN532 library.
 > 
 > Locate in `libraries/Adafruit_PN532/Adafruit_PN532.cpp`:
 > ```cpp
