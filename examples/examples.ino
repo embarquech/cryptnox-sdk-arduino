@@ -26,6 +26,9 @@ CryptnoxWallet wallet(PN532_SS, &SPI);
  */
 void setup() {
     Serial.begin(115200);
+    
+    /* Arduino R4: Wait 1s to get Serial ready */
+    delay(1000);
 
     /* Initialize SPI bus */
     SPI.begin();
