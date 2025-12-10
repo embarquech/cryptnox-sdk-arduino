@@ -134,8 +134,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a9342637fe7352965de1aefb74f082a6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print detailed firmware information of the PN532 module.  <br /></td></tr>
 <tr class="separator:a9342637fe7352965de1aefb74f082a6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7aceec616afcc2eaf23890d2319b7d62" id="r_a7aceec616afcc2eaf23890d2319b7d62"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a7aceec616afcc2eaf23890d2319b7d62">openSecureChannel</a> ()</td></tr>
+<tr class="memdesc:a7aceec616afcc2eaf23890d2319b7d62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Establish a secure channel with the card using ECC.  <br /></td></tr>
 <tr class="separator:a7aceec616afcc2eaf23890d2319b7d62"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0c4d176b4cfb46e8705db2eae661635d" id="r_a0c4d176b4cfb46e8705db2eae661635d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a0c4d176b4cfb46e8705db2eae661635d">printApdu</a> (const uint8_t *apdu, uint8_t length, const char *label=&quot;APDU to send&quot;)</td></tr>
+<tr class="memdesc:a0c4d176b4cfb46e8705db2eae661635d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print an APDU in hex format with optional label.  <br /></td></tr>
 <tr class="separator:a0c4d176b4cfb46e8705db2eae661635d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -409,6 +411,9 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Establish a secure channel with the card using ECC. </p>
+<dl class="section return"><dt>Returns</dt><dd>true if successful, false otherwise. </dd></dl>
+
 </div>
 </div>
 <a id="a0c4d176b4cfb46e8705db2eae661635d" name="a0c4d176b4cfb46e8705db2eae661635d"></a>
@@ -442,6 +447,25 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Print an APDU in hex format with optional label. </p>
+<p>Print an APDU in hexadecimal format to Serial for debugging.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">apdu</td><td>Pointer to the APDU bytes. </td></tr>
+    <tr><td class="paramname">length</td><td>Number of bytes in the APDU. </td></tr>
+    <tr><td class="paramname">label</td><td>Optional label for printing (default: "APDU to send").</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Each byte is printed as 0xXX. Lines wrap every 16 bytes for readability. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">apdu</td><td>Pointer to the APDU byte array. </td></tr>
+    <tr><td class="paramname">length</td><td>Number of bytes in the APDU. </td></tr>
+    <tr><td class="paramname">label</td><td>Optional label to prepend (default: "APDU to send"). </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
