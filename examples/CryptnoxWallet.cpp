@@ -1,5 +1,5 @@
-#include "CryptnoxWallet.h"
 #include <Arduino.h>
+#include "CryptnoxWallet.h"
 #include "uECC.h"
 
 #define RESPONSE_LENGTH_IN_BYTES 64
@@ -11,13 +11,16 @@
  */
 bool CryptnoxWallet::processCard() {
     bool ret = false;
+    /* Local response buffer */
+    uint8_t getCardCertificateResponse[RESPONSE_LENGTH_IN_BYTES];
+    uint8_t getCardCertificateResponseLength = sizeof(getCardCertificateResponse);
 
     /* Check for ISO-DEP capable target (APDU-capable card) */
     if (driver.inListPassiveTarget()) {
         /* Try selecting Cryptnox app */
         if (selectApdu()) {
             /* Get certificate and establish secure channel */
-            getCardCertificate();
+            getCardCertificate(getCardCertificateResponse, getCardCertificateResponseLength);
             openSecureChannel();
             ret = true;
         }
@@ -83,12 +86,17 @@ bool CryptnoxWallet::selectApdu() {
     return ret;
 }
 
-/* Request card certificate (with random nonce appended) */
-bool CryptnoxWallet::getCardCertificate() {
+/**
+ * @brief Send get card certificate APDU with random challenge.
+ * 
+ * Generates RANDOM_BYTES random bytes and appends them to the APDU.
+ * 
+ * @param response Buffer to store the card response.
+ * @param responseLength Input: buffer size, Output: actual response length.
+ * @return true if the APDU exchange succeeded, false otherwise.
+ */
+bool CryptnoxWallet::getCardCertificate(uint8_t* response, uint8_t &responseLength) {
     bool ret = false;
-    /* Local response buffer */
-    uint8_t response[RESPONSE_LENGTH_IN_BYTES];
-    uint8_t responseLength = sizeof(response);
 
     /* APDU template (last 8 bytes replaced by random nonce) */
     uint8_t getCardCertificateApdu[] = {

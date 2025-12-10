@@ -83,13 +83,15 @@ public:
     bool selectApdu();
 
     /**
-     * @brief Send the GET CARD CERTIFICATE APDU.
-     *
-     * Generates RANDOM_BYTES random bytes for challenge and sends the APDU.
-     *
+     * @brief Send get card certificate APDU with random challenge.
+     * 
+     * Generates RANDOM_BYTES random bytes and appends them to the APDU.
+     * 
+     * @param response Buffer to store the card response.
+     * @param responseLength Input: buffer size, Output: actual response length.
      * @return true if the APDU exchange succeeded, false otherwise.
      */
-    bool getCardCertificate();
+    bool getCardCertificate(uint8_t* response, uint8_t &len);
 
     /**
      * @brief Read the UID of a detected card.
