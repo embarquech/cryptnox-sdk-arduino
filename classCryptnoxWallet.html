@@ -142,6 +142,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a3ef950d7d2519b7f8a2d3bd4fccc15c8" id="r_a3ef950d7d2519b7f8a2d3bd4fccc15c8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a3ef950d7d2519b7f8a2d3bd4fccc15c8">derivePairingKeyFromPUK</a> (const uint8_t *puk, size_t pukLength, uint8_t *pairingKey)</td></tr>
 <tr class="memdesc:a3ef950d7d2519b7f8a2d3bd4fccc15c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Derive a pairing key by hashing the PUK 32 times (SHA256^32).  <br /></td></tr>
 <tr class="separator:a3ef950d7d2519b7f8a2d3bd4fccc15c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96067e53c3bb3d04e77a03f822676949" id="r_a96067e53c3bb3d04e77a03f822676949"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a96067e53c3bb3d04e77a03f822676949">checkStatusWord</a> (const uint8_t *response, uint8_t responseLength, uint8_t sw1Expected, uint8_t sw2Expected)</td></tr>
+<tr class="memdesc:a96067e53c3bb3d04e77a03f822676949"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks the status word (SW1/SW2) at the end of an APDU response.  <br /></td></tr>
+<tr class="separator:a96067e53c3bb3d04e77a03f822676949"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>High-level interface for interacting with a PN532-based wallet. </p>
@@ -375,6 +378,58 @@ Public Member Functions</h2></td></tr>
 <p>Initialize the PN532 module via the underlying driver. </p>
 <p>Performs SAM configuration and checks firmware version.</p>
 <dl class="section return"><dt>Returns</dt><dd>true if the module was successfully initialized, false otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="a96067e53c3bb3d04e77a03f822676949" name="a96067e53c3bb3d04e77a03f822676949"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a96067e53c3bb3d04e77a03f822676949">&#9670;&#160;</a></span>checkStatusWord()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool CryptnoxWallet::checkStatusWord </td>
+          <td>(</td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>response</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>responseLength</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>sw1Expected</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>sw2Expected</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Checks the status word (SW1/SW2) at the end of an APDU response. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">response</td><td>Pointer to the APDU response buffer. </td></tr>
+    <tr><td class="paramname">responseLength</td><td>Actual length of the response buffer. </td></tr>
+    <tr><td class="paramname">sw1Expected</td><td>Expected value for SW1 (e.g., 0x90). </td></tr>
+    <tr><td class="paramname">sw2Expected</td><td>Expected value for SW2 (e.g., 0x00). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if the last two bytes match SW1/SW2, false otherwise. </dd></dl>
 
 </div>
 </div>
