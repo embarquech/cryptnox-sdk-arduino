@@ -133,6 +133,7 @@ bool CryptnoxWallet::getCardCertificate(uint8_t* cardCertificate, uint8_t &cardC
     bool ret = false;
     uint8_t getCardCertificateResponse[RESPONSE_GETCARDCERTIFICATE_IN_BYTES];
     uint8_t getCardCertificateResponseLength = sizeof(getCardCertificateResponse);
+    uint8_t randomBytes[RANDOM_BYTES];
 
     if (cardCertificate != nullptr) {
         /* APDU template (last 8 bytes replaced by random nonce) */
@@ -145,11 +146,7 @@ bool CryptnoxWallet::getCardCertificate(uint8_t* cardCertificate, uint8_t &cardC
         };
 
         /* Generate 8 random bytes */
-        uint8_t randomBytes[RANDOM_BYTES];
-        randomSeed(analogRead(0));
-        for (int i = 0; i < RANDOM_BYTES; i++) {
-            randomBytes[i] = random(0, 256);
-        }
+        uECC_RNG(randomBytes, RANDOM_BYTES);
 
         /* Final APDU = header + 8 random bytes */
         uint8_t fullApdu[sizeof(getCardCertificateApdu) + RANDOM_BYTES];
@@ -199,7 +196,6 @@ bool CryptnoxWallet::openSecureChannel(uint8_t* salt, uint8_t* clientPublicKey, 
     bool ret = false;
 
     /* ECC setup and random generation */
-    randomSeed(analogRead(0));
     uECC_set_rng(&uECC_RNG);
 
     /* Generate keypair */
@@ -276,21 +272,46 @@ bool CryptnoxWallet::openSecureChannel(uint8_t* salt, uint8_t* clientPublicKey, 
  */
 bool CryptnoxWallet::mutuallyAuthenticate(uint8_t* salt, uint8_t* clientPublicKey, uint8_t* clientPrivateKey, const uECC_Curve_t* sessionCurve, uint8_t* cardEphemeralPubKey) {
     bool ret = false;
-
-    char pairingKey[] = COMMON_PAIRING_DATA;
-    uint8_t shared_secret_opc[32];
-    uint8_t peerPublicKey[64]; 
     uint8_t sharedSecret[32];
-    bool sharedSecretOk;
-    bool eccSharedSuccessOPC;
-    eccSharedSuccessOPC = uECC_shared_secret(cardEphemeralPubKey, clientPublicKey, shared_secret_opc, sessionCurve);
-    if (eccSharedSuccessOPC == true) {
-        Serial.println(F("eccSharedSuccessOPC generation ok!"));    
-        ret = true;
-    } 
-    else {
-        Serial.println(F("eccSharedSuccessOPC generation fail!"));
+    uint8_t concat[32 + sizeof(COMMON_PAIRING_DATA) - 1 + 32]; /* sharedSecret || pairingKey || salt */
+    uint8_t sha512Output[64];
+    uint8_t Kenc[32];
+    uint8_t Kmac[32];
+    size_t pairingKeyLen;
+    size_t concatLen;
+
+    /* Generate ECDH shared secret */
+    if (uECC_shared_secret(cardEphemeralPubKey, clientPrivateKey, sharedSecret, sessionCurve) == 0) {
+        Serial.println(F("ECDH shared secret generation failed!"));
+        return false;
     }
+    else {
+        Serial.println(F("ECDH shared secret generated."));
+
+        /* Concatenate sharedSecret, pairingKey, and salt */
+        pairingKeyLen = sizeof(COMMON_PAIRING_DATA) - 1U; /* exclude null terminator */
+        concatLen = 32U + pairingKeyLen + 32U;
+
+        memcpy(concat, sharedSecret, 32U); /* copy sharedSecret */
+        memcpy(concat + 32U, COMMON_PAIRING_DATA, pairingKeyLen); /* copy pairingKey */
+        memcpy(concat + 32U + pairingKeyLen, salt, 32U); /* copy salt */
+
+        /* Calculate SHA-512 over concatenated buffer */
+        SHA512 sha;
+        sha.update(concat, concatLen);
+        sha.finalize(sha512Output, sizeof(sha512Output));
+
+        Serial.println(F("SHA-512 calculated."));
+
+        /* Split SHA-512 output into Kenc and Kmac */
+        memcpy(Kenc, sha512Output, 32U);       /* first 32 bytes for encryption key */
+        memcpy(Kmac, sha512Output + 32U, 32U); /* last 32 bytes for MAC key */
+
+        Serial.println(F("Kenc and Kmac derived."));
+
+        ret = true;
+    }
+
     return ret;
 }
 
@@ -303,9 +324,19 @@ bool CryptnoxWallet::mutuallyAuthenticate(uint8_t* salt, uint8_t* clientPublicKe
  * @return 1 on success.
  */
 int CryptnoxWallet::uECC_RNG(uint8_t *dest, unsigned size) {
-    for (unsigned i = 0; i < size; i++) {
-        dest[i] = random(0, 256);
+    if (dest != nullptr) {
+        /* Seed the RNG once; ideally done once in setup() */
+        static bool seeded = false;
+        if (seeded == false) {
+            randomSeed(analogRead(0));
+            seeded = true;
+        }
+
+        for (uint16_t i = 0u; i < size; i++) {
+            dest[i] = (uint8_t)random(0, 256);
+        }
     }
+
     return 1;
 }
 
@@ -394,7 +425,8 @@ bool CryptnoxWallet::checkStatusWord(const uint8_t* response, uint8_t responseLe
 bool CryptnoxWallet::extractCardEphemeralKey(const uint8_t* cardCertificate, uint8_t* cardEphemeralPubKey, uint8_t* fullEphemeralPubKey65) {
     bool ret = false;
 
-    Serial.print(F("Full Ephemeral Public Key (65 bytes): "));
+    Serial.print(F("Full Ephemeral Public Key (65 bytes):"));
+    Serial.println();
     if ((cardCertificate == nullptr) || (cardEphemeralPubKey == nullptr)) {
         ret = false; // invalid input
     }
@@ -417,11 +449,15 @@ bool CryptnoxWallet::extractCardEphemeralKey(const uint8_t* cardCertificate, uin
             }
 
             /* Print hex to Serial for debugging */
+            Serial.print("0x");
             if (b < 0x10u) {
                 Serial.print('0');
             }
             Serial.print(b, HEX);
             Serial.print(' ');
+
+            /* Wrap line every 16 bytes */
+            if ((i + 1) % 16 == 0 && (i + 1) != fullKeyLength) Serial.println();
         }
 
         Serial.println();
