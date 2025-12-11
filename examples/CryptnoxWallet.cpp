@@ -259,68 +259,33 @@ void CryptnoxWallet::printApdu(const uint8_t* apdu, uint8_t length, const char* 
  * @param sw2Expected     Expected value for SW2 (e.g., 0x00).
  * @return true if the last two bytes match SW1/SW2, false otherwise.
  */
-bool CryptnoxWallet::checkStatusWord(const uint8_t* response,
-                                     uint8_t responseLength,
-                                     uint8_t sw1Expected,
-                                     uint8_t sw2Expected) 
-{
+bool CryptnoxWallet::checkStatusWord(const uint8_t* response, uint8_t responseLength, uint8_t sw1Expected, uint8_t sw2Expected) {
+    bool ret = false;
+
     if (response == NULL || responseLength < 2) {
         Serial.println(F("checkStatusWord: response too short."));
-        return false;
+        ret = false;
+    }
+    else {
+        uint8_t sw1 = response[responseLength - 2];
+        uint8_t sw2 = response[responseLength - 1];
+
+        Serial.print(F("Received SW1/SW2: "));
+        Serial.print(F("0x"));
+        if (sw1 < 16) Serial.print("0");
+        Serial.print(sw1, HEX);
+        Serial.print(F(" "));
+        Serial.print(F("0x"));
+        if (sw2 < 16) Serial.print("0");
+        Serial.println(sw2, HEX);
+
+        if ((sw1 == sw1Expected) && (sw2 == sw2Expected)) {
+            ret = true;
+        }
+        else {
+            ret = false;
+        }
     }
 
-    uint8_t sw1 = response[responseLength - 2];
-    uint8_t sw2 = response[responseLength - 1];
-
-    Serial.print(F("Received SW1/SW2: "));
-    Serial.print(F("0x"));
-    if (sw1 < 16) Serial.print("0");
-    Serial.print(sw1, HEX);
-    Serial.print(F(" "));
-    Serial.print(F("0x"));
-    if (sw2 < 16) Serial.print("0");
-    Serial.println(sw2, HEX);
-
-    return (sw1 == sw1Expected && sw2 == sw2Expected);
-}
-
-/**
- * @brief Derive a pairing key by hashing the PUK 32 times (SHA256^32).
- * 
- * When P1=0xFF, the pairing key is computed as SHA256 applied 32 times
- * to the PUK code. This allows the PUK to be used as a fallback pairing key.
- * 
- * @param puk Pointer to the PUK bytes.
- * @param pukLength Length of the PUK.
- * @param pairingKey Output buffer (must be at least 32 bytes).
- */
-
-/**
- * @brief Derive a pairing key by hashing the PUK 32 times (SHA256^32).
- * 
- * When P1=0xFF, the pairing key is computed as SHA256 applied 32 times
- * to the PUK code. This allows the PUK to be used as a fallback pairing key.
- * 
- * @param puk Pointer to the PUK bytes.
- * @param pukLength Length of the PUK.
- * @param pairingKey Output buffer (must be at least 32 bytes).
- */
-void CryptnoxWallet::derivePairingKeyFromPUK(const uint8_t* puk, size_t pukLength, uint8_t* pairingKey) {
-    SHA256 sha;
-    uint8_t hash[32];
-
-    /* Initial hash = SHA256(PUK) */
-    sha.reset();
-    sha.update(puk, pukLength);
-    sha.finalize(hash, 32);
-
-    /* Iteratively hash 31 more times (total 32) */
-    for (int i = 1; i < 32; i++) {
-        sha.reset();
-        sha.update(hash, 32);
-        sha.finalize(hash, 32);
-    }
-
-    /* Copy final hash to output */
-    memcpy(pairingKey, hash, 32);
+    return ret;
 }
