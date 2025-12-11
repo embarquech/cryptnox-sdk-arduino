@@ -83,15 +83,16 @@ public:
     bool selectApdu();
 
     /**
-     * @brief Send get card certificate APDU with random challenge.
-     * 
-     * Generates RANDOM_BYTES random bytes and appends them to the APDU.
-     * 
-     * @param response Buffer to store the card response.
-     * @param responseLength Input: buffer size, Output: actual response length.
-     * @return true if the APDU exchange succeeded, false otherwise.
-     */
-    bool getCardCertificate(uint8_t* response, uint8_t &len);
+    * @brief Retrieves the card's ephemeral public key with a GET CARD CERTIFICATE APDU.
+    *
+    * Sends a GET CARD CERTIFICATE command to the card, validates the response,
+    * and extracts the ephemeral EC P-256 public key used for ECDH in the secure channel.
+    *
+    * @param[out] cardEphemeralPubKey Buffer to store the 65-byte card ephemeral public key.
+    * @param[in,out] cardEphemeralPubKeyLength Input: size of the buffer; Output: actual key length (65 bytes).
+    * @return true if the APDU exchange and key extraction succeeded, false otherwise.
+    */
+    bool getCardCertificate(uint8_t* cardEphemeralPubKey, uint8_t &cardEphemeralPubKeyLength);
 
     /**
      * @brief Read the UID of a detected card.
@@ -113,10 +114,17 @@ public:
     bool printPN532FirmwareVersion();
 
     /**
-    * @brief Establish a secure channel with the card using ECC.
-    * @return true if successful, false otherwise.
+    * @brief Retrieves the initial 32-byte salt from the card for starting a secure channel.
+    *
+    * This function sends the APDU command to the card to get the session salt, which is
+    * required for the subsequent key derivation in the secure channel setup.
+    *
+    * @param[out] salt Pointer to a 32-byte buffer where the card-provided salt will be stored.
+    * @return true if the APDU exchange succeeded and the salt was retrieved, false otherwise.
     */
-    bool openSecureChannel();
+    bool openSecureChannel(uint8_t* salt);
+
+    bool mutuallyAuthenticate();
 
     /**
     * @brief Print an APDU in hex format with optional label.

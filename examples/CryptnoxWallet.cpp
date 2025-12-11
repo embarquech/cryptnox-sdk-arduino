@@ -6,7 +6,13 @@
 #define RESPONSE_GETCARDCERTIFICATE_IN_BYTES    148
 #define RESPONSE_SELECT_IN_BYTES                 26
 #define RESPONSE_OPENSECURECHANNEL_IN_BYTES      34
-#define RANDOM_BYTES 8
+#define RESPONSE_STATUS_WORDS_IN_BYTES            2
+
+#define OPENSECURECHANNEL_SALT_IN_BYTES            (RESPONSE_OPENSECURECHANNEL_IN_BYTES - RESPONSE_STATUS_WORDS_IN_BYTES)
+#define GETCARDCERTIFICATE_IN_BYTES                (RESPONSE_GETCARDCERTIFICATE_IN_BYTES - RESPONSE_STATUS_WORDS_IN_BYTES)
+
+#define RANDOM_BYTES                              8
+#define COMMON_PAIRING_DATA                        "Cryptnox Basic CommonPairingData"
 
 /* Main NFC handler:
  * - If ISO-DEP card detected → select app, request certificate, open secure channel.
@@ -15,16 +21,17 @@
 bool CryptnoxWallet::processCard() {
     bool ret = false;
     /* Local response buffer */
-    uint8_t getCardCertificateResponse[RESPONSE_GETCARDCERTIFICATE_IN_BYTES];
-    uint8_t getCardCertificateResponseLength = sizeof(getCardCertificateResponse);
+    uint8_t cardCertificate[GETCARDCERTIFICATE_IN_BYTES];
+    uint8_t openSecureChannelSalt[OPENSECURECHANNEL_SALT_IN_BYTES];
+    uint8_t cardCertificateLength = 0;
 
     /* Check for ISO-DEP capable target (APDU-capable card) */
     if (driver.inListPassiveTarget()) {
         /* Try selecting Cryptnox app */
         if (selectApdu()) {
             /* Get certificate and establish secure channel */
-            getCardCertificate(getCardCertificateResponse, getCardCertificateResponseLength);
-            openSecureChannel();
+            getCardCertificate(cardCertificate, cardCertificateLength);
+            openSecureChannel(openSecureChannelSalt);
             ret = true;
         }
     }
@@ -95,22 +102,32 @@ bool CryptnoxWallet::selectApdu() {
 }
 
 /**
- * @brief Send get card certificate APDU with random challenge.
+ * @brief Retrieves the card's ephemeral public key with a GET CARD CERTIFICATE APDU.
+ *
+ * Sends a GET CARD CERTIFICATE command to the card, validates the response,
+ * and extracts the ephemeral EC P-256 public key used for ECDH in the secure channel.
+ *
+ * | Field                      | Size                | Description                                                               |
+ * |----------------------------|---------------------|---------------------------------------------------------------------------|
+ * | 'C'                        | 1 byte              | Certificate format identifier                                             |
+ * | Nonce                      | 8 bytes (64 bits)   | Random challenge sent by the client                                       |
+ * | Session Public Key         | 65 bytes            | Card's ephemeral EC P-256 public key for ECDH                             |
+ * | ASN.1 DER Signature        | 70–72 bytes         | Signature over the previous fields using the card's permanent private key |
  * 
- * Generates RANDOM_BYTES random bytes and appends them to the APDU.
- * 
- * @param response Buffer to store the card response.
- * @param responseLength Input: buffer size, Output: actual response length.
- * @return true if the APDU exchange succeeded, false otherwise.
+ * @param[out] cardEphemeralPubKey Buffer to store the 65-byte card ephemeral public key.
+ * @param[in,out] cardEphemeralPubKeyLength Input: size of the buffer; Output: actual key length (65 bytes).
+ * @return true if the APDU exchange and key extraction succeeded, false otherwise.
  */
-bool CryptnoxWallet::getCardCertificate(uint8_t* response, uint8_t &responseLength) {
+bool CryptnoxWallet::getCardCertificate(uint8_t* cardEphemeralPubKey, uint8_t &cardEphemeralPubKeyLength) {
     bool ret = false;
+    uint8_t getCardCertificateResponse[RESPONSE_GETCARDCERTIFICATE_IN_BYTES];
+    uint8_t getCardCertificateResponseLength = sizeof(getCardCertificateResponse);
 
-    if (response!= NULL) {
+    if (cardEphemeralPubKey != NULL) {
         /* APDU template (last 8 bytes replaced by random nonce) */
         uint8_t getCardCertificateApdu[] = {
             0x80,  /* CLA */
-            0xF8,  /* INS : OPEN SECURE CHANNEL */
+            0xF8,  /* INS : GET CARD CERTIFICATE */
             0x00,  /* P1 */
             0x00,  /* P2 */
             0x08,  /* Lc : 8 bytes nonce */
@@ -134,9 +151,15 @@ bool CryptnoxWallet::getCardCertificate(uint8_t* response, uint8_t &responseLeng
         Serial.println(F("Sending getCardCertificate APDU..."));
 
         /* Send APDU */
-        if (driver.sendAPDU(fullApdu, sizeof(fullApdu), response, responseLength)) {
-            if (checkStatusWord(response,responseLength, 0x90, 0x00)) {
-                Serial.println(F("APDU exchange successful!"));
+        if (driver.sendAPDU(fullApdu, sizeof(fullApdu), getCardCertificateResponse, getCardCertificateResponseLength)) {
+            if (checkStatusWord(getCardCertificateResponse, getCardCertificateResponseLength, 0x90, 0x00)) {
+                /* Remove status word from answer */
+                cardEphemeralPubKeyLength = getCardCertificateResponseLength - RESPONSE_STATUS_WORDS_IN_BYTES;
+
+                /* Copy only the useful data (the salt) into the buffer */
+                memcpy(cardEphemeralPubKey, getCardCertificateResponse, cardEphemeralPubKeyLength);
+
+                Serial.println(F("APDU exchange successful!"));    
                 ret = true;
             } else {
                 Serial.println(F("APDU SW1/SW2 not expected. Error."));
@@ -149,13 +172,21 @@ bool CryptnoxWallet::getCardCertificate(uint8_t* response, uint8_t &responseLeng
     return ret;
 }
 
-/* Establish secure channel using ECC keypair exchange */
-bool CryptnoxWallet::openSecureChannel() {
+/**
+ * @brief Retrieves the initial 32-byte salt from the card for starting a secure channel.
+ *
+ * This function sends the APDU command to the card to get the session salt, which is
+ * required for the subsequent key derivation in the secure channel setup.
+ *
+ * @param[out] salt Pointer to a 32-byte buffer where the card-provided salt will be stored.
+ * @return true if the APDU exchange succeeded and the salt was retrieved, false otherwise.
+ */
+bool CryptnoxWallet::openSecureChannel(uint8_t* salt) {
     bool ret = false;
 
     /* Keys allocated on stack to save global RAM */
-    uint8_t privateKey[32];
-    uint8_t publicKey[64];
+    uint8_t clientPrivateKey[32];
+    uint8_t clientPublicKey[64];
 
     /* ECC setup and random generation */
     randomSeed(analogRead(0));
@@ -163,51 +194,67 @@ bool CryptnoxWallet::openSecureChannel() {
     const uECC_Curve_t *curve = uECC_secp256r1();
 
     /* Generate keypair */
-    bool eccSuccess = uECC_make_key(publicKey, privateKey, curve);
+    bool eccSuccess = uECC_make_key(clientPublicKey, clientPrivateKey, curve);
 
     /* Abort if ECC fails */
     if (!eccSuccess) {
         Serial.println(F("ECC key generation failed."));
-        return false;
     }
+    else {
+        /* APDU header for OPEN SECURE CHANNEL */
+        uint8_t opcApduHeader[] = {
+            0x80,  /* CLA */
+            0x10,  /* INS : OPEN SECURE CHANNEL */
+            0xFF,  /* P1 : pairing slot index */
+            0x00,  /* P2 */
+            0x41,  /* Lc : 1 format byte + 64 public key bytes */
+            0x04   /* ECC uncompressed public key format */
+        };
 
-    /* APDU header for OPEN SECURE CHANNEL */
-    uint8_t opcApduHeader[] = {
-        0x80,  /* CLA */
-        0x10,  /* INS : OPEN SECURE CHANNEL */
-        0xFF,  /* P1 : pairing slot index */
-        0x00,  /* P2 */
-        0x41,  /* Lc : 1 format byte + 64 public key bytes */
-        0x04   /* ECC uncompressed public key format */
-    };
+        /* Construct final APDU */
+        uint8_t fullApdu[sizeof(opcApduHeader) + sizeof(clientPublicKey)];
+        memcpy(fullApdu, opcApduHeader, sizeof(opcApduHeader));
+        memcpy(fullApdu + sizeof(opcApduHeader), clientPublicKey, sizeof(clientPublicKey));
 
-    /* Construct final APDU */
-    uint8_t fullApdu[sizeof(opcApduHeader) + sizeof(publicKey)];
-    memcpy(fullApdu, opcApduHeader, sizeof(opcApduHeader));
-    memcpy(fullApdu + sizeof(opcApduHeader), publicKey, sizeof(publicKey));
+        /* Response buffer */
+        uint8_t response[RESPONSE_OPENSECURECHANNEL_IN_BYTES];
+        uint8_t responseLength = sizeof(response);
 
-    /* Response buffer */
-    uint8_t response[RESPONSE_OPENSECURECHANNEL_IN_BYTES];
-    uint8_t responseLength = sizeof(response);
+        /* Print APDU */
+        printApdu(fullApdu, sizeof(fullApdu));
 
-    /* Print APDU */
-    printApdu(fullApdu, sizeof(fullApdu));
+        Serial.println(F("Sending OpenSecureChannel APDU..."));
 
-    Serial.println(F("Sending OpenSecureChannel APDU..."));
+        /* Send OPC request */
+        if (driver.sendAPDU(fullApdu, sizeof(fullApdu), response, responseLength)) {
+            if (checkStatusWord(response, responseLength, 0x90, 0x00)) {
+                if (responseLength == RESPONSE_OPENSECURECHANNEL_IN_BYTES) {
+                    /* Remove status word from answer */
+                    size_t dataLength = OPENSECURECHANNEL_SALT_IN_BYTES;
 
-    /* Send OPC request */
-    if (driver.sendAPDU(fullApdu, sizeof(fullApdu), response, responseLength)) {
-        if (checkStatusWord(response,responseLength, 0x90, 0x00)) {
-            Serial.println(F("APDU exchange successful!"));
-            ret = true;
+                    /* Copy only the useful data (the salt) into the buffer */
+                    memcpy(salt, response, dataLength);
+
+                    Serial.println(F("APDU exchange successful!"));    
+                    ret = true;
+                } 
+                else {
+                    Serial.println(F("Unexpected response size."));
+                }
+            } else {
+                Serial.println(F("APDU SW1/SW2 not expected. Error."));
+            }
         } else {
-            Serial.println(F("APDU SW1/SW2 not expected. Error."));
+            Serial.println(F("APDU exchange failed."));
         }
-    } else {
-        Serial.println(F("APDU exchange failed."));
     }
 
     return ret;
+}
+
+/* Establish secure channel using ECC keypair exchange */
+bool CryptnoxWallet::mutuallyAuthenticate() {
+    return true;
 }
 
 /**
