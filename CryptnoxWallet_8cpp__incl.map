@@ -1,14 +1,16 @@
 <map id="examples/CryptnoxWallet.cpp" name="examples/CryptnoxWallet.cpp">
-<area shape="rect" id="Node000001" title=" " alt="" coords="44,5,261,31"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="37,5,255,31"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="5,152,89,177"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="132,33,102,53,75,80,61,110,53,139,48,138,56,108,70,77,99,49,129,28"/>
-<area shape="rect" id="Node000003" href="$CryptnoxWallet_8h.html" title=" " alt="" coords="85,79,220,104"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="155,31,155,65,150,65,150,31"/>
-<area shape="rect" id="Node000006" title=" " alt="" coords="244,79,312,104"/>
-<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="174,28,247,69,244,74,171,33"/>
-<area shape="poly" id="edge5_Node000003_Node000002" title=" " alt="" coords="137,106,77,147,74,142,134,102"/>
-<area shape="rect" id="Node000004" href="$PN532Base_8h.html" title=" " alt="" coords="113,152,221,177"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="158,104,165,138,160,139,152,105"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="100,225,235,251"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="170,178,170,212,165,212,165,178"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="96,33,57,51,40,64,27,80,22,94,23,109,34,139,29,141,17,110,17,93,22,77,37,60,54,46,94,28"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="37,79,122,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="137,33,101,70,98,67,133,29"/>
+<area shape="rect" id="Node000004" href="$CryptnoxWallet_8h.html" title=" " alt="" coords="147,79,281,104"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="159,29,195,67,191,70,155,33"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="305,79,373,104"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="178,28,296,71,294,76,176,33"/>
+<area shape="poly" id="edge6_Node000004_Node000002" title=" " alt="" coords="188,106,88,149,86,144,186,102"/>
+<area shape="rect" id="Node000005" href="$PN532Base_8h.html" title=" " alt="" coords="160,152,268,177"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="217,104,217,138,211,138,211,104"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="147,225,281,251"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="217,178,217,212,211,212,211,178"/>
 </map>

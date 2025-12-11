@@ -90,31 +90,30 @@ $(document).ready(function(){initNavTree('CryptnoxWallet_8cpp.html',''); initRes
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle"><div class="title">CryptnoxWallet.cpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;Arduino.h&gt;</code><br />
+<code>#include &lt;SHA256.h&gt;</code><br />
 <code>#include &quot;<a class="el" href="CryptnoxWallet_8h_source.html">CryptnoxWallet.h</a>&quot;</code><br />
 <code>#include &quot;uECC.h&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for CryptnoxWallet.cpp:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="CryptnoxWallet_8cpp__incl.svg" width="318" height="256"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="CryptnoxWallet_8cpp__incl.svg" width="379" height="256"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a6bad2df700d914062abd5236a7f513b2" id="r_a6bad2df700d914062abd5236a7f513b2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="CryptnoxWallet_8cpp.html#a6bad2df700d914062abd5236a7f513b2">RESPONSE_LENGTH_IN_BYTES</a>&#160;&#160;&#160;64</td></tr>
-<tr class="separator:a6bad2df700d914062abd5236a7f513b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c25c23f5fe90be1ba5057da3671e497" id="r_a3c25c23f5fe90be1ba5057da3671e497"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="CryptnoxWallet_8cpp.html#a3c25c23f5fe90be1ba5057da3671e497">RESPONSE_GETCARDCERTIFICATE_IN_BYTES</a>&#160;&#160;&#160;148</td></tr>
+<tr class="separator:a3c25c23f5fe90be1ba5057da3671e497"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a460ee1a0f1a0e3420b7f4f621b35157b" id="r_a460ee1a0f1a0e3420b7f4f621b35157b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="CryptnoxWallet_8cpp.html#a460ee1a0f1a0e3420b7f4f621b35157b">RESPONSE_SELECT_IN_BYTES</a>&#160;&#160;&#160;26</td></tr>
+<tr class="separator:a460ee1a0f1a0e3420b7f4f621b35157b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7c5aeb3574b13dac470b43046615b00a" id="r_a7c5aeb3574b13dac470b43046615b00a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="CryptnoxWallet_8cpp.html#a7c5aeb3574b13dac470b43046615b00a">RESPONSE_OPENSECURECHANNEL_IN_BYTES</a>&#160;&#160;&#160;34</td></tr>
+<tr class="separator:a7c5aeb3574b13dac470b43046615b00a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af1f0cb989a33a574c24035af703f414a" id="r_af1f0cb989a33a574c24035af703f414a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="CryptnoxWallet_8cpp.html#af1f0cb989a33a574c24035af703f414a">RANDOM_BYTES</a>&#160;&#160;&#160;8</td></tr>
 <tr class="separator:af1f0cb989a33a574c24035af703f414a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:a770fec0a3f2b39945c7cee1b9e93ad31" id="r_a770fec0a3f2b39945c7cee1b9e93ad31"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="CryptnoxWallet_8cpp.html#a770fec0a3f2b39945c7cee1b9e93ad31">uaid</a> [200] = { 0xFF }</td></tr>
-<tr class="separator:a770fec0a3f2b39945c7cee1b9e93ad31"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="af1f0cb989a33a574c24035af703f414a" name="af1f0cb989a33a574c24035af703f414a"></a>
@@ -131,29 +130,42 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a6bad2df700d914062abd5236a7f513b2" name="a6bad2df700d914062abd5236a7f513b2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6bad2df700d914062abd5236a7f513b2">&#9670;&#160;</a></span>RESPONSE_LENGTH_IN_BYTES</h2>
+<a id="a3c25c23f5fe90be1ba5057da3671e497" name="a3c25c23f5fe90be1ba5057da3671e497"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3c25c23f5fe90be1ba5057da3671e497">&#9670;&#160;</a></span>RESPONSE_GETCARDCERTIFICATE_IN_BYTES</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define RESPONSE_LENGTH_IN_BYTES&#160;&#160;&#160;64</td>
+          <td class="memname">#define RESPONSE_GETCARDCERTIFICATE_IN_BYTES&#160;&#160;&#160;148</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<h2 class="groupheader">Variable Documentation</h2>
-<a id="a770fec0a3f2b39945c7cee1b9e93ad31" name="a770fec0a3f2b39945c7cee1b9e93ad31"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a770fec0a3f2b39945c7cee1b9e93ad31">&#9670;&#160;</a></span>uaid</h2>
+<a id="a7c5aeb3574b13dac470b43046615b00a" name="a7c5aeb3574b13dac470b43046615b00a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7c5aeb3574b13dac470b43046615b00a">&#9670;&#160;</a></span>RESPONSE_OPENSECURECHANNEL_IN_BYTES</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">volatile uint8_t uaid[200] = { 0xFF }</td>
+          <td class="memname">#define RESPONSE_OPENSECURECHANNEL_IN_BYTES&#160;&#160;&#160;34</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a460ee1a0f1a0e3420b7f4f621b35157b" name="a460ee1a0f1a0e3420b7f4f621b35157b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a460ee1a0f1a0e3420b7f4f621b35157b">&#9670;&#160;</a></span>RESPONSE_SELECT_IN_BYTES</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define RESPONSE_SELECT_IN_BYTES&#160;&#160;&#160;26</td>
         </tr>
       </table>
 </div><div class="memdoc">

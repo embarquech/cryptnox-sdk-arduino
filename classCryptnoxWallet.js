@@ -5,6 +5,7 @@ var classCryptnoxWallet =
     [ "CryptnoxWallet", "classCryptnoxWallet.html#a63b023ee36ddb72da641167a0f5b68c7", null ],
     [ "CryptnoxWallet", "classCryptnoxWallet.html#a19a5f98679f52f688c279cdb087b4f27", null ],
     [ "begin", "classCryptnoxWallet.html#aa394fe6bc19d57c4a9d89a303f7e664d", null ],
+    [ "derivePairingKeyFromPUK", "classCryptnoxWallet.html#a3ef950d7d2519b7f8a2d3bd4fccc15c8", null ],
     [ "getCardCertificate", "classCryptnoxWallet.html#aaf43c88ebaec9ff670c8b3ce01376c04", null ],
     [ "openSecureChannel", "classCryptnoxWallet.html#a7aceec616afcc2eaf23890d2319b7d62", null ],
     [ "printApdu", "classCryptnoxWallet.html#a0c4d176b4cfb46e8705db2eae661635d", null ],

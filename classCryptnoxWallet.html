@@ -139,6 +139,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a0c4d176b4cfb46e8705db2eae661635d" id="r_a0c4d176b4cfb46e8705db2eae661635d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a0c4d176b4cfb46e8705db2eae661635d">printApdu</a> (const uint8_t *apdu, uint8_t length, const char *label=&quot;APDU to send&quot;)</td></tr>
 <tr class="memdesc:a0c4d176b4cfb46e8705db2eae661635d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print an APDU in hex format with optional label.  <br /></td></tr>
 <tr class="separator:a0c4d176b4cfb46e8705db2eae661635d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ef950d7d2519b7f8a2d3bd4fccc15c8" id="r_a3ef950d7d2519b7f8a2d3bd4fccc15c8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a3ef950d7d2519b7f8a2d3bd4fccc15c8">derivePairingKeyFromPUK</a> (const uint8_t *puk, size_t pukLength, uint8_t *pairingKey)</td></tr>
+<tr class="memdesc:a3ef950d7d2519b7f8a2d3bd4fccc15c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Derive a pairing key by hashing the PUK 32 times (SHA256^32).  <br /></td></tr>
+<tr class="separator:a3ef950d7d2519b7f8a2d3bd4fccc15c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>High-level interface for interacting with a PN532-based wallet. </p>
@@ -372,6 +375,70 @@ Public Member Functions</h2></td></tr>
 <p>Initialize the PN532 module via the underlying driver. </p>
 <p>Performs SAM configuration and checks firmware version.</p>
 <dl class="section return"><dt>Returns</dt><dd>true if the module was successfully initialized, false otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="a3ef950d7d2519b7f8a2d3bd4fccc15c8" name="a3ef950d7d2519b7f8a2d3bd4fccc15c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3ef950d7d2519b7f8a2d3bd4fccc15c8">&#9670;&#160;</a></span>derivePairingKeyFromPUK()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CryptnoxWallet::derivePairingKeyFromPUK </td>
+          <td>(</td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>puk</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>pukLength</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>pairingKey</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Derive a pairing key by hashing the PUK 32 times (SHA256^32). </p>
+<p>When P1=0xFF, the pairing key is computed as SHA256 applied 32 times to the PUK code. This allows the PUK to be used as a fallback pairing key.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">puk</td><td>Pointer to the PUK bytes. </td></tr>
+    <tr><td class="paramname">pukLength</td><td>Length of the PUK. </td></tr>
+    <tr><td class="paramname">pairingKey</td><td>Output buffer (must be at least 32 bytes).</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>When P1=0xFF, the pairing key is computed as SHA256 applied 32 times to the PUK code. This allows the PUK to be used as a fallback pairing key.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">puk</td><td>Pointer to the PUK bytes. </td></tr>
+    <tr><td class="paramname">pukLength</td><td>Length of the PUK. </td></tr>
+    <tr><td class="paramname">pairingKey</td><td>Output buffer (must be at least 32 bytes).</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Derive a pairing key by hashing the PUK 32 times (SHA256^32).</p>
+<p>When P1=0xFF, the pairing key is computed as SHA256 applied 32 times to the PUK code. This allows the PUK to be used as a fallback pairing key.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">puk</td><td>Pointer to the PUK bytes. </td></tr>
+    <tr><td class="paramname">pukLength</td><td>Length of the PUK. </td></tr>
+    <tr><td class="paramname">pairingKey</td><td>Output buffer (must be at least 32 bytes). </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
