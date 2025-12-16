@@ -1,10 +1,13 @@
 var CryptnoxWallet_8cpp =
 [
+    [ "AES_BLOCK_SIZE", "CryptnoxWallet_8cpp.html#af19ab913a847ad1e91c5291215116de1", null ],
+    [ "AES_TEST_DATA_SIZE", "CryptnoxWallet_8cpp.html#a6b8f131d028b42f73709b0acd9e474f4", null ],
     [ "CARDEPHEMERALPUBKEY_SIZE", "CryptnoxWallet_8cpp.html#a25455ff28b2a52bf37f6edf188eac678", null ],
     [ "CLIENT_PRIVATE_KEY_SIZE", "CryptnoxWallet_8cpp.html#a3d9fc2cad2d26fab3fa80d87949055df", null ],
     [ "CLIENT_PUBLIC_KEY_SIZE", "CryptnoxWallet_8cpp.html#ad1ecaf611e7c30f8cad8d7e54e3407f4", null ],
     [ "COMMON_PAIRING_DATA", "CryptnoxWallet_8cpp.html#a627ec56cbcf257a02e062b8118206869", null ],
     [ "GETCARDCERTIFICATE_IN_BYTES", "CryptnoxWallet_8cpp.html#add6226a3b0f8dde62724922f00f0333a", null ],
+    [ "INPUT_BUFFER_LIMIT", "CryptnoxWallet_8cpp.html#a933c4568c34613285feefecab74ab596", null ],
     [ "OPENSECURECHANNEL_SALT_IN_BYTES", "CryptnoxWallet_8cpp.html#a5844cc731e45bc22143e8b5df0e5bbbe", null ],
     [ "RANDOM_BYTES", "CryptnoxWallet_8cpp.html#af1f0cb989a33a574c24035af703f414a", null ],
     [ "RESPONSE_GETCARDCERTIFICATE_IN_BYTES", "CryptnoxWallet_8cpp.html#a3c25c23f5fe90be1ba5057da3671e497", null ],

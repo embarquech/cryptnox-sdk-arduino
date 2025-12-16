@@ -96,11 +96,13 @@ $(document).ready(function(){initNavTree('CryptnoxWallet_8cpp.html',''); initRes
 <div class="contents">
 <div class="textblock"><code>#include &lt;Arduino.h&gt;</code><br />
 <code>#include &lt;SHA512.h&gt;</code><br />
+<code>#include &lt;AES.h&gt;</code><br />
 <code>#include &quot;<a class="el" href="CryptnoxWallet_8h_source.html">CryptnoxWallet.h</a>&quot;</code><br />
+<code>#include &quot;AESLib.h&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for CryptnoxWallet.cpp:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="CryptnoxWallet_8cpp__incl.svg" width="376" height="256"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="CryptnoxWallet_8cpp__incl.svg" width="458" height="256"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
@@ -127,8 +129,42 @@ Macros</h2></td></tr>
 <tr class="separator:ad1ecaf611e7c30f8cad8d7e54e3407f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a25455ff28b2a52bf37f6edf188eac678" id="r_a25455ff28b2a52bf37f6edf188eac678"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="CryptnoxWallet_8cpp.html#a25455ff28b2a52bf37f6edf188eac678">CARDEPHEMERALPUBKEY_SIZE</a>&#160;&#160;&#160;64</td></tr>
 <tr class="separator:a25455ff28b2a52bf37f6edf188eac678"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af19ab913a847ad1e91c5291215116de1" id="r_af19ab913a847ad1e91c5291215116de1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="CryptnoxWallet_8cpp.html#af19ab913a847ad1e91c5291215116de1">AES_BLOCK_SIZE</a>&#160;&#160;&#160;16</td></tr>
+<tr class="separator:af19ab913a847ad1e91c5291215116de1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b8f131d028b42f73709b0acd9e474f4" id="r_a6b8f131d028b42f73709b0acd9e474f4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="CryptnoxWallet_8cpp.html#a6b8f131d028b42f73709b0acd9e474f4">AES_TEST_DATA_SIZE</a>&#160;&#160;&#160;32</td></tr>
+<tr class="separator:a6b8f131d028b42f73709b0acd9e474f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a933c4568c34613285feefecab74ab596" id="r_a933c4568c34613285feefecab74ab596"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="CryptnoxWallet_8cpp.html#a933c4568c34613285feefecab74ab596">INPUT_BUFFER_LIMIT</a>&#160;&#160;&#160;(128 + 1)</td></tr>
+<tr class="separator:a933c4568c34613285feefecab74ab596"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="af19ab913a847ad1e91c5291215116de1" name="af19ab913a847ad1e91c5291215116de1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af19ab913a847ad1e91c5291215116de1">&#9670;&#160;</a></span>AES_BLOCK_SIZE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define AES_BLOCK_SIZE&#160;&#160;&#160;16</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6b8f131d028b42f73709b0acd9e474f4" name="a6b8f131d028b42f73709b0acd9e474f4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6b8f131d028b42f73709b0acd9e474f4">&#9670;&#160;</a></span>AES_TEST_DATA_SIZE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define AES_TEST_DATA_SIZE&#160;&#160;&#160;32</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a25455ff28b2a52bf37f6edf188eac678" name="a25455ff28b2a52bf37f6edf188eac678"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a25455ff28b2a52bf37f6edf188eac678">&#9670;&#160;</a></span>CARDEPHEMERALPUBKEY_SIZE</h2>
 
@@ -193,6 +229,20 @@ Macros</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">#define GETCARDCERTIFICATE_IN_BYTES&#160;&#160;&#160;(<a class="el" href="CryptnoxWallet_8cpp.html#a3c25c23f5fe90be1ba5057da3671e497">RESPONSE_GETCARDCERTIFICATE_IN_BYTES</a> - <a class="el" href="CryptnoxWallet_8cpp.html#a06c6580716e31d8e2dc06ce292908f0c">RESPONSE_STATUS_WORDS_IN_BYTES</a>)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a933c4568c34613285feefecab74ab596" name="a933c4568c34613285feefecab74ab596"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a933c4568c34613285feefecab74ab596">&#9670;&#160;</a></span>INPUT_BUFFER_LIMIT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define INPUT_BUFFER_LIMIT&#160;&#160;&#160;(128 + 1)</td>
         </tr>
       </table>
 </div><div class="memdoc">

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['begin_0',['begin',['../classCryptnoxWallet.html#aa394fe6bc19d57c4a9d89a303f7e664d',1,'CryptnoxWallet::begin()'],['../classPN532Base.html#a5753c35c1d94b9724016a0394455e200',1,'PN532Base::begin()']]]
+  ['aes_5fblock_5fsize_0',['AES_BLOCK_SIZE',['../CryptnoxWallet_8cpp.html#af19ab913a847ad1e91c5291215116de1',1,'CryptnoxWallet.cpp']]],
+  ['aes_5ftest_5fdata_5fsize_1',['AES_TEST_DATA_SIZE',['../CryptnoxWallet_8cpp.html#a6b8f131d028b42f73709b0acd9e474f4',1,'CryptnoxWallet.cpp']]]
 ];
