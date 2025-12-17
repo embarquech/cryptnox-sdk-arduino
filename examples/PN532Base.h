@@ -78,6 +78,13 @@ public:
      */
     bool sendAPDU(const uint8_t* apdu, uint8_t apduLength,
                   uint8_t* response, uint8_t &responseLength);
+
+    /**
+    * @brief Reset the PN532 reader to allow card detection again.
+    *
+    * Internally calls SAMConfig() to reinitialize the reader.
+    */
+    void resetReader(void);
 };
 
 #endif // PN532BASE_H

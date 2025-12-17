@@ -65,6 +65,9 @@ bool CryptnoxWallet::processCard() {
         }
     }
 
+    /* Reset reader in for the card to be detected by inListPassiveTarget again */
+    driver.resetReader();
+    
     return ret;
 }
 
@@ -286,7 +289,7 @@ bool CryptnoxWallet::mutuallyAuthenticate(uint8_t* salt, uint8_t* clientPublicKe
     AES aes;
     AESLib aesLib;
 
-    /* Generate ECDH shared secret */
+    /* Generate ECDH shared secret with card ephemeral public key and client private key */
     if (uECC_shared_secret(cardEphemeralPubKey, clientPrivateKey, sharedSecret, sessionCurve) == 0) {
         Serial.println(F("ECDH shared secret generation failed!"));
         return false;
@@ -315,13 +318,14 @@ bool CryptnoxWallet::mutuallyAuthenticate(uint8_t* salt, uint8_t* clientPublicKe
 
         Serial.println(F("Kenc and Kmac derived."));
 
-        Serial.println();
-        uint8_t iv_opc[N_BLOCK] = { 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01 };
-        uint8_t MAC_iv[N_BLOCK] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+        /* Set shared iv and mac_iv by client and smartcard */
+        uint8_t iv_opc[N_BLOCK];
+        memset(iv_opc, 0x01, N_BLOCK);
+        uint8_t mac_iv[N_BLOCK];
+        memset(mac_iv, 0x00, N_BLOCK);
+
         /* Padded data */
         uint8_t RNG_data[48] = { 0X7, 0X72, 0X30, 0XB, 0XDC, 0X82, 0X58, 0XEC, 0X32, 0X59, 0XCE, 0X38, 0X69, 0X24, 0X1B, 0X59, 0XFB, 0X10, 0X7B, 0X92, 0X10, 0XF2, 0X6E, 0X1F, 0X5E, 0X37, 0X66, 0X6A, 0XC6, 0X55, 0XB5, 0XEF, 0X80, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00 };
-        uint8_t AEStest[] = { 0X17, 0XAB, 0XF2, 0XAF, 0X5E, 0X19, 0X58, 0X7A, 0X8D, 0X4C, 0X9C, 0XC9, 0X22, 0X6F, 0X80, 0X77, 0X56, 0X2, 0X14, 0X7A, 0X8D, 0X58, 0X6C, 0X46, 0X5F, 0XE4, 0XDB, 0X2F, 0X14, 0XD7, 0X20, 0XBE };
-        uint8_t MACtest[] = { 0XFE, 0XF7, 0X97, 0X3B, 0XF0, 0X33, 0XAD, 0X12, 0XC1, 0X3E, 0X5B, 0X94, 0X59, 0X82, 0X26, 0X80, 0XC0, 0XD6, 0XCB, 0X2, 0X3C, 0X36, 0X4, 0XD5, 0X2D, 0X3E, 0X5A, 0XF6, 0X7B, 0XFF, 0X1E, 0XDF };
 
         unsigned char ciphertextOPC[2 * INPUT_BUFFER_LIMIT] = { 0 };
         uint8_t paddedLength = aesLib.get_cipher_length(sizeof(RNG_data));
@@ -356,7 +360,7 @@ bool CryptnoxWallet::mutuallyAuthenticate(uint8_t* salt, uint8_t* clientPublicKe
         Serial.println();
 
         unsigned char ciphertextMACLong[2 * INPUT_BUFFER_LIMIT] = { 0 };
-        uint16_t encryptedLengthMAC = aesLib.encrypt((byte*)MAC_data, MAC_data_length, ciphertextMACLong, macKey, sizeof(macKey), MAC_iv);
+        uint16_t encryptedLengthMAC = aesLib.encrypt((byte*)MAC_data, MAC_data_length, ciphertextMACLong, macKey, sizeof(macKey), mac_iv);
 
         uint8_t MACpaddedLength = aesLib.get_cipher_length(MAC_data_length);
         Serial.println("MACpaddedLength: ");

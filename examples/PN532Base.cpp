@@ -1,6 +1,8 @@
 #include "PN532Base.h"
 #include <Arduino.h>
 
+#define PN532BASE_READUID_TIMEOUT_MS    3000
+
 /**
  * @brief Initialize the PN532 module and configure it for normal operation.
  *
@@ -21,7 +23,7 @@ bool PN532Base::begin(void) {
  * @return true if a card was detected and UID read successfully, false otherwise.
  */
 bool PN532Base::readUID(uint8_t* uidBuffer, uint8_t &uidLength) {
-    return readPassiveTargetID(PN532_MIFARE_ISO14443A, uidBuffer, &uidLength);
+    return readPassiveTargetID(PN532_MIFARE_ISO14443A, uidBuffer, &uidLength, PN532BASE_READUID_TIMEOUT_MS);
 }
 
 /**
@@ -119,6 +121,15 @@ bool PN532Base::printFirmwareVersion(void)
     }
 
     return result;
+}
+
+/**
+ * @brief Reset the PN532 reader to allow card detection again.
+ *
+ * Internally calls SAMConfig() to reinitialize the reader.
+ */
+void PN532Base::resetReader(void) {
+    SAMConfig();
 }
 
 /**

@@ -35,6 +35,7 @@ void setup() {
 
     /* Initialize the PN532 module */
     if (wallet.begin()) {
+        wallet.printPN532FirmwareVersion();
         Serial.println(F("PN532 initialized"));
     } else {
         Serial.println(F("PN532 init failed"));
@@ -54,7 +55,7 @@ void setup() {
  * passive NFC/ISO-DEP card and processes wallet APDU commands.
  */
 void loop() {
-
+    
     /* Process any detected NFC card */
     (void)wallet.processCard();
 
