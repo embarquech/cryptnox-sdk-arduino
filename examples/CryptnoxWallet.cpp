@@ -22,6 +22,7 @@
 #define AES_BLOCK_SIZE                           16
 #define AES_TEST_DATA_SIZE                       32
 #define INPUT_BUFFER_LIMIT                         (128 + 1)
+#define MAX_MAC_DATA_LEN                           (AES_BLOCK_SIZE + 2 * INPUT_BUFFER_LIMIT)
 
 /* Main NFC handler:
  * - If ISO-DEP card detected → select app, request certificate, open secure channel.
@@ -281,11 +282,11 @@ bool CryptnoxWallet::openSecureChannel(uint8_t* salt, uint8_t* sessionPublicKey,
  */
 bool CryptnoxWallet::mutuallyAuthenticate(uint8_t* salt, uint8_t* clientPublicKey, uint8_t* clientPrivateKey, const uECC_Curve_t* sessionCurve, uint8_t* cardEphemeralPubKey) {
     bool ret = false;
-    uint8_t sharedSecret[32] = { 0 };
-    uint8_t concat[32 + sizeof(COMMON_PAIRING_DATA) - 1 + 32] = { 0 }; /* sharedSecret || pairingKey (- null character) || salt */
-    uint8_t sha512Output[64] = { 0 };
-    uint8_t aesKey[32] = { 0 };
-    uint8_t macKey[32] = { 0 };
+    uint8_t sharedSecret[32U] = { 0U };
+    uint8_t concat[32U + sizeof(COMMON_PAIRING_DATA) - 1U + 32U] = { 0U }; /* sharedSecret || pairingKey (- null character) || salt */
+    uint8_t sha512Output[64] = { 0U };
+    uint8_t aesKey[32U] = { 0U };
+    uint8_t macKey[32U] = { 0U };
     size_t pairingKeyLen;
     size_t concatLen;
     AESLib aesLib;
@@ -319,31 +320,36 @@ bool CryptnoxWallet::mutuallyAuthenticate(uint8_t* salt, uint8_t* clientPublicKe
         Serial.println(F("aesKey and macKey derived."));
 
         /* Set shared iv and mac_iv by client and smartcard */
-        uint8_t iv_opc[AES_BLOCK_SIZE] = { 0 };
+        uint8_t iv_opc[AES_BLOCK_SIZE] = { 0U };
         memset(iv_opc, 0x01, N_BLOCK);
-        uint8_t mac_iv[AES_BLOCK_SIZE] = { 0 };
+        uint8_t mac_iv[AES_BLOCK_SIZE] = { 0U };
         memset(mac_iv, 0x00, N_BLOCK);
 
         /* Generate 256-bit random number */
-        uint8_t RNG_data[32] = { 0 };
-        uECC_RNG(RNG_data, 32);
+        uint8_t RNG_data[32U] = { 0U };
+        if (!uECC_RNG(RNG_data, 32U)) {
+            Serial.println(F("Unable to generate 256-bit random number."));
+            return false;
+        }
 
         /* Cipher the randoom number with aesKey */
-        uint8_t ciphertextOPC[2 * INPUT_BUFFER_LIMIT] = { 0 };
+        uint8_t ciphertextOPC[2U * INPUT_BUFFER_LIMIT] = { 0U };
         /* Set padding ISO/IEC 9797-1 Method 2 algorithm */
         aesLib.set_paddingmode(paddingMode::Bit);
         uint16_t cipherLength = aesLib.encrypt((byte*)RNG_data, sizeof(RNG_data), ciphertextOPC, aesKey, sizeof(aesKey), iv_opc);
-        uint8_t ciphertextOPCpaddedLen = aesLib.get_cipher_length(sizeof(RNG_data));
 
         /* Compute MAC */
-        uint8_t opcApduHeader[5] = { 0x80, 0x11, 0x00, 0x00, ciphertextOPCpaddedLen + AES_BLOCK_SIZE };
+        uint8_t opcApduHeader[5U] = { 0x80, 0x11, 0x00, 0x00, cipherLength + AES_BLOCK_SIZE };
         /* MAC_apduHeader: zero padded opcApduHeader */
-        uint8_t MAC_apduHeader[AES_BLOCK_SIZE] = { 0 };
+        uint8_t MAC_apduHeader[AES_BLOCK_SIZE] = { 0U };
         memcpy(MAC_apduHeader, opcApduHeader, sizeof(opcApduHeader));
 
-        uint8_t MAC_data_length = sizeof(MAC_apduHeader) + cipherLength;
-        uint8_t MAC_data[4 * AES_BLOCK_SIZE] = { 0 }; /* sizeof(MAC_apduHeader) + cipherLength = 16 + 48 */
-        uint8_t ciphertextMACLong[2 * INPUT_BUFFER_LIMIT] = { 0 };
+        size_t  MAC_data_length = sizeof(MAC_apduHeader) + cipherLength;
+        uint8_t MAC_data[MAX_MAC_DATA_LEN] = { 0U }; /* sizeof(MAC_apduHeader) + cipherLength = 16 + 48 */
+        uint8_t ciphertextMACLong[2 * INPUT_BUFFER_LIMIT] = { 0U };
+        if (MAC_data_length > sizeof(MAC_data)) {
+            return false;
+        } 
 
         /* Data to cipher: MAC_data = MAC_apduHeader (zero padded opcApduHeader) || ciphertextOPC */
         memcpy(MAC_data, MAC_apduHeader, sizeof(MAC_apduHeader));
@@ -352,25 +358,26 @@ bool CryptnoxWallet::mutuallyAuthenticate(uint8_t* salt, uint8_t* clientPublicKe
         aesLib.set_paddingmode(paddingMode::Null);
         uint16_t encryptedLengthMAC = aesLib.encrypt((byte*)MAC_data, MAC_data_length, ciphertextMACLong, macKey, sizeof(macKey), mac_iv);
 
-        uint8_t MAC_value[AES_BLOCK_SIZE] = { 0 };
+        uint8_t MAC_value[AES_BLOCK_SIZE] = { 0U };
         /* In AES CBC-MAC last block is MAC */
         uint8_t macOffset = encryptedLengthMAC - AES_BLOCK_SIZE;
-        memcpy(MAC_value, ciphertextMACLong + macOffset, encryptedLengthMAC);
+        memcpy(MAC_value, ciphertextMACLong + macOffset, AES_BLOCK_SIZE);
 
         /* Forge APDU: OPC HEADER || MAC_value || ciphertextOPC
            REQUEST_MUTUALLYAUTHENTICATE_IN_BYTES : apduOpcLength = sizeof(opcApduHeader) + sizeof(MAC_value) + cipherLength */
-        uint8_t sendApduOpc[REQUEST_MUTUALLYAUTHENTICATE_IN_BYTES] = { 0 };
+        uint8_t sendApduOpc[REQUEST_MUTUALLYAUTHENTICATE_IN_BYTES] = { 0U };
         memcpy(sendApduOpc, opcApduHeader, sizeof(opcApduHeader));
         memcpy(sendApduOpc + sizeof(opcApduHeader), MAC_value, sizeof(MAC_value));
         memcpy(sendApduOpc + sizeof(opcApduHeader) + sizeof(MAC_value), ciphertextOPC, cipherLength);
 
         /* Send APDU */
-        uint8_t response[255] = { 0 };
+        uint8_t response[255U] = { 0U };
         uint8_t responseLength = sizeof(response);
         if (driver.sendAPDU(sendApduOpc, sizeof(sendApduOpc), response, responseLength)) {
             if (checkStatusWord(response, responseLength, 0x90, 0x00)) {
                 if (responseLength == RESPONSE_MUTUALLYAUTHENTICATE_IN_BYTES) {
                     Serial.println("OpenSecureChannel success.");
+                    ret = true; 
                 } 
                 else {
                     Serial.println(F("Unexpected response size."));
@@ -382,10 +389,18 @@ bool CryptnoxWallet::mutuallyAuthenticate(uint8_t* salt, uint8_t* clientPublicKe
             Serial.println(F("APDU exchange failed."));
         }
 
-        /* Wait to see result */
-        delay(5000);
+        /* Secure cleanup */
+        memset(sharedSecret, 0U, sizeof(sharedSecret));
+        memset(aesKey, 0U, sizeof(aesKey));
+        memset(macKey, 0U, sizeof(macKey));
+        memset(sha512Output, 0U, sizeof(sha512Output));
+        memset(concat, 0U, sizeof(concat));
+        memset(RNG_data, 0U, sizeof(RNG_data));
+        memset(ciphertextOPC, 0U, sizeof(ciphertextOPC));
+        memset(MAC_data, 0U, sizeof(MAC_data));
 
-        ret = true; 
+        /* Wait to see result */
+        delay(5000U);
     }
 
     return ret;
