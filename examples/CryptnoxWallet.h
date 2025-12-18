@@ -157,9 +157,27 @@ public:
     */
     bool checkStatusWord(const uint8_t* response, uint8_t responseLength, uint8_t sw1Expected, uint8_t sw2Expected);
 
+    /**
+    * @brief Sends a secured GET CARD INFO APDU.
+    */
+    void getCardInfo();
+
+    /**
+    * @brief Encrypts data and sends a secured APDU using AES-CBC and MAC.
+    *
+    * @param[in] apdu        APDU header (CLA, INS, P1, P2).
+    * @param[in] apduLength Length of the APDU header.
+    * @param[in] data        Plaintext data to encrypt and send.
+    * @param[in] dataLength  Length of the plaintext data.
+    */
+    void aes_cbc_encrypt(const uint8_t apdu[], uint16_t apduLength, const uint8_t data[], uint16_t dataLength);
+
 private:
     PN532Base driver; /**< PN532 driver for low-level NFC operations */
-    
+    uint8_t _aesKey[32U]; /**< AES-256 session encryption key (Kenc) */
+    uint8_t _macKey[32U]; /**< AES-256 session MAC key (Kmac) */
+    uint8_t _iv[16U];     /**< Current AES-CBC IV (rolling IV for secure messaging) */
+
     /**
      * @brief RNG callback for micro-ecc library.
      * @param dest Pointer to buffer to fill with random bytes.
