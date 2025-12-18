@@ -286,7 +286,6 @@ bool CryptnoxWallet::mutuallyAuthenticate(uint8_t* salt, uint8_t* clientPublicKe
     uint8_t macKey[32];
     size_t pairingKeyLen;
     size_t concatLen;
-    AES aes;
     AESLib aesLib;
 
     /* Generate ECDH shared secret with card ephemeral public key and client private key */
@@ -325,8 +324,10 @@ bool CryptnoxWallet::mutuallyAuthenticate(uint8_t* salt, uint8_t* clientPublicKe
         memset(mac_iv, 0x00, N_BLOCK);
 
         /* Padded data */
-        uint8_t RNG_data[48] = { 0X7, 0X72, 0X30, 0XB, 0XDC, 0X82, 0X58, 0XEC, 0X32, 0X59, 0XCE, 0X38, 0X69, 0X24, 0X1B, 0X59, 0XFB, 0X10, 0X7B, 0X92, 0X10, 0XF2, 0X6E, 0X1F, 0X5E, 0X37, 0X66, 0X6A, 0XC6, 0X55, 0XB5, 0XEF, 0X80, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00 };
+        uint8_t RNG_data[32] = { 0X7, 0X72, 0X30, 0XB, 0XDC, 0X82, 0X58, 0XEC, 0X32, 0X59, 0XCE, 0X38, 0X69, 0X24, 0X1B, 0X59, 0XFB, 0X10, 0X7B, 0X92, 0X10, 0XF2, 0X6E, 0X1F, 0X5E, 0X37, 0X66, 0X6A, 0XC6, 0X55, 0XB5, 0XEF};
 
+        /* Set padding ISO/IEC 9797-1 Method 2 algorithm */
+        aesLib.set_paddingmode(paddingMode::Bit);
         unsigned char ciphertextOPC[2 * INPUT_BUFFER_LIMIT] = { 0 };
         uint8_t paddedLength = aesLib.get_cipher_length(sizeof(RNG_data));
         uint16_t cipherLength;
@@ -360,6 +361,8 @@ bool CryptnoxWallet::mutuallyAuthenticate(uint8_t* salt, uint8_t* clientPublicKe
         Serial.println();
 
         unsigned char ciphertextMACLong[2 * INPUT_BUFFER_LIMIT] = { 0 };
+        /* Set no padding */
+        aesLib.set_paddingmode(paddingMode::Null);
         uint16_t encryptedLengthMAC = aesLib.encrypt((byte*)MAC_data, MAC_data_length, ciphertextMACLong, macKey, sizeof(macKey), mac_iv);
 
         uint8_t MACpaddedLength = aesLib.get_cipher_length(MAC_data_length);
