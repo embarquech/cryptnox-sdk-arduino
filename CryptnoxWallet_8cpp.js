@@ -16,5 +16,6 @@ var CryptnoxWallet_8cpp =
     [ "RESPONSE_MUTUALLYAUTHENTICATE_IN_BYTES", "CryptnoxWallet_8cpp.html#aa1b05565a70ac025eb457db8de5a5729", null ],
     [ "RESPONSE_OPENSECURECHANNEL_IN_BYTES", "CryptnoxWallet_8cpp.html#a7c5aeb3574b13dac470b43046615b00a", null ],
     [ "RESPONSE_SELECT_IN_BYTES", "CryptnoxWallet_8cpp.html#a460ee1a0f1a0e3420b7f4f621b35157b", null ],
-    [ "RESPONSE_STATUS_WORDS_IN_BYTES", "CryptnoxWallet_8cpp.html#a06c6580716e31d8e2dc06ce292908f0c", null ]
+    [ "RESPONSE_STATUS_WORDS_IN_BYTES", "CryptnoxWallet_8cpp.html#a06c6580716e31d8e2dc06ce292908f0c", null ],
+    [ "aesLib", "CryptnoxWallet_8cpp.html#a11928a5b41d2d27f52eb65dcb415c15f", null ]
 ];

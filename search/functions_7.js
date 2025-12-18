@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['readuid_0',['readuid',['../classCryptnoxWallet.html#a2e90b4ce65336ba84d371deab5144274',1,'CryptnoxWallet::readUID()'],['../classPN532Base.html#a72201197b549a93016234387f255cf7b',1,'PN532Base::readUID(uint8_t *uidBuffer, uint8_t &amp;uidLength)']]],
-  ['resetreader_1',['resetReader',['../classPN532Base.html#a2da00ab197b3c3f665f124c2f41db730',1,'PN532Base']]]
+  ['printapdu_0',['printApdu',['../classCryptnoxWallet.html#a0c4d176b4cfb46e8705db2eae661635d',1,'CryptnoxWallet']]],
+  ['printfirmwareversion_1',['printFirmwareVersion',['../classPN532Base.html#a4c49b74ef88c3a2ab2c7a1db582c20ee',1,'PN532Base']]],
+  ['printpn532firmwareversion_2',['printPN532FirmwareVersion',['../classCryptnoxWallet.html#a9342637fe7352965de1aefb74f082a6c',1,'CryptnoxWallet']]],
+  ['processcard_3',['processCard',['../classCryptnoxWallet.html#aa4ce170f582927c6e8e8d4e9dc4d412d',1,'CryptnoxWallet']]]
 ];

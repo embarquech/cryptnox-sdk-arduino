@@ -148,6 +148,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a96067e53c3bb3d04e77a03f822676949" id="r_a96067e53c3bb3d04e77a03f822676949"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a96067e53c3bb3d04e77a03f822676949">checkStatusWord</a> (const uint8_t *response, uint8_t responseLength, uint8_t sw1Expected, uint8_t sw2Expected)</td></tr>
 <tr class="memdesc:a96067e53c3bb3d04e77a03f822676949"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks the status word (SW1/SW2) at the end of an APDU response.  <br /></td></tr>
 <tr class="separator:a96067e53c3bb3d04e77a03f822676949"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0a6bc5d989fd875f19714cc9196508e" id="r_af0a6bc5d989fd875f19714cc9196508e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#af0a6bc5d989fd875f19714cc9196508e">getCardInfo</a> ()</td></tr>
+<tr class="memdesc:af0a6bc5d989fd875f19714cc9196508e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a secured GET CARD INFO APDU.  <br /></td></tr>
+<tr class="separator:af0a6bc5d989fd875f19714cc9196508e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9eb8af7880a0c78bf50197c8553edec2" id="r_a9eb8af7880a0c78bf50197c8553edec2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a9eb8af7880a0c78bf50197c8553edec2">aes_cbc_encrypt</a> (const uint8_t apdu[], uint16_t apduLength, const uint8_t data[], uint16_t dataLength)</td></tr>
+<tr class="memdesc:a9eb8af7880a0c78bf50197c8553edec2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypts data and sends a secured APDU using AES-CBC and MAC.  <br /></td></tr>
+<tr class="separator:a9eb8af7880a0c78bf50197c8553edec2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>High-level interface for interacting with a PN532-based wallet. </p>
@@ -355,6 +361,74 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a9eb8af7880a0c78bf50197c8553edec2" name="a9eb8af7880a0c78bf50197c8553edec2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9eb8af7880a0c78bf50197c8553edec2">&#9670;&#160;</a></span>aes_cbc_encrypt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CryptnoxWallet::aes_cbc_encrypt </td>
+          <td>(</td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>apdu</em>[], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>apduLength</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>data</em>[], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>dataLength</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Encrypts data and sends a secured APDU using AES-CBC and MAC. </p>
+<p>Encrypts data using AES-CBC, computes a MAC, and sends the APDU to the smartcard.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">apdu</td><td>APDU header (CLA, INS, P1, P2). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">apduLength</td><td>Length of the APDU header. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>Plaintext data to encrypt and send. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dataLength</td><td>Length of the plaintext data.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>This function performs AES-CBC encryption of the given data with padding (ISO/IEC 9797-1 Method 2), computes a MAC over the APDU header and encrypted payload, and constructs the final APDU to send. The response IV is updated from the last APDU response.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">apdu</td><td>Pointer to the APDU header bytes. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">apduLength</td><td>Length of the APDU header. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>Pointer to the plaintext data to encrypt. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dataLength</td><td>Length of the plaintext data.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd><ul>
+<li>AES CBC encryption is performed with <code>_aesKey</code> and current <code>_iv</code>.</li>
+<li>MAC is computed with <code>_macKey</code> using AES-CBC with no padding.</li>
+<li><code>_iv</code> is updated after successful APDU response for rolling IV. </li>
+</ul>
+</dd></dl>
+
+</div>
+</div>
 <a id="aa394fe6bc19d57c4a9d89a303f7e664d" name="aa394fe6bc19d57c4a9d89a303f7e664d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa394fe6bc19d57c4a9d89a303f7e664d">&#9670;&#160;</a></span>begin()</h2>
 
@@ -557,6 +631,27 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if the APDU exchange and key extraction succeeded, false otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="af0a6bc5d989fd875f19714cc9196508e" name="af0a6bc5d989fd875f19714cc9196508e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af0a6bc5d989fd875f19714cc9196508e">&#9670;&#160;</a></span>getCardInfo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CryptnoxWallet::getCardInfo </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sends a secured GET CARD INFO APDU. </p>
+<p>Requests information from the smartcard.</p>
+<p>This function constructs the APDU for the "Get Card Info" command and encrypts it using <code>aes_cbc_encrypt</code>. The response updates the rolling IV internally. </p>
 
 </div>
 </div>
