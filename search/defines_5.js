@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['pn532base_5freaduid_5ftimeout_5fms_0',['PN532BASE_READUID_TIMEOUT_MS',['../PN532Base_8cpp.html#a1f2491195ca521ea423a1e8f962c3ced',1,'PN532Base.cpp']]]
+  ['opensecurechannel_5fsalt_5fin_5fbytes_0',['OPENSECURECHANNEL_SALT_IN_BYTES',['../CryptnoxWallet_8cpp.html#a5844cc731e45bc22143e8b5df0e5bbbe',1,'CryptnoxWallet.cpp']]]
 ];

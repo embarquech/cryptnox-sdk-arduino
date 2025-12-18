@@ -8,6 +8,7 @@ var CryptnoxWallet_8cpp =
     [ "COMMON_PAIRING_DATA", "CryptnoxWallet_8cpp.html#a627ec56cbcf257a02e062b8118206869", null ],
     [ "GETCARDCERTIFICATE_IN_BYTES", "CryptnoxWallet_8cpp.html#add6226a3b0f8dde62724922f00f0333a", null ],
     [ "INPUT_BUFFER_LIMIT", "CryptnoxWallet_8cpp.html#a933c4568c34613285feefecab74ab596", null ],
+    [ "MAX_MAC_DATA_LEN", "CryptnoxWallet_8cpp.html#a8ed6716688e9a986a27784d937607b98", null ],
     [ "OPENSECURECHANNEL_SALT_IN_BYTES", "CryptnoxWallet_8cpp.html#a5844cc731e45bc22143e8b5df0e5bbbe", null ],
     [ "RANDOM_BYTES", "CryptnoxWallet_8cpp.html#af1f0cb989a33a574c24035af703f414a", null ],
     [ "REQUEST_MUTUALLYAUTHENTICATE_IN_BYTES", "CryptnoxWallet_8cpp.html#a598754e58bdf174bc9f67d37e3723afe", null ],
