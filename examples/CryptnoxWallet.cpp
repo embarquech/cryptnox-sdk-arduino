@@ -284,7 +284,7 @@ bool CryptnoxWallet::mutuallyAuthenticate(uint8_t* salt, uint8_t* clientPublicKe
     bool ret = false;
     uint8_t sharedSecret[32U] = { 0U };
     uint8_t concat[32U + sizeof(COMMON_PAIRING_DATA) - 1U + 32U] = { 0U }; /* sharedSecret || pairingKey (- null character) || salt */
-    uint8_t sha512Output[64] = { 0U };
+    uint8_t sha512Output[64U] = { 0U };
     uint8_t aesKey[32U] = { 0U };
     uint8_t macKey[32U] = { 0U };
     size_t pairingKeyLen;
@@ -351,7 +351,7 @@ bool CryptnoxWallet::mutuallyAuthenticate(uint8_t* salt, uint8_t* clientPublicKe
             return false;
         } 
 
-        /* Data to cipher: MAC_data = MAC_apduHeader (zero padded opcApduHeader) || ciphertextOPC */
+        /* Data to cipher: MAC_data = MAC_apduHeader (zero padded opcApduHeader to equal AES_BLOCK_SIZE) || ciphertextOPC */
         memcpy(MAC_data, MAC_apduHeader, sizeof(MAC_apduHeader));
         memcpy(MAC_data + sizeof(MAC_apduHeader), ciphertextOPC, cipherLength);
         /* Set no  padding */
