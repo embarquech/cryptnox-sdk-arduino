@@ -371,9 +371,12 @@ bool CryptnoxWallet::mutuallyAuthenticate(uint8_t* salt, uint8_t* clientPublicKe
         /* Forge APDU: OPC HEADER || MAC_value || ciphertextOPC
            REQUEST_MUTUALLYAUTHENTICATE_IN_BYTES : apduOpcLength = sizeof(opcApduHeader) + sizeof(MAC_value) + cipherLength */
         uint8_t sendApduOpc[REQUEST_MUTUALLYAUTHENTICATE_IN_BYTES] = { 0U };
-        memcpy(sendApduOpc, opcApduHeader, sizeof(opcApduHeader));
-        memcpy(sendApduOpc + sizeof(opcApduHeader), MAC_value, sizeof(MAC_value));
-        memcpy(sendApduOpc + sizeof(opcApduHeader) + sizeof(MAC_value), ciphertextOPC, cipherLength);
+        uint16_t offset = 0;
+        memcpy(sendApduOpc + offset, opcApduHeader, sizeof(opcApduHeader));
+        offset += sizeof(opcApduHeader);
+        memcpy(sendApduOpc + offset, MAC_value, sizeof(MAC_value));
+        offset += sizeof(MAC_value);
+        memcpy(sendApduOpc + offset, ciphertextOPC, cipherLength);
 
         /* Send APDU */
         uint8_t response[255U] = { 0U };
@@ -590,50 +593,48 @@ void CryptnoxWallet::getCardInfo() {
  * - `_iv` is updated after successful APDU response for rolling IV.
  */
 void CryptnoxWallet::aes_cbc_encrypt(const uint8_t apdu[], uint16_t apduLength, const uint8_t data[], uint16_t dataLength) {
-    unsigned char encryptedData[2 * INPUT_BUFFER_LIMIT] = { 0 };
+    uint8_t encryptedData[2 * INPUT_BUFFER_LIMIT] = { 0U };
 
     /* Set padding ISO/IEC 9797-1 Method 2 algorithm */
     aesLib.set_paddingmode(paddingMode::Bit);
     uint16_t encryptedLength = aesLib.encrypt((byte*)data, dataLength, encryptedData, _aesKey, sizeof(_aesKey), _iv);
 
-    uint8_t macApdu[] = { encryptedLength + 16, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+    uint8_t macApdu[] = { encryptedLength + 16U, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
     uint16_t macDataLength = apduLength + sizeof(macApdu) + encryptedLength;
     uint8_t macData[macDataLength];
-    uint8_t* buffMacData = macData;
-    memcpy(buffMacData, apdu, apduLength);
-    buffMacData += apduLength;
-    memcpy(buffMacData, macApdu, sizeof(macApdu));
-    buffMacData += sizeof(macApdu);
-    memcpy(buffMacData, encryptedData, encryptedLength);
+    uint16_t offset = 0;
+    memcpy(macData + offset, apdu, apduLength);
+    offset += apduLength;
+    memcpy(macData + offset, macApdu, sizeof(macApdu));
+    offset += sizeof(macApdu);
+    memcpy(macData + offset, encryptedData, encryptedLength);
 
-    uint8_t macEncryptedData[2 * INPUT_BUFFER_LIMIT] = { 0 };
-    uint8_t macIv[N_BLOCK] = { 0x00 };
+    uint8_t macEncryptedData[2 * INPUT_BUFFER_LIMIT] = { 0U };
+    uint8_t macIv[N_BLOCK] = { 0U };
     /* Set no padding */
     aesLib.set_paddingmode(paddingMode::Null);
     uint16_t macEncryptedLength = aesLib.encrypt((byte*)macData, macDataLength, macEncryptedData, _macKey, sizeof(_macKey), macIv);
 
-    uint8_t firstSliceEncryptedLength = macEncryptedLength - 16;
-    uint8_t macValue[16];
-    for (int i = firstSliceEncryptedLength; i < macEncryptedLength; i++) {
-        macValue[i - firstSliceEncryptedLength] = macEncryptedData[i];
-    }
+    uint8_t macValue[AES_BLOCK_SIZE] = { 0U };
+    /* In AES CBC-MAC last block is MAC */
+    uint8_t macOffset = macEncryptedLength - AES_BLOCK_SIZE;
+    memcpy(macValue, macEncryptedData + macOffset, AES_BLOCK_SIZE);
 
-    uint8_t lengthValue[] = { encryptedLength + 16 };
+    uint8_t lengthValue[] = { encryptedLength + 16U };
     uint16_t sendApduLength = apduLength + sizeof(lengthValue) + sizeof(macValue) + encryptedLength;
 
     uint8_t sendApdu[sendApduLength];
-    uint8_t* buffApdu = sendApdu;
-    memcpy(buffApdu, apdu, apduLength);
-    buffApdu += apduLength;
-    memcpy(buffApdu, lengthValue, sizeof(lengthValue));
-    buffApdu += sizeof(lengthValue);
-    memcpy(buffApdu, macValue, sizeof(macValue));
-    buffApdu += sizeof(macValue);
-    memcpy(buffApdu, encryptedData, encryptedLength);
+    offset = 0;
+    memcpy(sendApdu + offset, apdu, apduLength);
+    offset += apduLength;
+    memcpy(sendApdu + offset, lengthValue, sizeof(lengthValue));
+    offset += sizeof(lengthValue);
+    memcpy(sendApdu + offset, macValue, sizeof(macValue));
+    offset += sizeof(macValue);
+    memcpy(sendApdu + offset, encryptedData, encryptedLength);
 
-    Serial.println(sizeof(sendApdu));
-    Serial.println("Apdu ");
-    for (int i = 0; i < sizeof(sendApdu); i++) {
+    Serial.println("Apdu: ");
+    for (uint8_t i = 0; i < sizeof(sendApdu); i++) {
         Serial.print(sendApdu[i], HEX);
         Serial.print(" ");
     }
