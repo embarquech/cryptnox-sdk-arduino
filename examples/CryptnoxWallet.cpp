@@ -7,6 +7,7 @@
 #define RESPONSE_GETCARDCERTIFICATE_IN_BYTES    148
 #define RESPONSE_SELECT_IN_BYTES                 26
 #define RESPONSE_OPENSECURECHANNEL_IN_BYTES      34
+#define RESPONSE_OPENSECURECHANNEL_2_IN_BYTES    66
 #define RESPONSE_STATUS_WORDS_IN_BYTES            2
 
 #define OPENSECURECHANNEL_SALT_IN_BYTES            (RESPONSE_OPENSECURECHANNEL_IN_BYTES - RESPONSE_STATUS_WORDS_IN_BYTES)
@@ -323,26 +324,15 @@ bool CryptnoxWallet::mutuallyAuthenticate(uint8_t* salt, uint8_t* clientPublicKe
         uint8_t mac_iv[N_BLOCK];
         memset(mac_iv, 0x00, N_BLOCK);
 
-        /* Padded data */
-        uint8_t RNG_data[32] = { 0X7, 0X72, 0X30, 0XB, 0XDC, 0X82, 0X58, 0XEC, 0X32, 0X59, 0XCE, 0X38, 0X69, 0X24, 0X1B, 0X59, 0XFB, 0X10, 0X7B, 0X92, 0X10, 0XF2, 0X6E, 0X1F, 0X5E, 0X37, 0X66, 0X6A, 0XC6, 0X55, 0XB5, 0XEF};
+        /* Generate 256-bit random */
+        uint8_t RNG_data[32];
+        uECC_RNG(RNG_data, 32);
 
+        uint8_t ciphertextOPC[2 * INPUT_BUFFER_LIMIT] = { 0 };
         /* Set padding ISO/IEC 9797-1 Method 2 algorithm */
         aesLib.set_paddingmode(paddingMode::Bit);
-        unsigned char ciphertextOPC[2 * INPUT_BUFFER_LIMIT] = { 0 };
+        uint16_t cipherLength = aesLib.encrypt((byte*)RNG_data, sizeof(RNG_data), ciphertextOPC, aesKey, sizeof(aesKey), iv_opc);
         uint8_t paddedLength = aesLib.get_cipher_length(sizeof(RNG_data));
-        uint16_t cipherLength;
-        Serial.print("paddedLength = ");
-        Serial.println(paddedLength);
-        cipherLength = aesLib.encrypt((byte*)RNG_data, sizeof(RNG_data), ciphertextOPC, aesKey, sizeof(aesKey), iv_opc);
-        Serial.print("cipherlength = ");
-        Serial.println(cipherLength);
-
-        Serial.println(" Encrypted ------------------ ");
-        for (int i = 0; i < cipherLength; i++) {
-            Serial.print(ciphertextOPC[i], HEX);
-        }
-
-        Serial.println();
 
         uint8_t opcApduHeader[] = { 0x80, 0x11, 0x00, 0x00, paddedLength + 16 };
         uint8_t MAC_apduHeader[] = { 0x80, 0x11, 0x00, 0x00, paddedLength + 16, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
@@ -354,40 +344,22 @@ bool CryptnoxWallet::mutuallyAuthenticate(uint8_t* salt, uint8_t* clientPublicKe
         buffMAC_data += sizeof(MAC_apduHeader);
         memcpy(buffMAC_data, ciphertextOPC, cipherLength);
 
-        Serial.println(" MAC data ------------------ ");
-        for (int i = 0; i < MAC_data_length; i++) {
-            Serial.print(MAC_data[i], HEX);
-        }
-        Serial.println();
-
-        unsigned char ciphertextMACLong[2 * INPUT_BUFFER_LIMIT] = { 0 };
-        /* Set no padding */
+        uint8_t ciphertextMACLong[2 * INPUT_BUFFER_LIMIT] = { 0 };
+        /* Set no  padding */
         aesLib.set_paddingmode(paddingMode::Null);
         uint16_t encryptedLengthMAC = aesLib.encrypt((byte*)MAC_data, MAC_data_length, ciphertextMACLong, macKey, sizeof(macKey), mac_iv);
-
         uint8_t MACpaddedLength = aesLib.get_cipher_length(MAC_data_length);
-        Serial.println("MACpaddedLength: ");
-        Serial.println(MACpaddedLength);
-
         uint8_t MAC_value[16];
         uint8_t firstSliceLength = encryptedLengthMAC - 16;
 
         for (int i = firstSliceLength; i < encryptedLengthMAC; i++) {
             MAC_value[i - firstSliceLength] = ciphertextMACLong[i];
-            Serial.print(ciphertextMACLong[i], HEX);
         }
 
-        Serial.println();
         /* 5 + 16 + 48 = 69 */
         uint8_t apduOpcLength = sizeof(opcApduHeader) + sizeof(MAC_value) + cipherLength;
         uint8_t sendApduOpc[apduOpcLength];
         uint8_t* buff_send_apdu = sendApduOpc;
-        Serial.println("apduOpcLength: ");
-        Serial.println(apduOpcLength);
-        Serial.println("MAC_value len: ");
-        Serial.println(sizeof(MAC_value));
-        Serial.println("cipherLength len: ");
-        Serial.println(cipherLength);
 
         /* OPC HEADER || MAC value || ciphertextOPC */
         memcpy(buff_send_apdu, opcApduHeader, sizeof(opcApduHeader));
@@ -396,20 +368,20 @@ bool CryptnoxWallet::mutuallyAuthenticate(uint8_t* salt, uint8_t* clientPublicKe
         buff_send_apdu += sizeof(MAC_value);
         memcpy(buff_send_apdu, ciphertextOPC, cipherLength);
 
-        uint8_t res_send_opc[255];
-        uint8_t sendOpcResLength = sizeof(res_send_opc);
+        uint8_t response[255];
+        uint8_t responseLength = sizeof(response);
 
-        Serial.println("send APDU");
-
-        for (int i = 0; i < sizeof(sendApduOpc); i++) {
-            Serial.print(sendApduOpc[i], HEX);
-        }
-        Serial.println();
-
-        if (driver.sendAPDU(sendApduOpc, sizeof(sendApduOpc), res_send_opc, sendOpcResLength)) {
-            Serial.print("responseLength: ");
-            Serial.println(sendOpcResLength);
-            Serial.println("OpenSecureChannel success.");
+        if (driver.sendAPDU(sendApduOpc, sizeof(sendApduOpc), response, responseLength)) {
+            if (checkStatusWord(response, responseLength, 0x90, 0x00)) {
+                if (responseLength == RESPONSE_OPENSECURECHANNEL_2_IN_BYTES) {
+                    Serial.println("OpenSecureChannel success.");
+                } 
+                else {
+                    Serial.println(F("Unexpected response size."));
+                }
+            } else {
+                Serial.println(F("APDU SW1/SW2 not expected. Error."));
+            }
         } else {
             Serial.println(F("APDU exchange failed."));
         }
