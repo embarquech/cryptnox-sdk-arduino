@@ -10,8 +10,9 @@ var CryptnoxWallet_8cpp =
     [ "INPUT_BUFFER_LIMIT", "CryptnoxWallet_8cpp.html#a933c4568c34613285feefecab74ab596", null ],
     [ "OPENSECURECHANNEL_SALT_IN_BYTES", "CryptnoxWallet_8cpp.html#a5844cc731e45bc22143e8b5df0e5bbbe", null ],
     [ "RANDOM_BYTES", "CryptnoxWallet_8cpp.html#af1f0cb989a33a574c24035af703f414a", null ],
+    [ "REQUEST_MUTUALLYAUTHENTICATE_IN_BYTES", "CryptnoxWallet_8cpp.html#a598754e58bdf174bc9f67d37e3723afe", null ],
     [ "RESPONSE_GETCARDCERTIFICATE_IN_BYTES", "CryptnoxWallet_8cpp.html#a3c25c23f5fe90be1ba5057da3671e497", null ],
-    [ "RESPONSE_OPENSECURECHANNEL_2_IN_BYTES", "CryptnoxWallet_8cpp.html#ab51256e3dacd1b73f07d566bd534d779", null ],
+    [ "RESPONSE_MUTUALLYAUTHENTICATE_IN_BYTES", "CryptnoxWallet_8cpp.html#aa1b05565a70ac025eb457db8de5a5729", null ],
     [ "RESPONSE_OPENSECURECHANNEL_IN_BYTES", "CryptnoxWallet_8cpp.html#a7c5aeb3574b13dac470b43046615b00a", null ],
     [ "RESPONSE_SELECT_IN_BYTES", "CryptnoxWallet_8cpp.html#a460ee1a0f1a0e3420b7f4f621b35157b", null ],
     [ "RESPONSE_STATUS_WORDS_IN_BYTES", "CryptnoxWallet_8cpp.html#a06c6580716e31d8e2dc06ce292908f0c", null ]
