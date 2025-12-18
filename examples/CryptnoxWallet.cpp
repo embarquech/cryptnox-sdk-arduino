@@ -332,7 +332,7 @@ bool CryptnoxWallet::mutuallyAuthenticate(uint8_t* salt, uint8_t* clientPublicKe
             return false;
         }
 
-        /* Cipher the randoom number with aesKey */
+        /* Cipher the random number with aesKey */
         uint8_t ciphertextOPC[2U * INPUT_BUFFER_LIMIT] = { 0U };
         /* Set padding ISO/IEC 9797-1 Method 2 algorithm */
         aesLib.set_paddingmode(paddingMode::Bit);
@@ -354,7 +354,7 @@ bool CryptnoxWallet::mutuallyAuthenticate(uint8_t* salt, uint8_t* clientPublicKe
         /* Data to cipher: MAC_data = MAC_apduHeader (zero padded opcApduHeader to equal AES_BLOCK_SIZE) || ciphertextOPC */
         memcpy(MAC_data, MAC_apduHeader, sizeof(MAC_apduHeader));
         memcpy(MAC_data + sizeof(MAC_apduHeader), ciphertextOPC, cipherLength);
-        /* Set no  padding */
+        /* Set no padding */
         aesLib.set_paddingmode(paddingMode::Null);
         uint16_t encryptedLengthMAC = aesLib.encrypt((byte*)MAC_data, MAC_data_length, ciphertextMACLong, macKey, sizeof(macKey), mac_iv);
 
