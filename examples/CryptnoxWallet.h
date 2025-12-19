@@ -163,6 +163,11 @@ public:
     void getCardInfo();
 
     /**
+    * @brief Verifies the PIN code.
+    */
+    void verifyPin();
+
+    /**
     * @brief Encrypts data and sends a secured APDU using AES-CBC and MAC.
     *
     * @param[in] apdu        APDU header (CLA, INS, P1, P2).
@@ -171,6 +176,16 @@ public:
     * @param[in] dataLength  Length of the plaintext data.
     */
     void aes_cbc_encrypt(const uint8_t apdu[], uint16_t apduLength, const uint8_t data[], uint16_t dataLength);
+
+    /**
+    * @brief Decrypts data from a secured APDU using AES-CBC and verifies the MAC.
+    *
+    * @param[in,out] response     Encrypted APDU response buffer (decrypted in place).
+    * @param[in]     response_len Length of the response buffer.
+    * @param[out]    mac_value    Computed MAC value.
+    * @return true if MAC verification succeeds, false otherwise.
+    */
+    bool aes_cbc_decrypt(uint8_t *response, size_t response_len, uint8_t * mac_value);
 
 private:
     PN532Base driver; /**< PN532 driver for low-level NFC operations */
