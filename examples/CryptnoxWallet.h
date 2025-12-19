@@ -1,7 +1,7 @@
 #ifndef CRYPTNOXWALLET_H
 #define CRYPTNOXWALLET_H
 
-#include "PN532Base.h"
+#include "NFCDriver.h"
 #include <Arduino.h>
 #include "uECC.h"
 
@@ -23,38 +23,7 @@ public:
      * @param reset Pin number for PN532 RESET (use -1 if unused).
      * @param theWire TwoWire instance (default is &Wire).
      */
-    CryptnoxWallet(uint8_t irq, uint8_t reset, TwoWire *theWire = &Wire)
-        : driver(irq, reset, theWire) {}
-
-    /**
-     * @brief Construct a CryptnoxWallet over hardware SPI.
-     *
-     * @param ss SPI slave select pin.
-     * @param theSPI SPIClass instance (default is &SPI).
-     */
-    CryptnoxWallet(uint8_t ss, SPIClass *theSPI = &SPI)
-        : driver(ss, theSPI) {}
-
-    /**
-     * @brief Construct a CryptnoxWallet over software SPI.
-     *
-     * @param clk Clock pin.
-     * @param miso MISO pin.
-     * @param mosi MOSI pin.
-     * @param ss SPI slave select pin.
-     */
-    CryptnoxWallet(uint8_t clk, uint8_t miso, uint8_t mosi, uint8_t ss)
-        : driver(clk, miso, mosi, ss) {}
-
-    /**
-     * @brief Construct a CryptnoxWallet over UART.
-     *
-     * @param reset Reset pin for PN532 (use -1 if unused).
-     * @param theSer HardwareSerial instance.
-     */
-    CryptnoxWallet(uint8_t reset, HardwareSerial *theSer)
-        : driver(reset, theSer) {}
-
+    explicit CryptnoxWallet(NFCDriver& driver) : driver(driver) {}
     /**
      * @brief Initialize the PN532 module via the underlying driver.
      *
@@ -188,7 +157,7 @@ public:
     bool aes_cbc_decrypt(uint8_t *response, size_t response_len, uint8_t * mac_value);
 
 private:
-    PN532Base driver; /**< PN532 driver for low-level NFC operations */
+    NFCDriver& driver; /**< PN532 driver for low-level NFC operations */
     uint8_t _aesKey[32U]; /**< AES-256 session encryption key (Kenc) */
     uint8_t _macKey[32U]; /**< AES-256 session MAC key (Kmac) */
     uint8_t _iv[16U];     /**< Current AES-CBC IV (rolling IV for secure messaging) */

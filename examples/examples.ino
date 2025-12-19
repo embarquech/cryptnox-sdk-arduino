@@ -7,16 +7,17 @@
  * processes wallet-specific APDU commands.
  */
 
-#include <Wire.h>
+#include "PN532Adapter.h"
 #include "CryptnoxWallet.h"
 
 /**
  * @def PN532_SS
  * @brief Slave select pin of the PN532 module. Set to -1 if not used.
  */
-#define PN532_SS   (10)
+#define PN532_SS   (10U)
 
-CryptnoxWallet wallet(PN532_SS, &SPI);
+PN532Adapter nfc(PN532_SS, &SPI);
+CryptnoxWallet wallet(nfc);
 
 /**
  * @brief Arduino setup function.
@@ -35,8 +36,8 @@ void setup() {
 
     /* Initialize the PN532 module */
     if (wallet.begin()) {
-        wallet.printPN532FirmwareVersion();
         Serial.println(F("PN532 initialized"));
+        wallet.printPN532FirmwareVersion();
     } else {
         Serial.println(F("PN532 init failed"));
         /* Halt program if initialization fails */
