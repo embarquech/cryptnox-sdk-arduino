@@ -169,9 +169,6 @@ private:
      * @return 1 on success.
      */
     static int uECC_RNG(uint8_t *dest, unsigned size);
-
-    /** @brief Initialize the ECC RNG for micro-ecc library. */
-    void initECC_RNG();
 };
 
 #endif // CRYPTNOXWALLET_H
