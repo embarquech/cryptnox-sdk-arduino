@@ -1,5 +1,6 @@
 var annotated_dup =
 [
     [ "CryptnoxWallet", "classCryptnoxWallet.html", "classCryptnoxWallet" ],
-    [ "PN532Base", "classPN532Base.html", "classPN532Base" ]
+    [ "NFCDriver", "classNFCDriver.html", "classNFCDriver" ],
+    [ "PN532Adapter", "classPN532Adapter.html", "classPN532Adapter" ]
 ];

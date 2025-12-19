@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['selectapdu_0',['selectApdu',['../classCryptnoxWallet.html#a67b951c652d29c940a16867e9a0d8c3d',1,'CryptnoxWallet']]],
-  ['sendapdu_1',['sendAPDU',['../classPN532Base.html#a0ca0113b0bdc930bbcdc0b85d6e31f22',1,'PN532Base']]]
+  ['readuid_0',['readuid',['../classCryptnoxWallet.html#a2e90b4ce65336ba84d371deab5144274',1,'CryptnoxWallet::readUID()'],['../classNFCDriver.html#ab1ac5eac6aa543c4b7d9586c7d39dba9',1,'NFCDriver::readUID()'],['../classPN532Adapter.html#a41f94628f4cc1441cf5391a165d3e9c6',1,'PN532Adapter::readUID()']]],
+  ['resetreader_1',['resetreader',['../classNFCDriver.html#aee0747ff468a79637af603245fa2b21f',1,'NFCDriver::resetReader()'],['../classPN532Adapter.html#a0aa02e9f1cb109f9faa7826e11b50b7c',1,'PN532Adapter::resetReader()']]]
 ];

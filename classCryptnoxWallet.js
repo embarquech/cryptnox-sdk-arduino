@@ -1,9 +1,6 @@
 var classCryptnoxWallet =
 [
-    [ "CryptnoxWallet", "classCryptnoxWallet.html#af35119491a036609cf251a9bf92ef154", null ],
-    [ "CryptnoxWallet", "classCryptnoxWallet.html#aa2275c4d8e65abc791159ffc9c3b3dc9", null ],
-    [ "CryptnoxWallet", "classCryptnoxWallet.html#a63b023ee36ddb72da641167a0f5b68c7", null ],
-    [ "CryptnoxWallet", "classCryptnoxWallet.html#a19a5f98679f52f688c279cdb087b4f27", null ],
+    [ "CryptnoxWallet", "classCryptnoxWallet.html#a515beb0af1cdc3e57dbfe4c3bfce594d", null ],
     [ "aes_cbc_decrypt", "classCryptnoxWallet.html#a7c45d6c2e6d2cad47e29a3e2b6311980", null ],
     [ "aes_cbc_encrypt", "classCryptnoxWallet.html#a9eb8af7880a0c78bf50197c8553edec2", null ],
     [ "begin", "classCryptnoxWallet.html#aa394fe6bc19d57c4a9d89a303f7e664d", null ],
