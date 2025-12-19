@@ -151,9 +151,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:af0a6bc5d989fd875f19714cc9196508e" id="r_af0a6bc5d989fd875f19714cc9196508e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#af0a6bc5d989fd875f19714cc9196508e">getCardInfo</a> ()</td></tr>
 <tr class="memdesc:af0a6bc5d989fd875f19714cc9196508e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a secured GET CARD INFO APDU.  <br /></td></tr>
 <tr class="separator:af0a6bc5d989fd875f19714cc9196508e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f313ab332d85ae6bb10ffceb489a1a1" id="r_a2f313ab332d85ae6bb10ffceb489a1a1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a2f313ab332d85ae6bb10ffceb489a1a1">verifyPin</a> ()</td></tr>
+<tr class="memdesc:a2f313ab332d85ae6bb10ffceb489a1a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verifies the PIN code.  <br /></td></tr>
+<tr class="separator:a2f313ab332d85ae6bb10ffceb489a1a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9eb8af7880a0c78bf50197c8553edec2" id="r_a9eb8af7880a0c78bf50197c8553edec2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a9eb8af7880a0c78bf50197c8553edec2">aes_cbc_encrypt</a> (const uint8_t apdu[], uint16_t apduLength, const uint8_t data[], uint16_t dataLength)</td></tr>
 <tr class="memdesc:a9eb8af7880a0c78bf50197c8553edec2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypts data and sends a secured APDU using AES-CBC and MAC.  <br /></td></tr>
 <tr class="separator:a9eb8af7880a0c78bf50197c8553edec2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7c45d6c2e6d2cad47e29a3e2b6311980" id="r_a7c45d6c2e6d2cad47e29a3e2b6311980"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a7c45d6c2e6d2cad47e29a3e2b6311980">aes_cbc_decrypt</a> (uint8_t *response, size_t response_len, uint8_t *mac_value)</td></tr>
+<tr class="memdesc:a7c45d6c2e6d2cad47e29a3e2b6311980"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrypts data from a secured APDU using AES-CBC and verifies the MAC.  <br /></td></tr>
+<tr class="separator:a7c45d6c2e6d2cad47e29a3e2b6311980"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>High-level interface for interacting with a PN532-based wallet. </p>
@@ -361,6 +367,62 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a7c45d6c2e6d2cad47e29a3e2b6311980" name="a7c45d6c2e6d2cad47e29a3e2b6311980"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7c45d6c2e6d2cad47e29a3e2b6311980">&#9670;&#160;</a></span>aes_cbc_decrypt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool CryptnoxWallet::aes_cbc_decrypt </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>response</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>response_len</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>mac_value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Decrypts data from a secured APDU using AES-CBC and verifies the MAC. </p>
+<p>Verifies the MAC and decrypts an AES-CBC encrypted APDU response.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">response</td><td>Encrypted APDU response buffer (decrypted in place). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">response_len</td><td>Length of the response buffer. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">mac_value</td><td>Computed MAC value. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if MAC verification succeeds, false otherwise.</dd></dl>
+<p>This function recomputes the MAC, compares it with the received MAC to ensure integrity and decrypts the response data with last MAC sent as as mac_iv.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">response</td><td>Encrypted APDU response buffer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">response_len</td><td>Length of the response buffer. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">mac_value</td><td>MAC from last sent message. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if MAC verification succeeds, false otherwise. </dd></dl>
+
+</div>
+</div>
 <a id="a9eb8af7880a0c78bf50197c8553edec2" name="a9eb8af7880a0c78bf50197c8553edec2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9eb8af7880a0c78bf50197c8553edec2">&#9670;&#160;</a></span>aes_cbc_encrypt()</h2>
 
@@ -926,6 +988,27 @@ Public Member Functions</h2></td></tr>
 
 <p>Send the SELECT APDU to select the wallet application. </p>
 <dl class="section return"><dt>Returns</dt><dd>true if the APDU exchange succeeded, false otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="a2f313ab332d85ae6bb10ffceb489a1a1" name="a2f313ab332d85ae6bb10ffceb489a1a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2f313ab332d85ae6bb10ffceb489a1a1">&#9670;&#160;</a></span>verifyPin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CryptnoxWallet::verifyPin </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Verifies the PIN code. </p>
+<p>Verifies the PIN code on the smartcard.</p>
+<p>This function constructs the APDU for the "Verify PIN" command and encrypts it using <code>aes_cbc_encrypt</code>. </p>
 
 </div>
 </div>
