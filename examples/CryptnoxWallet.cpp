@@ -394,7 +394,7 @@ bool CryptnoxWallet::mutuallyAuthenticate(const uint8_t* salt, uint8_t* clientPu
         /* Forge APDU: OPC HEADER || MAC_value || ciphertextOPC
            REQUEST_MUTUALLYAUTHENTICATE_IN_BYTES : apduOpcLength = sizeof(opcApduHeader) + sizeof(MAC_value) + cipherLength */
         uint8_t sendApduOpc[REQUEST_MUTUALLYAUTHENTICATE_IN_BYTES] = { 0U };
-        uint16_t offset = 0;
+        uint16_t offset = 0U;
         memcpy(sendApduOpc + offset, opcApduHeader, sizeof(opcApduHeader));
         offset += sizeof(opcApduHeader);
         memcpy(sendApduOpc + offset, MAC_value, sizeof(MAC_value));
@@ -629,7 +629,7 @@ void CryptnoxWallet::aes_cbc_encrypt(const uint8_t apdu[], uint16_t apduLength, 
     uint8_t macApdu[] = { encryptedLength + 16U, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
     uint16_t macDataLength = apduLength + sizeof(macApdu) + encryptedLength;
     uint8_t macData[macDataLength];
-    uint16_t offset = 0;
+    uint16_t offset = 0U;
     memcpy(macData, apdu, apduLength);
     offset += apduLength;
     memcpy(macData + offset, macApdu, sizeof(macApdu));
@@ -651,7 +651,7 @@ void CryptnoxWallet::aes_cbc_encrypt(const uint8_t apdu[], uint16_t apduLength, 
     uint16_t sendApduLength = apduLength + sizeof(lengthValue) + sizeof(macValue) + encryptedLength;
 
     uint8_t sendApdu[sendApduLength];
-    offset = 0;
+    offset = 0U;
     memcpy(sendApdu, apdu, apduLength);
     offset += apduLength;
     memcpy(sendApdu + offset, lengthValue, sizeof(lengthValue));
@@ -678,7 +678,7 @@ void CryptnoxWallet::aes_cbc_encrypt(const uint8_t apdu[], uint16_t apduLength, 
             memcpy(_iv, response, AES_BLOCK_SIZE);
 
             Serial.println("macValue: ");
-            for (uint8_t i = 0; i < AES_BLOCK_SIZE; i++) {
+            for (uint8_t i = 0U; i < AES_BLOCK_SIZE; i++) {
                 Serial.print(macValue[i], HEX);
                 Serial.print(" ");
             }
