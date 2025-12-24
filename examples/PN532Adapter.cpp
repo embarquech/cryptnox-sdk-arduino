@@ -97,7 +97,7 @@ bool PN532Adapter::readUID(uint8_t* uidBuffer, uint8_t &uidLength) {
  */
 bool PN532Adapter::sendAPDU(const uint8_t* apdu, uint16_t apduLength,
                             uint8_t* response, uint8_t &responseLength) {
-    bool success = nfc->inDataExchange((uint8_t*)apdu, apduLength, response, &responseLength);
+    bool success = nfc->inDataExchange(const_cast<uint8_t*>(apdu), apduLength, response, &responseLength);
 
     if (!success) {
         Serial.println(F("APDU exchange failed!"));

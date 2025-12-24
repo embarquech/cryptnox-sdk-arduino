@@ -40,7 +40,7 @@ public:
      *
      * @note This constructor configures the Adafruit_PN532 driver for hardware SPI.
      */
-    PN532Adapter(uint8_t ssPin, SPIClass *theSPI = &SPI);
+    explicit PN532Adapter(uint8_t ssPin, SPIClass *theSPI = &SPI);
 
     /**
      * @brief Constructs a PN532Adapter using software SPI (bit-banged).
@@ -61,7 +61,7 @@ public:
      * @param resetPin The reset pin of the PN532 module.
      * @param wire Pointer to TwoWire instance to use (default is &Wire).
      */
-    PN532Adapter(uint8_t irqPin, uint8_t resetPin, TwoWire *wire = &Wire);
+    explicit PN532Adapter(uint8_t irqPin, uint8_t resetPin, TwoWire *wire = &Wire);
 
     /**
      * @brief Constructs a PN532Adapter using UART.
