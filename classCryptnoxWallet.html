@@ -127,9 +127,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a5e31e6d45992e39db06b8a05ca70bddd" id="r_a5e31e6d45992e39db06b8a05ca70bddd"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a5e31e6d45992e39db06b8a05ca70bddd">openSecureChannel</a> (uint8_t *salt, uint8_t *clientPublicKey, uint8_t *clientPrivateKey, const uECC_Curve_t *sessionCurve)</td></tr>
 <tr class="memdesc:a5e31e6d45992e39db06b8a05ca70bddd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the initial 32-byte salt from the card for starting a secure channel.  <br /></td></tr>
 <tr class="separator:a5e31e6d45992e39db06b8a05ca70bddd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad64326f5103642fb485d7109018f68df" id="r_ad64326f5103642fb485d7109018f68df"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#ad64326f5103642fb485d7109018f68df">mutuallyAuthenticate</a> (uint8_t *salt, uint8_t *clientPublicKey, uint8_t *clientPrivateKey, const uECC_Curve_t *sessionCurve, uint8_t *cardEphemeralPubKey)</td></tr>
-<tr class="memdesc:ad64326f5103642fb485d7109018f68df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs the ECDH-based mutual authentication step of the secure channel.  <br /></td></tr>
-<tr class="separator:ad64326f5103642fb485d7109018f68df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9afa77ec0b80823d2263dd0e4cfc7825" id="r_a9afa77ec0b80823d2263dd0e4cfc7825"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a9afa77ec0b80823d2263dd0e4cfc7825">mutuallyAuthenticate</a> (const uint8_t *salt, uint8_t *clientPublicKey, uint8_t *clientPrivateKey, const uECC_Curve_t *sessionCurve, uint8_t *cardEphemeralPubKey)</td></tr>
+<tr class="memdesc:a9afa77ec0b80823d2263dd0e4cfc7825"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs the ECDH-based mutual authentication step of the secure channel.  <br /></td></tr>
+<tr class="separator:a9afa77ec0b80823d2263dd0e4cfc7825"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae435d13a1a21b8a4f5cdbc00f9d2d24e" id="r_ae435d13a1a21b8a4f5cdbc00f9d2d24e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#ae435d13a1a21b8a4f5cdbc00f9d2d24e">extractCardEphemeralKey</a> (const uint8_t *cardCertificate, uint8_t *cardEphemeralPubKey, uint8_t *fullEphemeralPubKey65=nullptr)</td></tr>
 <tr class="memdesc:ae435d13a1a21b8a4f5cdbc00f9d2d24e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts the card's ephemeral EC P-256 public key from the certificate.  <br /></td></tr>
 <tr class="separator:ae435d13a1a21b8a4f5cdbc00f9d2d24e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -544,8 +544,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ad64326f5103642fb485d7109018f68df" name="ad64326f5103642fb485d7109018f68df"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad64326f5103642fb485d7109018f68df">&#9670;&#160;</a></span>mutuallyAuthenticate()</h2>
+<a id="a9afa77ec0b80823d2263dd0e4cfc7825" name="a9afa77ec0b80823d2263dd0e4cfc7825"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9afa77ec0b80823d2263dd0e4cfc7825">&#9670;&#160;</a></span>mutuallyAuthenticate()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -553,7 +553,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">bool CryptnoxWallet::mutuallyAuthenticate </td>
           <td>(</td>
-          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramtype">const uint8_t *&#160;</td>
           <td class="paramname"><em>salt</em>, </td>
         </tr>
         <tr>

@@ -8,7 +8,7 @@ var classCryptnoxWallet =
     [ "extractCardEphemeralKey", "classCryptnoxWallet.html#ae435d13a1a21b8a4f5cdbc00f9d2d24e", null ],
     [ "getCardCertificate", "classCryptnoxWallet.html#a629e48c198d3bace45603bf335d43f09", null ],
     [ "getCardInfo", "classCryptnoxWallet.html#af0a6bc5d989fd875f19714cc9196508e", null ],
-    [ "mutuallyAuthenticate", "classCryptnoxWallet.html#ad64326f5103642fb485d7109018f68df", null ],
+    [ "mutuallyAuthenticate", "classCryptnoxWallet.html#a9afa77ec0b80823d2263dd0e4cfc7825", null ],
     [ "openSecureChannel", "classCryptnoxWallet.html#a5e31e6d45992e39db06b8a05ca70bddd", null ],
     [ "printApdu", "classCryptnoxWallet.html#a0c4d176b4cfb46e8705db2eae661635d", null ],
     [ "printPN532FirmwareVersion", "classCryptnoxWallet.html#a9342637fe7352965de1aefb74f082a6c", null ],
