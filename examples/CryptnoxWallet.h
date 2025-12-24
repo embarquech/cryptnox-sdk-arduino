@@ -159,9 +159,9 @@ public:
 
 private:
     NFCDriver& driver; /**< PN532 driver for low-level NFC operations */
-    uint8_t _aesKey[32U]; /**< AES-256 session encryption key (Kenc) */
-    uint8_t _macKey[32U]; /**< AES-256 session MAC key (Kmac) */
-    uint8_t _iv[16U];     /**< Current AES-CBC IV (rolling IV for secure messaging) */
+    uint8_t _aesKey[32U] = { 0U }; /**< AES-256 session encryption key (Kenc) */
+    uint8_t _macKey[32U] = { 0U }; /**< AES-256 session MAC key (Kmac) */
+    uint8_t _iv[16U] = { 0U }; /**< Current AES-CBC IV (rolling IV for secure messaging) */
 
     /**
      * @brief RNG callback for micro-ecc library.

@@ -27,20 +27,6 @@
 AESLib aesLib;
 
 /**
- * @brief CryptnoxWallet constructor.
- *
- * Initializes cryptographic buffers (AES key, MAC key, IV) to zero.
- *
- * @warning The arrays declared inside this constructor are local
- *          variables and do not initialize class members.
- */
-CryptnoxWallet::CryptnoxWallet(NFCDriver& driver) : driver(driver) {
-    _aesKey[32U] = { 0U };
-    _macKey[32U] = { 0U };
-    _iv[16U] = { 0U };
-}
-
-/**
  * @brief Processes a detected NFC card.
  *
  * Selects the Cryptnox application, establishes a secure channel,
