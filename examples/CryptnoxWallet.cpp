@@ -19,34 +19,51 @@
 #define CLIENT_PRIVATE_KEY_SIZE                  32U
 #define CLIENT_PUBLIC_KEY_SIZE                   64U
 #define CARDEPHEMERALPUBKEY_SIZE                 64U
-#define AES_BLOCK_SIZE                              N_BLOCK
+#define AES_BLOCK_SIZE                           16U
 #define AES_TEST_DATA_SIZE                       32U
 #define INPUT_BUFFER_LIMIT                         (128U + 1U)
 #define MAX_MAC_DATA_LEN                           (AES_BLOCK_SIZE + 2U * INPUT_BUFFER_LIMIT)
 
 AESLib aesLib;
 
-/* Main NFC handler:
- * - If ISO-DEP card detected → select app, request certificate, open secure channel.
- * - Otherwise → try reading UID of simple NFC tag.
+/**
+ * @brief CryptnoxWallet constructor.
+ *
+ * Initializes cryptographic buffers (AES key, MAC key, IV) to zero.
+ *
+ * @warning The arrays declared inside this constructor are local
+ *          variables and do not initialize class members.
+ */
+CryptnoxWallet::CryptnoxWallet(NFCDriver& driver) : driver(driver) {
+    std::fill(std::begin(_aesKey), std::end(_aesKey), 0U);
+    std::fill(std::begin(_macKey), std::end(_macKey), 0U);
+    std::fill(std::begin(_iv), std::end(_iv), 0U);
+}
+
+/**
+ * @brief Processes a detected NFC card.
+ *
+ * Selects the Cryptnox application, establishes a secure channel,
+ * authenticates the card, and verifies the PIN.
+ *
+ * @return true if the Cryptnox card was successfully processed, false otherwise.
  */
 bool CryptnoxWallet::processCard() {
     bool ret = false;
-    /* Local response buffer */
-    uint8_t cardCertificate[GETCARDCERTIFICATE_IN_BYTES];
-    uint8_t cardCertificateLength = 0;
-    uint8_t openSecureChannelSalt[OPENSECURECHANNEL_SALT_IN_BYTES];
-
-    uint8_t clientPrivateKey[32];
-    uint8_t clientPublicKey[64];
-    const uECC_Curve_t * sessionCurve = uECC_secp256r1();
-
-    uint8_t cardEphemeralPubKey[CARDEPHEMERALPUBKEY_SIZE];
 
     /* Check for ISO-DEP capable target (APDU-capable card) */
     if (driver.inListPassiveTarget()) {
         /* Try selecting Cryptnox app */
         if (selectApdu()) {
+            /* Local response buffer */
+            uint8_t cardCertificate[GETCARDCERTIFICATE_IN_BYTES];
+            uint8_t cardCertificateLength = 0U;
+            uint8_t openSecureChannelSalt[OPENSECURECHANNEL_SALT_IN_BYTES];
+            uint8_t clientPrivateKey[32];
+            uint8_t clientPublicKey[64];
+            uint8_t cardEphemeralPubKey[CARDEPHEMERALPUBKEY_SIZE];
+            const uECC_Curve_t * sessionCurve = uECC_secp256r1();
+
             /* Get certificate and establish secure channel */
             getCardCertificate(cardCertificate, cardCertificateLength);
             extractCardEphemeralKey(cardCertificate, cardEphemeralPubKey);
@@ -152,7 +169,7 @@ bool CryptnoxWallet::getCardCertificate(uint8_t* cardCertificate, uint8_t &cardC
     uint8_t getCardCertificateResponseLength = sizeof(getCardCertificateResponse);
     uint8_t randomBytes[RANDOM_BYTES];
 
-    if (cardCertificate != nullptr) {
+    if (cardCertificate != NULL) {
         /* APDU template (last 8 bytes replaced by random nonce) */
         uint8_t getCardCertificateApdu[] = {
             0x80,  /* CLA */
@@ -290,18 +307,18 @@ bool CryptnoxWallet::openSecureChannel(uint8_t* salt, uint8_t* sessionPublicKey,
 bool CryptnoxWallet::mutuallyAuthenticate(uint8_t* salt, uint8_t* clientPublicKey, uint8_t* clientPrivateKey, const uECC_Curve_t* sessionCurve, uint8_t* cardEphemeralPubKey) {
     bool ret = false;
     uint8_t sharedSecret[32U] = { 0U };
-    uint8_t concat[32U + sizeof(COMMON_PAIRING_DATA) - 1U + 32U] = { 0U }; /* sharedSecret || pairingKey (- null character) || salt */
-    uint8_t sha512Output[64U] = { 0U };
-
-    size_t pairingKeyLen;
-    size_t concatLen;
 
     /* Generate ECDH shared secret with card ephemeral public key and client private key */
     if (uECC_shared_secret(cardEphemeralPubKey, clientPrivateKey, sharedSecret, sessionCurve) == 0) {
         Serial.println(F("ECDH shared secret generation failed!"));
-        return false;
+        ret = false;
     }
     else {
+        uint8_t concat[32U + sizeof(COMMON_PAIRING_DATA) - 1U + 32U] = { 0U }; /* sharedSecret || pairingKey (- null character) || salt */
+        uint8_t sha512Output[64U] = { 0U };
+        size_t pairingKeyLen;
+        size_t concatLen;
+
         Serial.println(F("ECDH shared secret generated."));
 
         /* Concatenate sharedSecret, pairingKey, and salt */
@@ -331,7 +348,7 @@ bool CryptnoxWallet::mutuallyAuthenticate(uint8_t* salt, uint8_t* clientPublicKe
 
         /* Generate 256-bit random number */
         uint8_t RNG_data[32U] = { 0U };
-        if (!uECC_RNG(RNG_data, 32U)) {
+        if (uECC_RNG(RNG_data, 32U) != 1) {
             Serial.println(F("Unable to generate 256-bit random number."));
             return false;
         }
@@ -340,7 +357,7 @@ bool CryptnoxWallet::mutuallyAuthenticate(uint8_t* salt, uint8_t* clientPublicKe
         uint8_t ciphertextOPC[2U * INPUT_BUFFER_LIMIT] = { 0U };
         /* Set padding ISO/IEC 9797-1 Method 2 algorithm */
         aesLib.set_paddingmode(paddingMode::Bit);
-        uint16_t cipherLength = aesLib.encrypt((byte*)RNG_data, sizeof(RNG_data), ciphertextOPC, _aesKey, sizeof(_aesKey), iv_opc);
+        uint16_t cipherLength = aesLib.encrypt(reinterpret_cast<byte*>(RNG_data), sizeof(RNG_data), ciphertextOPC, _aesKey, sizeof(_aesKey), iv_opc);
 
         /* Compute MAC */
         uint8_t opcApduHeader[5U] = { 0x80, 0x11, 0x00, 0x00, cipherLength + AES_BLOCK_SIZE };
@@ -420,7 +437,9 @@ bool CryptnoxWallet::mutuallyAuthenticate(uint8_t* salt, uint8_t* clientPublicKe
  * @return 1 on success.
  */
 int CryptnoxWallet::uECC_RNG(uint8_t *dest, unsigned size) {
-    if (dest != nullptr) {
+    int ret = 0;
+
+    if ((dest != NULL) && (size > 0U)) {
         /* Seed the RNG once; ideally done once in setup() */
         static bool seeded = false;
         if (seeded == false) {
@@ -431,9 +450,11 @@ int CryptnoxWallet::uECC_RNG(uint8_t *dest, unsigned size) {
         for (uint16_t i = 0U; i < size; i++) {
             dest[i] = (uint8_t)random(0U, 256U);
         }
+
+        ret = 1;
     }
 
-    return 1;
+    return ret;
 }
 
 /**
@@ -473,7 +494,7 @@ void CryptnoxWallet::printApdu(const uint8_t* apdu, uint8_t length, const char* 
 bool CryptnoxWallet::checkStatusWord(const uint8_t* response, uint8_t responseLength, uint8_t sw1Expected, uint8_t sw2Expected) {
     bool ret = false;
 
-    if (response == nullptr || responseLength < 2U) {
+    if ((response == NULL) || (responseLength < 2U)) {
         Serial.println(F("checkStatusWord: response too short."));
         ret = false;
     }
@@ -523,7 +544,7 @@ bool CryptnoxWallet::extractCardEphemeralKey(const uint8_t* cardCertificate, uin
 
     Serial.print(F("Full Ephemeral Public Key (65 bytes):"));
     Serial.println();
-    if ((cardCertificate == nullptr) || (cardEphemeralPubKey == nullptr)) {
+    if ((cardCertificate == NULL) || (cardEphemeralPubKey == NULL)) {
         ret = false;
     }
     else {
@@ -535,7 +556,7 @@ bool CryptnoxWallet::extractCardEphemeralKey(const uint8_t* cardCertificate, uin
             uint8_t b = cardCertificate[keyStart + i];
 
             /* Copy full key including prefix if buffer provided */
-            if (fullEphemeralPubKey65 != nullptr) {
+            if (fullEphemeralPubKey65 != NULL) {
                 fullEphemeralPubKey65[i] = b;
             }
 
@@ -560,18 +581,6 @@ bool CryptnoxWallet::extractCardEphemeralKey(const uint8_t* cardCertificate, uin
     }
 
     return ret;
-}
-
-/**
- * @brief Requests information from the smartcard.
- *
- * This function constructs the APDU for the "Get Card Info" command and encrypts it
- * using `aes_cbc_encrypt`. The response updates the rolling IV internally.
- */
-void CryptnoxWallet::getCardInfo() {
-    uint8_t data[] = { 0U };
-    uint8_t apdu[] = { 0x80, 0xFA, 0x00, 0x00 };
-    aes_cbc_encrypt(apdu, sizeof(apdu), data, sizeof(data));
 }
 
 /**
@@ -698,7 +707,7 @@ bool CryptnoxWallet::aes_cbc_decrypt(uint8_t *response, size_t response_len, uin
     memcpy(rep_mac, response, AES_BLOCK_SIZE);
     uint8_t *rep_data = response + 16U;
     size_t cipherTextLen = response_len - 2U; /* Remove SW1/SW2 */
-    if (mac_value == nullptr) {
+    if (mac_value == NULL) {
         return false;
     }
 
