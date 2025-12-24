@@ -48,6 +48,9 @@ CryptnoxWallet::CryptnoxWallet(NFCDriver& driver) : driver(driver) {
  *
  * @return true if the Cryptnox card was successfully processed, false otherwise.
  */
+ /* MISRA C:2012 Rule 8.9 deviation:
+   processCard() is called externally via library */
+// cppcheck-suppress unusedFunction
 bool CryptnoxWallet::processCard() {
     bool ret = false;
 
@@ -104,6 +107,9 @@ bool CryptnoxWallet::readUID(uint8_t* uidBuffer, uint8_t &uidLength) {
 }
 
 /* Print PN532 firmware version via driver */
+/* MISRA C:2012 Rule 8.9 deviation:
+   printPN532FirmwareVersion() is called externally via PN532 driver/library */
+// cppcheck-suppress unusedFunction
 bool CryptnoxWallet::printPN532FirmwareVersion() {
     return driver.printFirmwareVersion();
 }
@@ -167,9 +173,10 @@ bool CryptnoxWallet::getCardCertificate(uint8_t* cardCertificate, uint8_t &cardC
     bool ret = false;
     uint8_t getCardCertificateResponse[RESPONSE_GETCARDCERTIFICATE_IN_BYTES];
     uint8_t getCardCertificateResponseLength = sizeof(getCardCertificateResponse);
-    uint8_t randomBytes[RANDOM_BYTES];
-
+   
     if (cardCertificate != NULL) {
+        uint8_t randomBytes[RANDOM_BYTES];
+
         /* APDU template (last 8 bytes replaced by random nonce) */
         uint8_t getCardCertificateApdu[] = {
             0x80,  /* CLA */
@@ -304,7 +311,7 @@ bool CryptnoxWallet::openSecureChannel(uint8_t* salt, uint8_t* sessionPublicKey,
  * @param[in] cardEphemeralPubKey Pointer to the 65-byte card ephemeral public key ('0x04' prefix + X||Y).
  * @return true if the shared secret was successfully generated, false otherwise.
  */
-bool CryptnoxWallet::mutuallyAuthenticate(uint8_t* salt, uint8_t* clientPublicKey, uint8_t* clientPrivateKey, const uECC_Curve_t* sessionCurve, uint8_t* cardEphemeralPubKey) {
+bool CryptnoxWallet::mutuallyAuthenticate(const uint8_t* salt, uint8_t* clientPublicKey, uint8_t* clientPrivateKey, const uECC_Curve_t* sessionCurve, uint8_t* cardEphemeralPubKey) {
     bool ret = false;
     uint8_t sharedSecret[32U] = { 0U };
 
@@ -377,7 +384,7 @@ bool CryptnoxWallet::mutuallyAuthenticate(uint8_t* salt, uint8_t* clientPublicKe
         memcpy(MAC_data + sizeof(MAC_apduHeader), ciphertextOPC, cipherLength);
         /* Set no padding */
         aesLib.set_paddingmode(paddingMode::Null);
-        uint16_t encryptedLengthMAC = aesLib.encrypt((byte*)MAC_data, MAC_data_length, ciphertextMACLong, _macKey, sizeof(_macKey), mac_iv);
+        uint16_t encryptedLengthMAC = aesLib.encrypt(reinterpret_cast<byte*>(MAC_data), MAC_data_length, ciphertextMACLong, _macKey, sizeof(_macKey), mac_iv);
 
         uint8_t MAC_value[AES_BLOCK_SIZE] = { 0U };
         /* In AES CBC-MAC last block is MAC */
@@ -617,7 +624,7 @@ void CryptnoxWallet::aes_cbc_encrypt(const uint8_t apdu[], uint16_t apduLength, 
 
     /* Set padding ISO/IEC 9797-1 Method 2 algorithm */
     aesLib.set_paddingmode(paddingMode::Bit);
-    uint16_t encryptedLength = aesLib.encrypt((byte*)data, dataLength, encryptedData, _aesKey, sizeof(_aesKey), _iv);
+    uint16_t encryptedLength = aesLib.encrypt(reinterpret_cast<const byte*>(data), dataLength, encryptedData, _aesKey, sizeof(_aesKey), _iv);
 
     uint8_t macApdu[] = { encryptedLength + 16U, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
     uint16_t macDataLength = apduLength + sizeof(macApdu) + encryptedLength;
@@ -633,7 +640,7 @@ void CryptnoxWallet::aes_cbc_encrypt(const uint8_t apdu[], uint16_t apduLength, 
     uint8_t macIv[AES_BLOCK_SIZE] = { 0U };
     /* Set no padding */
     aesLib.set_paddingmode(paddingMode::Null);
-    uint16_t macEncryptedLength = aesLib.encrypt((byte*)macData, macDataLength, macEncryptedData, _macKey, sizeof(_macKey), macIv);
+    uint16_t macEncryptedLength = aesLib.encrypt(reinterpret_cast<byte*>(macData), macDataLength, macEncryptedData, _macKey, sizeof(_macKey), macIv);
 
     uint8_t macValue[AES_BLOCK_SIZE] = { 0U };
     /* In AES CBC-MAC last block is MAC */
@@ -700,7 +707,6 @@ void CryptnoxWallet::aes_cbc_encrypt(const uint8_t apdu[], uint16_t apduLength, 
  * @return true if MAC verification succeeds, false otherwise.
  */
 bool CryptnoxWallet::aes_cbc_decrypt(uint8_t *response, size_t response_len, uint8_t * mac_value) {
-    bool ret = false;
 
     /* Response = MAC || cipherText || SW1/2 */
     uint8_t rep_mac[AES_BLOCK_SIZE];
@@ -721,7 +727,7 @@ bool CryptnoxWallet::aes_cbc_decrypt(uint8_t *response, size_t response_len, uin
     uint8_t mac_iv[AES_BLOCK_SIZE] = { 0U }; /* Default MAC IVs */
     /* Set no padding */
     aesLib.set_paddingmode(paddingMode::Null);
-    uint16_t macEncryptedLength = aesLib.encrypt((byte*)mac_datar, cipherTextLen, macEncryptedData, _macKey, sizeof(_macKey), mac_iv);
+    uint16_t macEncryptedLength = aesLib.encrypt(reinterpret_cast<byte*>(mac_datar), cipherTextLen, macEncryptedData, _macKey, sizeof(_macKey), mac_iv);
 
     uint8_t recomputedMacValue[AES_BLOCK_SIZE] = { 0U };
     /* In AES CBC-MAC last block is MAC */

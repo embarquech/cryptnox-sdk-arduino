@@ -24,7 +24,7 @@ public:
      * @param theWire TwoWire instance (default is &Wire).
      */
     explicit CryptnoxWallet(NFCDriver& driver);
-    
+
     /**
      * @brief Initialize the PN532 module via the underlying driver.
      *
@@ -95,7 +95,7 @@ public:
     */
     bool openSecureChannel(uint8_t* salt, uint8_t* clientPublicKey, uint8_t* clientPrivateKey, const uECC_Curve_t* sessionCurve);
 
-    bool mutuallyAuthenticate(uint8_t* salt, uint8_t* clientPublicKey, uint8_t* clientPrivateKey, const uECC_Curve_t* sessionCurve, uint8_t* cardEphemeralPubKey);
+    bool mutuallyAuthenticate(const uint8_t* salt, uint8_t* clientPublicKey, uint8_t* clientPrivateKey, const uECC_Curve_t* sessionCurve, uint8_t* cardEphemeralPubKey);
 
     /**
     * @brief Extracts the card's ephemeral EC P-256 public key from the certificate.
