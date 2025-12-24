@@ -181,17 +181,14 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Construct a <a class="el" href="classCryptnoxWallet.html" title="High-level interface for interacting with a PN532-based wallet.">CryptnoxWallet</a> over I2C. </p>
-<p><a class="el" href="classCryptnoxWallet.html" title="High-level interface for interacting with a PN532-based wallet.">CryptnoxWallet</a> constructor.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">irq</td><td>Pin number for PN532 IRQ (use -1 if unused). </td></tr>
     <tr><td class="paramname">reset</td><td>Pin number for PN532 RESET (use -1 if unused). </td></tr>
-    <tr><td class="paramname">theWire</td><td>TwoWire instance (default is &amp;Wire).</td></tr>
+    <tr><td class="paramname">theWire</td><td>TwoWire instance (default is &amp;Wire). </td></tr>
   </table>
   </dd>
 </dl>
-<p>Initializes cryptographic buffers (AES key, MAC key, IV) to zero.</p>
-<dl class="section warning"><dt>Warning</dt><dd>The arrays declared inside this constructor are local variables and do not initialize class members. </dd></dl>
 
 </div>
 </div>
