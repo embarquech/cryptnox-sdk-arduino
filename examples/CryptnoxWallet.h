@@ -23,7 +23,7 @@ public:
      * @param reset Pin number for PN532 RESET (use -1 if unused).
      * @param theWire TwoWire instance (default is &Wire).
      */
-    explicit CryptnoxWallet(NFCDriver& driver);
+    explicit CryptnoxWallet(NFCDriver& driver) : driver(driver) {}
 
     /**
      * @brief Initialize the PN532 module via the underlying driver.
