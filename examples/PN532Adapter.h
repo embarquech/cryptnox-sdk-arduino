@@ -78,6 +78,25 @@ public:
      */
     ~PN532Adapter();
 
+    /**
+    * @brief Deleted copy constructor to prevent copying.
+    *
+    * PN532Adapter manages a dynamic resource (Adafruit_PN532 pointer). 
+    * Copying would lead to multiple objects owning the same pointer, 
+    * causing double deletion and undefined behavior. 
+    * This constructor is explicitly deleted to enforce safe usage.
+    */
+    PN532Adapter(const PN532Adapter&) = delete;
+
+    /**
+    * @brief Deleted copy assignment operator to prevent assignment.
+    *
+    * Assigning one PN532Adapter to another would copy the internal pointer, 
+    * leading to double deletion and memory corruption. 
+    * This operator is explicitly deleted to enforce safe usage.
+    */
+    PN532Adapter& operator=(const PN532Adapter&) = delete;
+
     /** @name NFCDriver Interface Overrides */
     ///@{
     
