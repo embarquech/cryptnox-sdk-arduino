@@ -175,20 +175,23 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
+<span class="mlabels"><span class="mlabel">explicit</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 <p>Construct a <a class="el" href="classCryptnoxWallet.html" title="High-level interface for interacting with a PN532-based wallet.">CryptnoxWallet</a> over I2C. </p>
+<p><a class="el" href="classCryptnoxWallet.html" title="High-level interface for interacting with a PN532-based wallet.">CryptnoxWallet</a> constructor.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">irq</td><td>Pin number for PN532 IRQ (use -1 if unused). </td></tr>
     <tr><td class="paramname">reset</td><td>Pin number for PN532 RESET (use -1 if unused). </td></tr>
-    <tr><td class="paramname">theWire</td><td>TwoWire instance (default is &amp;Wire). </td></tr>
+    <tr><td class="paramname">theWire</td><td>TwoWire instance (default is &amp;Wire).</td></tr>
   </table>
   </dd>
 </dl>
+<p>Initializes cryptographic buffers (AES key, MAC key, IV) to zero.</p>
+<dl class="section warning"><dt>Warning</dt><dd>The arrays declared inside this constructor are local variables and do not initialize class members. </dd></dl>
 
 </div>
 </div>
@@ -538,8 +541,6 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Sends a secured GET CARD INFO APDU. </p>
-<p>Requests information from the smartcard.</p>
-<p>This function constructs the APDU for the "Get Card Info" command and encrypts it using <code>aes_cbc_encrypt</code>. The response updates the rolling IV internally. </p>
 
 </div>
 </div>
@@ -754,8 +755,11 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Detect and process an NFC card for Cryptnox wallet operations. </p>
+<p>Processes a detected NFC card.</p>
 <p>If an ISO-DEP card is detected, SELECT APDU is sent and certificate is retrieved. If only a passive card is detected, the UID is printed.</p>
-<dl class="section return"><dt>Returns</dt><dd>true if a card was successfully processed, false otherwise. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>true if a card was successfully processed, false otherwise.</dd></dl>
+<p>Selects the Cryptnox application, establishes a secure channel, authenticates the card, and verifies the PIN.</p>
+<dl class="section return"><dt>Returns</dt><dd>true if the Cryptnox card was successfully processed, false otherwise. </dd></dl>
 
 </div>
 </div>
