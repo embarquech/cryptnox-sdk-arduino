@@ -35,9 +35,9 @@ AESLib aesLib;
  *          variables and do not initialize class members.
  */
 CryptnoxWallet::CryptnoxWallet(NFCDriver& driver) : driver(driver) {
-    uint8_t _aesKey[32U] = { 0U };
-    uint8_t _macKey[32U] = { 0U };
-    uint8_t _iv[16U] = { 0U };
+    _aesKey[32U] = { 0U };
+    _macKey[32U] = { 0U };
+    _iv[16U] = { 0U };
 }
 
 /**
