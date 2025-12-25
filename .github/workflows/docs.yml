@@ -1,5 +1,7 @@
 name: Build and deploy documentation
-
+permissions:
+  contents: read
+  pull-requests: write
 on:
   push:
 
