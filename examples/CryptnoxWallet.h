@@ -4,6 +4,7 @@
 #include "NFCDriver.h"
 #include <Arduino.h>
 #include "uECC.h"
+#include "SerialDriver.h"
 
 /**
  * @class CryptnoxWallet
@@ -22,8 +23,10 @@ public:
      * @param irq Pin number for PN532 IRQ (use -1 if unused).
      * @param reset Pin number for PN532 RESET (use -1 if unused).
      * @param theWire TwoWire instance (default is &Wire).
+     * @param driver Reference to an NFCDriver implementation for NFC communication.
+     * @param serial Reference to a SerialDriver implementation for debug output.
      */
-    explicit CryptnoxWallet(NFCDriver& driver) : driver(driver) {}
+    CryptnoxWallet(NFCDriver& driver, SerialDriver& serial) : driver(driver), serial(serial) {}
 
     /**
      * @brief Initialize the PN532 module via the underlying driver.
@@ -159,6 +162,7 @@ public:
 
 private:
     NFCDriver& driver; /**< PN532 driver for low-level NFC operations */
+    SerialDriver& serial; /**< Serial driver for debug output */
     uint8_t _aesKey[32U] = { 0U }; /**< AES-256 session encryption key (Kenc) */
     uint8_t _macKey[32U] = { 0U }; /**< AES-256 session MAC key (Kmac) */
     uint8_t _iv[16U] = { 0U }; /**< Current AES-CBC IV (rolling IV for secure messaging) */

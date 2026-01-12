@@ -4,6 +4,7 @@
 #include <Arduino.h>
 #include <Adafruit_PN532.h>
 #include "NFCDriver.h"
+#include "SerialDriver.h"
 
 /**
  * @brief Enum representing the supported communication interfaces for the PN532 NFC module.
@@ -35,16 +36,18 @@ public:
     /**
      * @brief Constructs a PN532Adapter using hardware SPI.
      *
+     * @param serial Reference to SerialDriver for debug output.
      * @param ssPin The SPI slave select (SS) pin connected to the PN532.
      * @param theSPI Pointer to SPIClass instance to use (default is &SPI).
      *
      * @note This constructor configures the Adafruit_PN532 driver for hardware SPI.
      */
-    explicit PN532Adapter(uint8_t ssPin, SPIClass *theSPI = &SPI);
+    PN532Adapter(SerialDriver& serial, uint8_t ssPin, SPIClass *theSPI = &SPI);
 
     /**
      * @brief Constructs a PN532Adapter using software SPI (bit-banged).
      *
+     * @param serial Reference to SerialDriver for debug output.
      * @param clk Clock pin.
      * @param miso MISO pin.
      * @param mosi MOSI pin.
@@ -52,24 +55,26 @@ public:
      *
      * @note Software SPI allows usage of arbitrary pins but is slower than hardware SPI.
      */
-    PN532Adapter(uint8_t clk, uint8_t miso, uint8_t mosi, uint8_t ss);
+    PN532Adapter(SerialDriver& serial, uint8_t clk, uint8_t miso, uint8_t mosi, uint8_t ss);
 
     /**
      * @brief Constructs a PN532Adapter using the I2C interface.
      *
+     * @param serial Reference to SerialDriver for debug output.
      * @param irqPin The IRQ pin (optional for some configurations).
      * @param resetPin The reset pin of the PN532 module.
      * @param wire Pointer to TwoWire instance to use (default is &Wire).
      */
-    explicit PN532Adapter(uint8_t irqPin, uint8_t resetPin, TwoWire *wire = &Wire);
+    PN532Adapter(SerialDriver& serial, uint8_t irqPin, uint8_t resetPin, TwoWire *wire = &Wire);
 
     /**
      * @brief Constructs a PN532Adapter using UART.
      *
+     * @param serial Reference to SerialDriver for debug output.
      * @param resetPin The reset pin of the PN532 module.
-     * @param serial Pointer to HardwareSerial instance to use for UART.
+     * @param uartSerial Pointer to HardwareSerial instance to use for UART.
      */
-    PN532Adapter(uint8_t resetPin, HardwareSerial *serial);
+    PN532Adapter(SerialDriver& serial, uint8_t resetPin, HardwareSerial *uartSerial);
 
     /**
      * @brief Destructor.
@@ -157,6 +162,7 @@ public:
     ///@}
 
 private:
+    SerialDriver& serial;     ///< Serial driver for debug output.
     PN532Interface interface; ///< The active interface type currently used.
     Adafruit_PN532* nfc;      ///< Pointer to the underlying Adafruit_PN532 instance.
 };
