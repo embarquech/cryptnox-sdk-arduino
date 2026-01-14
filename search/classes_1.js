@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['nfcdriver_0',['NFCDriver',['../classNFCDriver.html',1,'']]]
+  ['cryptnoxwallet_0',['CryptnoxWallet',['../classCryptnoxWallet.html',1,'']]]
 ];
