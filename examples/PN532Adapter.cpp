@@ -10,7 +10,7 @@
  * @param theSPI Pointer to SPIClass instance (default: &SPI).
  */
 PN532Adapter::PN532Adapter(SerialDriver& serialDriver, uint8_t ssPin, SPIClass *theSPI)
-    : serial(serialDriver), interface(PN532Interface::SPI_HARDWARE), nfc(nullptr)
+    : serial(serialDriver), interface(PN532Interface::SPI_HARDWARE)
 {
     nfc = new Adafruit_PN532(ssPin, theSPI);
 }
@@ -25,7 +25,7 @@ PN532Adapter::PN532Adapter(SerialDriver& serialDriver, uint8_t ssPin, SPIClass *
  * @param ss SPI slave select pin.
  */
 PN532Adapter::PN532Adapter(SerialDriver& serialDriver, uint8_t clk, uint8_t miso, uint8_t mosi, uint8_t ss)
-    : serial(serialDriver), interface(PN532Interface::SPI_SOFTWARE), nfc(nullptr)
+    : serial(serialDriver), interface(PN532Interface::SPI_SOFTWARE)
 {
     nfc = new Adafruit_PN532(clk, miso, mosi, ss);
 }
@@ -39,7 +39,7 @@ PN532Adapter::PN532Adapter(SerialDriver& serialDriver, uint8_t clk, uint8_t miso
  * @param wire Pointer to TwoWire instance (default: &Wire).
  */
 PN532Adapter::PN532Adapter(SerialDriver& serialDriver, uint8_t irqPin, uint8_t resetPin, TwoWire *wire)
-    : serial(serialDriver), interface(PN532Interface::I2C), nfc(nullptr)
+    : serial(serialDriver), interface(PN532Interface::I2C)
 {
     nfc = new Adafruit_PN532(irqPin, resetPin, wire);
 }
@@ -52,7 +52,7 @@ PN532Adapter::PN532Adapter(SerialDriver& serialDriver, uint8_t irqPin, uint8_t r
  * @param uartSerial Pointer to HardwareSerial instance to use.
  */
 PN532Adapter::PN532Adapter(SerialDriver& serialDriver, uint8_t resetPin, HardwareSerial *uartSerial)
-    : serial(serialDriver), interface(PN532Interface::UART), nfc(nullptr)
+    : serial(serialDriver), interface(PN532Interface::UART)
 {
     nfc = new Adafruit_PN532(resetPin, uartSerial);
 }
