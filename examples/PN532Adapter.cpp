@@ -5,13 +5,14 @@
 /**
  * @brief Construct a PN532Adapter using hardware SPI.
  *
- * @param serial Reference to SerialDriver for debug output.
+ * @param serialDriver Reference to SerialDriver for debug output.
  * @param ssPin SPI slave select pin connected to the PN532 module.
  * @param theSPI Pointer to SPIClass instance (default: &SPI).
  */
-PN532Adapter::PN532Adapter(SerialDriver& serial, uint8_t ssPin, SPIClass *theSPI)
-    : serial(serial)
+PN532Adapter::PN532Adapter(SerialDriver& serialDriver, uint8_t ssPin, SPIClass *theSPI)
+    : serial(serialDriver)
     , interface(PN532Interface::SPI_HARDWARE)
+    , nfc(nullptr)
 {
     nfc = new Adafruit_PN532(ssPin, theSPI);
 }
@@ -19,15 +20,16 @@ PN532Adapter::PN532Adapter(SerialDriver& serial, uint8_t ssPin, SPIClass *theSPI
 /**
  * @brief Construct a PN532Adapter using software SPI (bit-banged).
  *
- * @param serial Reference to SerialDriver for debug output.
+ * @param serialDriver Reference to SerialDriver for debug output.
  * @param clk Clock pin.
  * @param miso MISO pin.
  * @param mosi MOSI pin.
  * @param ss SPI slave select pin.
  */
-PN532Adapter::PN532Adapter(SerialDriver& serial, uint8_t clk, uint8_t miso, uint8_t mosi, uint8_t ss)
-    : serial(serial)
+PN532Adapter::PN532Adapter(SerialDriver& serialDriver, uint8_t clk, uint8_t miso, uint8_t mosi, uint8_t ss)
+    : serial(serialDriver)
     , interface(PN532Interface::SPI_SOFTWARE)
+    , nfc(nullptr)
 {
     nfc = new Adafruit_PN532(clk, miso, mosi, ss);
 }
@@ -35,14 +37,15 @@ PN532Adapter::PN532Adapter(SerialDriver& serial, uint8_t clk, uint8_t miso, uint
 /**
  * @brief Construct a PN532Adapter using I2C.
  *
- * @param serial Reference to SerialDriver for debug output.
+ * @param serialDriver Reference to SerialDriver for debug output.
  * @param irqPin IRQ pin (if applicable).
  * @param resetPin Reset pin of PN532.
  * @param wire Pointer to TwoWire instance (default: &Wire).
  */
-PN532Adapter::PN532Adapter(SerialDriver& serial, uint8_t irqPin, uint8_t resetPin, TwoWire *wire)
-    : serial(serial)
+PN532Adapter::PN532Adapter(SerialDriver& serialDriver, uint8_t irqPin, uint8_t resetPin, TwoWire *wire)
+    : serial(serialDriver)
     , interface(PN532Interface::I2C)
+    , nfc(nullptr)
 {
     nfc = new Adafruit_PN532(irqPin, resetPin, wire);
 }
@@ -50,13 +53,14 @@ PN532Adapter::PN532Adapter(SerialDriver& serial, uint8_t irqPin, uint8_t resetPi
 /**
  * @brief Construct a PN532Adapter using UART.
  *
- * @param serial Reference to SerialDriver for debug output.
+ * @param serialDriver Reference to SerialDriver for debug output.
  * @param resetPin Reset pin of PN532.
  * @param uartSerial Pointer to HardwareSerial instance to use.
  */
-PN532Adapter::PN532Adapter(SerialDriver& serial, uint8_t resetPin, HardwareSerial *uartSerial)
-    : serial(serial)
+PN532Adapter::PN532Adapter(SerialDriver& serialDriver, uint8_t resetPin, HardwareSerial *uartSerial)
+    : serial(serialDriver)
     , interface(PN532Interface::UART)
+    , nfc(nullptr)
 {
     nfc = new Adafruit_PN532(resetPin, uartSerial);
 }
