@@ -11,7 +11,7 @@
  */
 PN532Adapter::PN532Adapter(SerialDriver& serialDriver, uint8_t ssPin, SPIClass *theSPI)
     : serial(serialDriver)
-    , interface(PN532Interface::SPI_HARDWARE)
+    , interface(PN532Interface::SPI_HARDWARE) // cppcheck-suppress misra-c2012-12.3 ; nfc initialized via default member initializer
 {
     nfc = new Adafruit_PN532(ssPin, theSPI);
 }
@@ -27,7 +27,7 @@ PN532Adapter::PN532Adapter(SerialDriver& serialDriver, uint8_t ssPin, SPIClass *
  */
 PN532Adapter::PN532Adapter(SerialDriver& serialDriver, uint8_t clk, uint8_t miso, uint8_t mosi, uint8_t ss)
     : serial(serialDriver)
-    , interface(PN532Interface::SPI_SOFTWARE)
+    , interface(PN532Interface::SPI_SOFTWARE) // cppcheck-suppress misra-c2012-12.3 ; nfc initialized via default member initializer
 {
     nfc = new Adafruit_PN532(clk, miso, mosi, ss);
 }
@@ -42,7 +42,7 @@ PN532Adapter::PN532Adapter(SerialDriver& serialDriver, uint8_t clk, uint8_t miso
  */
 PN532Adapter::PN532Adapter(SerialDriver& serialDriver, uint8_t irqPin, uint8_t resetPin, TwoWire *wire)
     : serial(serialDriver)
-    , interface(PN532Interface::I2C)
+    , interface(PN532Interface::I2C) // cppcheck-suppress misra-c2012-12.3 ; nfc initialized via default member initializer
 {
     nfc = new Adafruit_PN532(irqPin, resetPin, wire);
 }
@@ -56,7 +56,7 @@ PN532Adapter::PN532Adapter(SerialDriver& serialDriver, uint8_t irqPin, uint8_t r
  */
 PN532Adapter::PN532Adapter(SerialDriver& serialDriver, uint8_t resetPin, HardwareSerial *uartSerial)
     : serial(serialDriver)
-    , interface(PN532Interface::UART)
+    , interface(PN532Interface::UART) // cppcheck-suppress misra-c2012-12.3 ; nfc initialized via default member initializer
 {
     nfc = new Adafruit_PN532(resetPin, uartSerial);
 }
