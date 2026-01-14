@@ -7,6 +7,34 @@
 #include "SerialDriver.h"
 
 /**
+ * @struct SecureSession
+ * @brief Holds cryptographic session state for reentrant secure channel operations.
+ *
+ * This struct encapsulates all session-specific cryptographic material,
+ * allowing functions to be reentrant by passing session state as a parameter
+ * rather than storing it as class member variables.
+ */
+struct SecureSession {
+    uint8_t aesKey[32U];  /**< AES-256 session encryption key (Kenc) */
+    uint8_t macKey[32U];  /**< AES-256 session MAC key (Kmac) */
+    uint8_t iv[16U];      /**< Current AES-CBC IV (rolling IV for secure messaging) */
+
+    /** @brief Initialize all session keys and IV to zero. */
+    SecureSession() {
+        memset(aesKey, 0U, sizeof(aesKey));
+        memset(macKey, 0U, sizeof(macKey));
+        memset(iv, 0U, sizeof(iv));
+    }
+
+    /** @brief Securely clear all session keys and IV. */
+    void clear() {
+        memset(aesKey, 0U, sizeof(aesKey));
+        memset(macKey, 0U, sizeof(macKey));
+        memset(iv, 0U, sizeof(iv));
+    }
+};
+
+/**
  * @class CryptnoxWallet
  * @brief High-level interface for interacting with a PN532-based wallet.
  *
@@ -98,7 +126,7 @@ public:
     */
     bool openSecureChannel(uint8_t* salt, uint8_t* clientPublicKey, uint8_t* clientPrivateKey, const uECC_Curve_t* sessionCurve);
 
-    bool mutuallyAuthenticate(const uint8_t* salt, uint8_t* clientPublicKey, uint8_t* clientPrivateKey, const uECC_Curve_t* sessionCurve, uint8_t* cardEphemeralPubKey);
+    bool mutuallyAuthenticate(SecureSession& session, const uint8_t* salt, uint8_t* clientPublicKey, uint8_t* clientPrivateKey, const uECC_Curve_t* sessionCurve, uint8_t* cardEphemeralPubKey);
 
     /**
     * @brief Extracts the card's ephemeral EC P-256 public key from the certificate.
@@ -132,40 +160,41 @@ public:
 
     /**
     * @brief Sends a secured GET CARD INFO APDU.
+    * @param[in,out] session Reference to the secure session containing keys and IV.
     */
-    void getCardInfo();
+    void getCardInfo(SecureSession& session);
 
     /**
     * @brief Verifies the PIN code.
+    * @param[in,out] session Reference to the secure session containing keys and IV.
     */
-    void verifyPin();
+    void verifyPin(SecureSession& session);
 
     /**
     * @brief Encrypts data and sends a secured APDU using AES-CBC and MAC.
     *
-    * @param[in] apdu        APDU header (CLA, INS, P1, P2).
-    * @param[in] apduLength Length of the APDU header.
-    * @param[in] data        Plaintext data to encrypt and send.
-    * @param[in] dataLength  Length of the plaintext data.
+    * @param[in,out] session    Reference to the secure session containing keys and IV.
+    * @param[in] apdu           APDU header (CLA, INS, P1, P2).
+    * @param[in] apduLength     Length of the APDU header.
+    * @param[in] data           Plaintext data to encrypt and send.
+    * @param[in] dataLength     Length of the plaintext data.
     */
-    void aes_cbc_encrypt(const uint8_t apdu[], uint16_t apduLength, const uint8_t data[], uint16_t dataLength);
+    void aes_cbc_encrypt(SecureSession& session, const uint8_t apdu[], uint16_t apduLength, const uint8_t data[], uint16_t dataLength);
 
     /**
     * @brief Decrypts data from a secured APDU using AES-CBC and verifies the MAC.
     *
+    * @param[in,out] session      Reference to the secure session containing keys and IV.
     * @param[in,out] response     Encrypted APDU response buffer (decrypted in place).
     * @param[in]     response_len Length of the response buffer.
     * @param[out]    mac_value    Computed MAC value.
     * @return true if MAC verification succeeds, false otherwise.
     */
-    bool aes_cbc_decrypt(uint8_t *response, size_t response_len, uint8_t * mac_value);
+    bool aes_cbc_decrypt(SecureSession& session, uint8_t *response, size_t response_len, uint8_t * mac_value);
 
 private:
     NFCDriver& driver; /**< PN532 driver for low-level NFC operations */
     SerialDriver& serial; /**< Serial driver for debug output */
-    uint8_t _aesKey[32U] = { 0U }; /**< AES-256 session encryption key (Kenc) */
-    uint8_t _macKey[32U] = { 0U }; /**< AES-256 session MAC key (Kmac) */
-    uint8_t _iv[16U] = { 0U }; /**< Current AES-CBC IV (rolling IV for secure messaging) */
 
     /**
      * @brief RNG callback for micro-ecc library.

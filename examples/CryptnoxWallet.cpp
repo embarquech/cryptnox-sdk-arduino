@@ -53,13 +53,19 @@ bool CryptnoxWallet::processCard() {
             uint8_t cardEphemeralPubKey[CARDEPHEMERALPUBKEY_SIZE];
             const uECC_Curve_t * sessionCurve = uECC_secp256r1();
 
+            /* Create secure session context (stack-local for reentrancy) */
+            SecureSession session;
+
             /* Get certificate and establish secure channel */
             getCardCertificate(cardCertificate, cardCertificateLength);
             extractCardEphemeralKey(cardCertificate, cardEphemeralPubKey);
             openSecureChannel(openSecureChannelSalt, clientPublicKey, clientPrivateKey, sessionCurve);
-            mutuallyAuthenticate(openSecureChannelSalt, clientPublicKey, clientPrivateKey, sessionCurve, cardEphemeralPubKey);
-            verifyPin();
+            mutuallyAuthenticate(session, openSecureChannelSalt, clientPublicKey, clientPrivateKey, sessionCurve, cardEphemeralPubKey);
+            verifyPin(session);
             
+            /* Securely clear session keys before leaving scope */
+            session.clear();
+
             /* Wait to see result */
             delay(5000U);
 
@@ -297,7 +303,7 @@ bool CryptnoxWallet::openSecureChannel(uint8_t* salt, uint8_t* sessionPublicKey,
  * @param[in] cardEphemeralPubKey Pointer to the 65-byte card ephemeral public key ('0x04' prefix + X||Y).
  * @return true if the shared secret was successfully generated, false otherwise.
  */
-bool CryptnoxWallet::mutuallyAuthenticate(const uint8_t* salt, uint8_t* clientPublicKey, uint8_t* clientPrivateKey, const uECC_Curve_t* sessionCurve, uint8_t* cardEphemeralPubKey) {
+bool CryptnoxWallet::mutuallyAuthenticate(SecureSession& session, const uint8_t* salt, uint8_t* clientPublicKey, uint8_t* clientPrivateKey, const uECC_Curve_t* sessionCurve, uint8_t* cardEphemeralPubKey) {
     bool ret = false;
     uint8_t sharedSecret[32U] = { 0U };
 
@@ -329,8 +335,8 @@ bool CryptnoxWallet::mutuallyAuthenticate(const uint8_t* salt, uint8_t* clientPu
         serial.println(F("SHA-512 computed."));
 
         /* Split SHA-512 output into Kenc and Kmac */
-        memcpy(_aesKey, sha512Output, 32U);       /* first 32 bytes for encryption key */
-        memcpy(_macKey, sha512Output + 32U, 32U); /* last 32 bytes for MAC key */
+        memcpy(session.aesKey, sha512Output, 32U);       /* first 32 bytes for encryption key */
+        memcpy(session.macKey, sha512Output + 32U, 32U); /* last 32 bytes for MAC key */
 
         serial.println(F("aesKey and macKey derived."));
 
@@ -350,7 +356,7 @@ bool CryptnoxWallet::mutuallyAuthenticate(const uint8_t* salt, uint8_t* clientPu
         uint8_t ciphertextOPC[2U * INPUT_BUFFER_LIMIT] = { 0U };
         /* Set padding ISO/IEC 9797-1 Method 2 algorithm */
         aesLib.set_paddingmode(paddingMode::Bit);
-        uint16_t cipherLength = aesLib.encrypt(reinterpret_cast<byte*>(RNG_data), sizeof(RNG_data), ciphertextOPC, _aesKey, sizeof(_aesKey), iv_opc);
+        uint16_t cipherLength = aesLib.encrypt(reinterpret_cast<byte*>(RNG_data), sizeof(RNG_data), ciphertextOPC, session.aesKey, sizeof(session.aesKey), iv_opc);
 
         /* Compute MAC */
         uint8_t opcApduHeader[5U] = { 0x80, 0x11, 0x00, 0x00, cipherLength + AES_BLOCK_SIZE };
@@ -370,7 +376,7 @@ bool CryptnoxWallet::mutuallyAuthenticate(const uint8_t* salt, uint8_t* clientPu
         memcpy(MAC_data + sizeof(MAC_apduHeader), ciphertextOPC, cipherLength);
         /* Set no padding */
         aesLib.set_paddingmode(paddingMode::Null);
-        uint16_t encryptedLengthMAC = aesLib.encrypt(reinterpret_cast<byte*>(MAC_data), MAC_data_length, ciphertextMACLong, _macKey, sizeof(_macKey), mac_iv);
+        uint16_t encryptedLengthMAC = aesLib.encrypt(reinterpret_cast<byte*>(MAC_data), MAC_data_length, ciphertextMACLong, session.macKey, sizeof(session.macKey), mac_iv);
 
         uint8_t MAC_value[AES_BLOCK_SIZE] = { 0U };
         /* In AES CBC-MAC last block is MAC */
@@ -396,7 +402,7 @@ bool CryptnoxWallet::mutuallyAuthenticate(const uint8_t* salt, uint8_t* clientPu
                     serial.println(F("OpenSecureChannel success."));
 
                     /* Rolling IVs: It is the last MAC, ie the first AES_BLOCK_SIZE bytes from the last answer */
-                    memcpy(_iv, response, 16U);
+                    memcpy(session.iv, response, 16U);
                     ret = true; 
                 } 
                 else {
@@ -581,11 +587,13 @@ bool CryptnoxWallet::extractCardEphemeralKey(const uint8_t* cardCertificate, uin
  *
  * This function constructs the APDU for the "Verify PIN" command and encrypts it
  * using `aes_cbc_encrypt`.
+ *
+ * @param[in,out] session Reference to the secure session containing keys and IV.
  */
-void CryptnoxWallet::verifyPin() {
+void CryptnoxWallet::verifyPin(SecureSession& session) {
     uint8_t data[] = { 0x31, 0x32, 0x33, 0x34 }; /* PIN code 1234 */
     uint8_t apdu[] = {0x80, 0x20, 0x00, 0x00};
-    aes_cbc_encrypt(apdu, sizeof(apdu), data, sizeof(data));
+    aes_cbc_encrypt(session, apdu, sizeof(apdu), data, sizeof(data));
 }
 
 /**
@@ -595,22 +603,23 @@ void CryptnoxWallet::verifyPin() {
  * computes a MAC over the APDU header and encrypted payload, and constructs the final APDU to send.
  * The response IV is updated from the last APDU response.
  *
+ * @param[in,out] session Reference to the secure session containing keys and IV.
  * @param[in] apdu Pointer to the APDU header bytes.
  * @param[in] apduLength Length of the APDU header.
  * @param[in] data Pointer to the plaintext data to encrypt.
  * @param[in] dataLength Length of the plaintext data.
  *
  * @note
- * - AES CBC encryption is performed with `_aesKey` and current `_iv`.
- * - MAC is computed with `_macKey` using AES-CBC with no padding.
- * - `_iv` is updated after successful APDU response for rolling IV.
+ * - AES CBC encryption is performed with `session.aesKey` and current `session.iv`.
+ * - MAC is computed with `session.macKey` using AES-CBC with no padding.
+ * - `session.iv` is updated after successful APDU response for rolling IV.
  */
-void CryptnoxWallet::aes_cbc_encrypt(const uint8_t apdu[], uint16_t apduLength, const uint8_t data[], uint16_t dataLength) {
+void CryptnoxWallet::aes_cbc_encrypt(SecureSession& session, const uint8_t apdu[], uint16_t apduLength, const uint8_t data[], uint16_t dataLength) {
     uint8_t encryptedData[2 * INPUT_BUFFER_LIMIT] = { 0U };
 
     /* Set padding ISO/IEC 9797-1 Method 2 algorithm */
     aesLib.set_paddingmode(paddingMode::Bit);
-    uint16_t encryptedLength = aesLib.encrypt(reinterpret_cast<const byte*>(data), dataLength, encryptedData, _aesKey, sizeof(_aesKey), _iv);
+    uint16_t encryptedLength = aesLib.encrypt(reinterpret_cast<const byte*>(data), dataLength, encryptedData, session.aesKey, sizeof(session.aesKey), session.iv);
 
     uint8_t macApdu[] = { encryptedLength + 16U, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
     uint16_t macDataLength = apduLength + sizeof(macApdu) + encryptedLength;
@@ -626,7 +635,7 @@ void CryptnoxWallet::aes_cbc_encrypt(const uint8_t apdu[], uint16_t apduLength, 
     uint8_t macIv[AES_BLOCK_SIZE] = { 0U };
     /* Set no padding */
     aesLib.set_paddingmode(paddingMode::Null);
-    uint16_t macEncryptedLength = aesLib.encrypt(reinterpret_cast<byte*>(macData), macDataLength, macEncryptedData, _macKey, sizeof(_macKey), macIv);
+    uint16_t macEncryptedLength = aesLib.encrypt(reinterpret_cast<byte*>(macData), macDataLength, macEncryptedData, session.macKey, sizeof(session.macKey), macIv);
 
     uint8_t macValue[AES_BLOCK_SIZE] = { 0U };
     /* In AES CBC-MAC last block is MAC */
@@ -661,7 +670,7 @@ void CryptnoxWallet::aes_cbc_encrypt(const uint8_t apdu[], uint16_t apduLength, 
             serial.println(F("getCardInfo success."));
 
             /* Rolling IVs: It is the last MAC, ie the first AES_BLOCK_SIZE bytes from the last answer */
-            memcpy(_iv, response, AES_BLOCK_SIZE);
+            memcpy(session.iv, response, AES_BLOCK_SIZE);
 
             serial.println("macValue: ");
             for (uint8_t i = 0U; i < AES_BLOCK_SIZE; i++) {
@@ -671,7 +680,7 @@ void CryptnoxWallet::aes_cbc_encrypt(const uint8_t apdu[], uint16_t apduLength, 
             serial.println();
 
             /* Decode response */
-            aes_cbc_decrypt(response, responseLength, macValue);
+            aes_cbc_decrypt(session, response, responseLength, macValue);
         } else {
             serial.println(F("getCardInfo APDU SW1/SW2 not expected. Error."));
         }
@@ -687,12 +696,13 @@ void CryptnoxWallet::aes_cbc_encrypt(const uint8_t apdu[], uint16_t apduLength, 
  * to ensure integrity and decrypts the response data with last MAC
  * sent as as mac_iv.
  *
+ * @param[in,out] session      Reference to the secure session containing keys and IV.
  * @param[in,out] response     Encrypted APDU response buffer.
  * @param[in]     response_len Length of the response buffer.
  * @param[out]    mac_value    MAC from last sent message.
  * @return true if MAC verification succeeds, false otherwise.
  */
-bool CryptnoxWallet::aes_cbc_decrypt(uint8_t *response, size_t response_len, uint8_t * mac_value) {
+bool CryptnoxWallet::aes_cbc_decrypt(SecureSession& session, uint8_t *response, size_t response_len, uint8_t * mac_value) {
 
     /* Response = MAC || cipherText || SW1/2 */
     uint8_t rep_mac[AES_BLOCK_SIZE];
@@ -713,7 +723,7 @@ bool CryptnoxWallet::aes_cbc_decrypt(uint8_t *response, size_t response_len, uin
     uint8_t mac_iv[AES_BLOCK_SIZE] = { 0U }; /* Default MAC IVs */
     /* Set no padding */
     aesLib.set_paddingmode(paddingMode::Null);
-    uint16_t macEncryptedLength = aesLib.encrypt(reinterpret_cast<byte*>(mac_datar), cipherTextLen, macEncryptedData, _macKey, sizeof(_macKey), mac_iv);
+    uint16_t macEncryptedLength = aesLib.encrypt(reinterpret_cast<byte*>(mac_datar), cipherTextLen, macEncryptedData, session.macKey, sizeof(session.macKey), mac_iv);
 
     uint8_t recomputedMacValue[AES_BLOCK_SIZE] = { 0U };
     /* In AES CBC-MAC last block is MAC */
@@ -733,7 +743,7 @@ bool CryptnoxWallet::aes_cbc_decrypt(uint8_t *response, size_t response_len, uin
     /* Set padding ISO/IEC 9797-1 Method 2 algorithm */
     aesLib.set_paddingmode(paddingMode::Bit);
     /* Decode the payload using the AES key and IVs corresponding to the last MAC received by the smartcard */
-    uint16_t decryptedDataLength = aesLib.decrypt(rep_data, AES_BLOCK_SIZE, decryptedData, _aesKey, sizeof(_aesKey), mac_value);
+    uint16_t decryptedDataLength = aesLib.decrypt(rep_data, AES_BLOCK_SIZE, decryptedData, session.aesKey, sizeof(session.aesKey), mac_value);
 
     serial.println("Decoded data: ");
     for (uint8_t i = 0; i < decryptedDataLength; i++) {
