@@ -1,9 +1,9 @@
 var classPN532Adapter =
 [
-    [ "PN532Adapter", "classPN532Adapter.html#a5156eb230c39119af586141e96c4581e", null ],
-    [ "PN532Adapter", "classPN532Adapter.html#aceddba9d4faa368ea55a58643ada76c3", null ],
-    [ "PN532Adapter", "classPN532Adapter.html#aeffabbe2f32a9572fd516565f9f5ba31", null ],
-    [ "PN532Adapter", "classPN532Adapter.html#a9d3b1edb49a756b6f8b9a938e014d611", null ],
+    [ "PN532Adapter", "classPN532Adapter.html#aad20984554a22f3de346be51969c3998", null ],
+    [ "PN532Adapter", "classPN532Adapter.html#a8c439e0e1ae55b2fd973f5653f0f8a1a", null ],
+    [ "PN532Adapter", "classPN532Adapter.html#a186e2027581a97254064dca9132fa4d3", null ],
+    [ "PN532Adapter", "classPN532Adapter.html#ab419ae9f927a641de99630b540441a1b", null ],
     [ "~PN532Adapter", "classPN532Adapter.html#a66a9119026b6d0312aa52fe625208735", null ],
     [ "PN532Adapter", "classPN532Adapter.html#acd41b9b53db59c1777d6059fda1e6dcd", null ],
     [ "begin", "classPN532Adapter.html#ac512aa42da5b575aaa7422e6d2358351", null ],
