@@ -54,7 +54,7 @@ bool CryptnoxWallet::processCard() {
             const uECC_Curve_t * sessionCurve = uECC_secp256r1();
 
             /* Create secure session context (stack-local for reentrancy) */
-            SecureSession session;
+            CW_SecureSession session;
 
             /* Get certificate and establish secure channel */
             getCardCertificate(cardCertificate, cardCertificateLength);
@@ -303,7 +303,7 @@ bool CryptnoxWallet::openSecureChannel(uint8_t* salt, uint8_t* sessionPublicKey,
  * @param[in] cardEphemeralPubKey Pointer to the 65-byte card ephemeral public key ('0x04' prefix + X||Y).
  * @return true if the shared secret was successfully generated, false otherwise.
  */
-bool CryptnoxWallet::mutuallyAuthenticate(SecureSession& session, const uint8_t* salt, uint8_t* clientPublicKey, uint8_t* clientPrivateKey, const uECC_Curve_t* sessionCurve, uint8_t* cardEphemeralPubKey) {
+bool CryptnoxWallet::mutuallyAuthenticate(CW_SecureSession& session, const uint8_t* salt, uint8_t* clientPublicKey, uint8_t* clientPrivateKey, const uECC_Curve_t* sessionCurve, uint8_t* cardEphemeralPubKey) {
     bool ret = false;
     uint8_t sharedSecret[32U] = { 0U };
 
@@ -335,8 +335,8 @@ bool CryptnoxWallet::mutuallyAuthenticate(SecureSession& session, const uint8_t*
         serial.println(F("SHA-512 computed."));
 
         /* Split SHA-512 output into Kenc and Kmac */
-        memcpy(session.aesKey, sha512Output, 32U);       /* first 32 bytes for encryption key */
-        memcpy(session.macKey, sha512Output + 32U, 32U); /* last 32 bytes for MAC key */
+        memcpy(session.aesKey, sha512Output, CW_AESKEY_SIZE);       /* first 32 bytes for encryption key */
+        memcpy(session.macKey, sha512Output + CW_AESKEY_SIZE, CW_MACKEY_SIZE); /* last 32 bytes for MAC key */
 
         serial.println(F("aesKey and macKey derived."));
 
@@ -402,7 +402,7 @@ bool CryptnoxWallet::mutuallyAuthenticate(SecureSession& session, const uint8_t*
                     serial.println(F("OpenSecureChannel success."));
 
                     /* Rolling IVs: It is the last MAC, ie the first AES_BLOCK_SIZE bytes from the last answer */
-                    memcpy(session.iv, response, 16U);
+                    memcpy(session.iv, response, CW_IV_SIZE);
                     ret = true; 
                 } 
                 else {
@@ -590,7 +590,7 @@ bool CryptnoxWallet::extractCardEphemeralKey(const uint8_t* cardCertificate, uin
  *
  * @param[in,out] session Reference to the secure session containing keys and IV.
  */
-void CryptnoxWallet::verifyPin(SecureSession& session) {
+void CryptnoxWallet::verifyPin(CW_SecureSession& session) {
     uint8_t data[] = { 0x31, 0x32, 0x33, 0x34 }; /* PIN code 1234 */
     uint8_t apdu[] = {0x80, 0x20, 0x00, 0x00};
     aes_cbc_encrypt(session, apdu, sizeof(apdu), data, sizeof(data));
@@ -614,7 +614,7 @@ void CryptnoxWallet::verifyPin(SecureSession& session) {
  * - MAC is computed with `session.macKey` using AES-CBC with no padding.
  * - `session.iv` is updated after successful APDU response for rolling IV.
  */
-void CryptnoxWallet::aes_cbc_encrypt(SecureSession& session, const uint8_t apdu[], uint16_t apduLength, const uint8_t data[], uint16_t dataLength) {
+void CryptnoxWallet::aes_cbc_encrypt(CW_SecureSession& session, const uint8_t apdu[], uint16_t apduLength, const uint8_t data[], uint16_t dataLength) {
     uint8_t encryptedData[2 * INPUT_BUFFER_LIMIT] = { 0U };
 
     /* Set padding ISO/IEC 9797-1 Method 2 algorithm */
@@ -670,7 +670,7 @@ void CryptnoxWallet::aes_cbc_encrypt(SecureSession& session, const uint8_t apdu[
             serial.println(F("getCardInfo success."));
 
             /* Rolling IVs: It is the last MAC, ie the first AES_BLOCK_SIZE bytes from the last answer */
-            memcpy(session.iv, response, AES_BLOCK_SIZE);
+            memcpy(session.iv, response, CW_IV_SIZE);
 
             serial.println("macValue: ");
             for (uint8_t i = 0U; i < AES_BLOCK_SIZE; i++) {
@@ -702,7 +702,7 @@ void CryptnoxWallet::aes_cbc_encrypt(SecureSession& session, const uint8_t apdu[
  * @param[out]    mac_value    MAC from last sent message.
  * @return true if MAC verification succeeds, false otherwise.
  */
-bool CryptnoxWallet::aes_cbc_decrypt(SecureSession& session, uint8_t *response, size_t response_len, uint8_t * mac_value) {
+bool CryptnoxWallet::aes_cbc_decrypt(CW_SecureSession& session, uint8_t *response, size_t response_len, uint8_t * mac_value) {
 
     /* Response = MAC || cipherText || SW1/2 */
     uint8_t rep_mac[AES_BLOCK_SIZE];

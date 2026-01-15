@@ -41,12 +41,12 @@ package "Cryptnox SDK" <<Frame>> {
         + ~NFCDriver()
     }
 
-    class SecureSession <<struct>> {
+    class CW_SecureSession <<struct>> {
         + aesKey[32] : uint8_t
         + macKey[32] : uint8_t
         + iv[16] : uint8_t
         --
-        + SecureSession()
+        + CW_SecureSession()
         + clear() : void
     }
 
@@ -136,7 +136,7 @@ package "External Libraries" <<Frame>> #FFFDE7 {
 
 NFCDriver <|-- PN532Adapter : implements
 CryptnoxWallet o--> "1" NFCDriver : uses
-CryptnoxWallet ..> SecureSession : "creates & passes"
+CryptnoxWallet ..> CW_SecureSession : "creates & passes"
 PN532Adapter --> PN532Interface : uses
 PN532Adapter *--> "1" Adafruit_PN532 : owns
 
@@ -160,7 +160,7 @@ note right of CryptnoxWallet
   * Key derivation (SHA-512)
 end note
 
-note top of SecureSession
+note top of CW_SecureSession
   **Reentrant Session Context**
   Holds cryptographic state
   as a stack-local struct:

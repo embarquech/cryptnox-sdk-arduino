@@ -1,26 +1,42 @@
 #ifndef CRYPTNOXWALLET_H
 #define CRYPTNOXWALLET_H
 
-#include "NFCDriver.h"
+/******************************************************************
+ * 1. Included files (microcontroller ones then user defined ones)
+ ******************************************************************/
+
 #include <Arduino.h>
-#include "uECC.h"
+#include "NFCDriver.h"
 #include "SerialDriver.h"
+#include "uECC.h"
+
+/******************************************************************
+ * 2. Constants / define declarations
+ ******************************************************************/
+
+#define CW_AESKEY_SIZE    (32U)  /**< AES-256 session encryption key size in bytes */
+#define CW_MACKEY_SIZE    (32U)  /**< AES-256 session MAC key size in bytes */
+#define CW_IV_SIZE        (16U)  /**< AES-CBC IV size in bytes */
+
+/******************************************************************
+ * 3. Typedefs / enum / structs
+ ******************************************************************/
 
 /**
- * @struct SecureSession
+ * @struct CW_SecureSession
  * @brief Holds cryptographic session state for reentrant secure channel operations.
  *
  * This struct encapsulates all session-specific cryptographic material,
  * allowing functions to be reentrant by passing session state as a parameter
  * rather than storing it as class member variables.
  */
-struct SecureSession {
-    uint8_t aesKey[32U];  /**< AES-256 session encryption key (Kenc) */
-    uint8_t macKey[32U];  /**< AES-256 session MAC key (Kmac) */
-    uint8_t iv[16U];      /**< Current AES-CBC IV (rolling IV for secure messaging) */
+struct CW_SecureSession {
+    uint8_t aesKey[CW_AESKEY_SIZE];  /**< AES-256 session encryption key (Kenc) */
+    uint8_t macKey[CW_MACKEY_SIZE];  /**< AES-256 session MAC key (Kmac) */
+    uint8_t iv[CW_IV_SIZE];          /**< Current AES-CBC IV (rolling IV for secure messaging) */
 
     /** @brief Initialize all session keys and IV to zero. */
-    SecureSession() {
+    CW_SecureSession() {
         memset(aesKey, 0U, sizeof(aesKey));
         memset(macKey, 0U, sizeof(macKey));
         memset(iv, 0U, sizeof(iv));
@@ -33,6 +49,10 @@ struct SecureSession {
         memset(iv, 0U, sizeof(iv));
     }
 };
+
+/******************************************************************
+ * 4. Free functions / file-scope functions
+ ******************************************************************/
 
 /**
  * @class CryptnoxWallet
@@ -126,7 +146,7 @@ public:
     */
     bool openSecureChannel(uint8_t* salt, uint8_t* clientPublicKey, uint8_t* clientPrivateKey, const uECC_Curve_t* sessionCurve);
 
-    bool mutuallyAuthenticate(SecureSession& session, const uint8_t* salt, uint8_t* clientPublicKey, uint8_t* clientPrivateKey, const uECC_Curve_t* sessionCurve, uint8_t* cardEphemeralPubKey);
+    bool mutuallyAuthenticate(CW_SecureSession& session, const uint8_t* salt, uint8_t* clientPublicKey, uint8_t* clientPrivateKey, const uECC_Curve_t* sessionCurve, uint8_t* cardEphemeralPubKey);
 
     /**
     * @brief Extracts the card's ephemeral EC P-256 public key from the certificate.
@@ -162,13 +182,13 @@ public:
     * @brief Sends a secured GET CARD INFO APDU.
     * @param[in,out] session Reference to the secure session containing keys and IV.
     */
-    void getCardInfo(SecureSession& session);
+    void getCardInfo(CW_SecureSession& session);
 
     /**
     * @brief Verifies the PIN code.
     * @param[in,out] session Reference to the secure session containing keys and IV.
     */
-    void verifyPin(SecureSession& session);
+    void verifyPin(CW_SecureSession& session);
 
     /**
     * @brief Encrypts data and sends a secured APDU using AES-CBC and MAC.
@@ -179,7 +199,7 @@ public:
     * @param[in] data           Plaintext data to encrypt and send.
     * @param[in] dataLength     Length of the plaintext data.
     */
-    void aes_cbc_encrypt(SecureSession& session, const uint8_t apdu[], uint16_t apduLength, const uint8_t data[], uint16_t dataLength);
+    void aes_cbc_encrypt(CW_SecureSession& session, const uint8_t apdu[], uint16_t apduLength, const uint8_t data[], uint16_t dataLength);
 
     /**
     * @brief Decrypts data from a secured APDU using AES-CBC and verifies the MAC.
@@ -190,7 +210,7 @@ public:
     * @param[out]    mac_value    Computed MAC value.
     * @return true if MAC verification succeeds, false otherwise.
     */
-    bool aes_cbc_decrypt(SecureSession& session, uint8_t *response, size_t response_len, uint8_t * mac_value);
+    bool aes_cbc_decrypt(CW_SecureSession& session, uint8_t *response, size_t response_len, uint8_t * mac_value);
 
 private:
     NFCDriver& driver; /**< PN532 driver for low-level NFC operations */
