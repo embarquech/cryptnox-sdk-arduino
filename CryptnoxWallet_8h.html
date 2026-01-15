@@ -90,18 +90,19 @@ $(document).ready(function(){initNavTree('CryptnoxWallet_8h.html',''); initResiz
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a>  </div>
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle"><div class="title">CryptnoxWallet.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="NFCDriver_8h_source.html">NFCDriver.h</a>&quot;</code><br />
-<code>#include &lt;Arduino.h&gt;</code><br />
-<code>#include &quot;uECC.h&quot;</code><br />
+<div class="textblock"><code>#include &lt;Arduino.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="NFCDriver_8h_source.html">NFCDriver.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="SerialDriver_8h_source.html">SerialDriver.h</a>&quot;</code><br />
+<code>#include &quot;uECC.h&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for CryptnoxWallet.h:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="CryptnoxWallet_8h__incl.svg" width="390" height="183"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="CryptnoxWallet_8h__incl.svg" width="354" height="183"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
@@ -113,13 +114,68 @@ This graph shows which files directly or indirectly include this file:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSecureSession.html">SecureSession</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Holds cryptographic session state for reentrant secure channel operations.  <a href="structSecureSession.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structCW__SecureSession.html">CW_SecureSession</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Holds cryptographic session state for reentrant secure channel operations.  <a href="structCW__SecureSession.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html">CryptnoxWallet</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">High-level interface for interacting with a PN532-based wallet.  <a href="classCryptnoxWallet.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ab2cbf807dca2732cdf52cc1f7ea7eed7" id="r_ab2cbf807dca2732cdf52cc1f7ea7eed7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="CryptnoxWallet_8h.html#ab2cbf807dca2732cdf52cc1f7ea7eed7">CW_AESKEY_SIZE</a>&#160;&#160;&#160;(32U)</td></tr>
+<tr class="separator:ab2cbf807dca2732cdf52cc1f7ea7eed7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a788f3618a3b011dafdeac9a4be0e4511" id="r_a788f3618a3b011dafdeac9a4be0e4511"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="CryptnoxWallet_8h.html#a788f3618a3b011dafdeac9a4be0e4511">CW_MACKEY_SIZE</a>&#160;&#160;&#160;(32U)</td></tr>
+<tr class="separator:a788f3618a3b011dafdeac9a4be0e4511"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0174789c51339e421a8fd1b10570bd9d" id="r_a0174789c51339e421a8fd1b10570bd9d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="CryptnoxWallet_8h.html#a0174789c51339e421a8fd1b10570bd9d">CW_IV_SIZE</a>&#160;&#160;&#160;(16U)</td></tr>
+<tr class="separator:a0174789c51339e421a8fd1b10570bd9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="ab2cbf807dca2732cdf52cc1f7ea7eed7" name="ab2cbf807dca2732cdf52cc1f7ea7eed7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab2cbf807dca2732cdf52cc1f7ea7eed7">&#9670;&#160;</a></span>CW_AESKEY_SIZE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CW_AESKEY_SIZE&#160;&#160;&#160;(32U)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>AES-256 session encryption key size in bytes </p>
+
+</div>
+</div>
+<a id="a0174789c51339e421a8fd1b10570bd9d" name="a0174789c51339e421a8fd1b10570bd9d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0174789c51339e421a8fd1b10570bd9d">&#9670;&#160;</a></span>CW_IV_SIZE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CW_IV_SIZE&#160;&#160;&#160;(16U)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>AES-CBC IV size in bytes </p>
+
+</div>
+</div>
+<a id="a788f3618a3b011dafdeac9a4be0e4511" name="a788f3618a3b011dafdeac9a4be0e4511"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a788f3618a3b011dafdeac9a4be0e4511">&#9670;&#160;</a></span>CW_MACKEY_SIZE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CW_MACKEY_SIZE&#160;&#160;&#160;(32U)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>AES-256 session MAC key size in bytes </p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

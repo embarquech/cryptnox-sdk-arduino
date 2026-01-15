@@ -1,5 +1,5 @@
 var searchData=
 [
   ['getcardcertificate_0',['getCardCertificate',['../classCryptnoxWallet.html#a629e48c198d3bace45603bf335d43f09',1,'CryptnoxWallet']]],
-  ['getcardinfo_1',['getCardInfo',['../classCryptnoxWallet.html#a7facedd0c4ac09e20b535e8dded78ab5',1,'CryptnoxWallet']]]
+  ['getcardinfo_1',['getCardInfo',['../classCryptnoxWallet.html#a14a8f392e44c6960205aa6514f99b34f',1,'CryptnoxWallet']]]
 ];
