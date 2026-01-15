@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['mutuallyauthenticate_0',['mutuallyAuthenticate',['../classCryptnoxWallet.html#a9afa77ec0b80823d2263dd0e4cfc7825',1,'CryptnoxWallet']]]
+  ['mutuallyauthenticate_0',['mutuallyAuthenticate',['../classCryptnoxWallet.html#a48010290fb260713c1afca2e6ea7fd2b',1,'CryptnoxWallet']]]
 ];

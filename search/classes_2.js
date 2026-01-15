@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['pn532adapter_0',['PN532Adapter',['../classPN532Adapter.html',1,'']]]
+  ['nfcdriver_0',['NFCDriver',['../classNFCDriver.html',1,'']]]
 ];

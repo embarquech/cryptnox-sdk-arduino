@@ -1,10 +1,13 @@
 <map id="examples/PN532Adapter.h" name="examples/PN532Adapter.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,200,31"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="78,152,162,177"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="78,33,55,47,34,63,22,83,22,92,25,103,46,127,74,144,71,149,43,131,20,105,16,93,17,81,30,60,52,42,76,29"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="35,79,170,104"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="105,31,105,65,100,65,100,31"/>
-<area shape="rect" id="Node000004" href="$NFCDriver_8h.html" title=" " alt="" coords="194,79,294,104"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="127,28,210,70,208,75,124,33"/>
-<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="225,106,153,147,151,143,223,102"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="66,5,261,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="192,152,276,177"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="101,33,61,45,27,60,16,69,10,79,9,90,15,102,40,120,82,134,179,154,178,159,81,139,38,124,11,106,4,91,4,78,12,66,25,56,59,40,100,28"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="26,79,160,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="154,33,116,71,112,67,150,29"/>
+<area shape="rect" id="Node000004" href="$NFCDriver_8h.html" title=" " alt="" coords="184,79,284,104"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="177,29,215,67,211,71,173,33"/>
+<area shape="rect" id="Node000005" href="$SerialDriver_8h.html" title=" " alt="" coords="308,79,419,104"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="197,28,319,71,317,76,195,33"/>
+<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="237,104,237,138,232,138,232,104"/>
+<area shape="poly" id="edge6_Node000005_Node000002" title=" " alt="" coords="344,106,269,147,266,143,342,102"/>
 </map>
