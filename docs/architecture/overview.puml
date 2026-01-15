@@ -41,10 +41,18 @@ package "Cryptnox SDK" <<Frame>> {
         + ~NFCDriver()
     }
 
+    abstract class SerialDriver <<interface>> {
+        + {abstract} begin(baudRate) : bool
+        + {abstract} print(...) : void
+        + {abstract} println(...) : void
+        --
+        + ~SerialDriver()
+    }
+
     class CW_SecureSession <<struct>> {
-        + aesKey[32] : uint8_t
-        + macKey[32] : uint8_t
-        + iv[16] : uint8_t
+        + aesKey[CW_AESKEY_SIZE] : uint8_t
+        + macKey[CW_MACKEY_SIZE] : uint8_t
+        + iv[CW_IV_SIZE] : uint8_t
         --
         + CW_SecureSession()
         + clear() : void
@@ -52,8 +60,9 @@ package "Cryptnox SDK" <<Frame>> {
 
     class CryptnoxWallet <<core>> {
         - driver : NFCDriver&
+        - serial : SerialDriver&
         --
-        + CryptnoxWallet(driver : NFCDriver&)
+        + CryptnoxWallet(driver : NFCDriver&, serial : SerialDriver&)
         + begin() : bool
         + processCard() : bool
         + selectApdu() : bool
@@ -81,13 +90,14 @@ package "Cryptnox SDK" <<Frame>> {
     }
 
     class PN532Adapter <<adapter>> {
+        - serial : SerialDriver*
         - interface : PN532Interface
         - nfc : Adafruit_PN532*
         --
-        + PN532Adapter(ssPin, theSPI) <<SPI>>
-        + PN532Adapter(clk, miso, mosi, ss) <<SW-SPI>>
-        + PN532Adapter(irqPin, resetPin, wire) <<I2C>>
-        + PN532Adapter(resetPin, uartSerial) <<UART>>
+        + PN532Adapter(serialDriver, ssPin, theSPI) <<SPI>>
+        + PN532Adapter(serialDriver, clk, miso, mosi, ss) <<SW-SPI>>
+        + PN532Adapter(serialDriver, irqPin, resetPin, wire) <<I2C>>
+        + PN532Adapter(serialDriver, resetPin, uartSerial) <<UART>>
         + ~PN532Adapter()
         + PN532Adapter(const PN532Adapter&) = delete
         + operator=(const PN532Adapter&) = delete
@@ -98,6 +108,20 @@ package "Cryptnox SDK" <<Frame>> {
         + inListPassiveTarget() : bool
         + resetReader() : void
         + printFirmwareVersion() : bool
+    }
+
+    class ArduinoSerialAdapter <<adapter>> {
+        - _serial : HardwareSerial*
+        --
+        + ArduinoSerialAdapter()
+        + ArduinoSerialAdapter(serial : HardwareSerial*)
+        + ~ArduinoSerialAdapter()
+        + ArduinoSerialAdapter(const ArduinoSerialAdapter&) = delete
+        + operator=(const ArduinoSerialAdapter&) = delete
+        --
+        + begin(baudRate) : bool
+        + print(...) : void
+        + println(...) : void
     }
 }
 
@@ -128,6 +152,12 @@ package "External Libraries" <<Frame>> #FFFDE7 {
         + update(data, len) : void
         + finalize(output, len) : void
     }
+
+    class HardwareSerial <<Arduino>> {
+        + begin(baudRate) : void
+        + print(...) : size_t
+        + println(...) : size_t
+    }
 }
 
 ' ============================================
@@ -135,16 +165,21 @@ package "External Libraries" <<Frame>> #FFFDE7 {
 ' ============================================
 
 NFCDriver <|-- PN532Adapter : implements
+SerialDriver <|-- ArduinoSerialAdapter : implements
 CryptnoxWallet o--> "1" NFCDriver : uses
+CryptnoxWallet o--> "1" SerialDriver : uses
 CryptnoxWallet ..> CW_SecureSession : "creates & passes"
+PN532Adapter o--> "1" SerialDriver : uses
 PN532Adapter --> PN532Interface : uses
 PN532Adapter *--> "1" Adafruit_PN532 : owns
+ArduinoSerialAdapter *--> "1" HardwareSerial : wraps
 
 CryptnoxWallet ..> AESLib : uses
 CryptnoxWallet ..> uECC : uses
 CryptnoxWallet ..> SHA512 : uses
 
 Adafruit_PN532 -[hidden]- AESLib
+SerialDriver -[hidden]- NFCDriver
 
 ' ============================================
 ' NOTES
@@ -184,6 +219,15 @@ note right of NFCDriver
   **Driver Interface**
   Allows swapping NFC hardware
   without changing wallet logic
+end note
+
+note left of SerialDriver
+  **Serial Interface**
+  Abstracts serial output for:
+  * Different UART ports
+  * LCD displays
+  * Network logging
+  * Unit testing (mock)
 end note
 
 @enduml
