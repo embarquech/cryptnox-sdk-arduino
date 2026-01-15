@@ -56,13 +56,11 @@ var menudata={children:[
 {text:"r",url:"functions_func.html#index_r"},
 {text:"s",url:"functions_func.html#index_s"},
 {text:"v",url:"functions_func.html#index_v"},
-{text:"~",url:"functions_func.html#index__7E"}]},
-{text:"Variables",url:"functions_vars.html"}]}]},
+{text:"~",url:"functions_func.html#index__7E"}]}]}]},
 {text:"Files",url:"files.html",children:[
 {text:"File List",url:"files.html"},
 {text:"File Members",url:"globals.html",children:[
 {text:"All",url:"globals.html"},
 {text:"Variables",url:"globals_vars.html"},
 {text:"Enumerations",url:"globals_enum.html"},
-{text:"Macros",url:"globals_defs.html"}]}]},
-{text:"Examples",url:"examples.html"}]}
+{text:"Macros",url:"globals_defs.html"}]}]}]}

@@ -103,9 +103,9 @@ $(document).ready(function(){initNavTree('classCryptnoxWallet.html',''); initRes
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ab1de25a91595a9c250ba84da2edc7012" id="r_ab1de25a91595a9c250ba84da2edc7012"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#ab1de25a91595a9c250ba84da2edc7012">CryptnoxWallet</a> (<a class="el" href="classNFCDriver.html">NFCDriver</a> &amp;driver, <a class="el" href="classSerialDriver.html">SerialDriver</a> &amp;serial)</td></tr>
-<tr class="memdesc:ab1de25a91595a9c250ba84da2edc7012"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a <a class="el" href="classCryptnoxWallet.html" title="High-level interface for interacting with a PN532-based wallet.">CryptnoxWallet</a> over I2C.  <br /></td></tr>
-<tr class="separator:ab1de25a91595a9c250ba84da2edc7012"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a515beb0af1cdc3e57dbfe4c3bfce594d" id="r_a515beb0af1cdc3e57dbfe4c3bfce594d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a515beb0af1cdc3e57dbfe4c3bfce594d">CryptnoxWallet</a> (<a class="el" href="classNFCDriver.html">NFCDriver</a> &amp;driver)</td></tr>
+<tr class="memdesc:a515beb0af1cdc3e57dbfe4c3bfce594d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a <a class="el" href="classCryptnoxWallet.html" title="High-level interface for interacting with a PN532-based wallet.">CryptnoxWallet</a> over I2C.  <br /></td></tr>
+<tr class="separator:a515beb0af1cdc3e57dbfe4c3bfce594d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa394fe6bc19d57c4a9d89a303f7e664d" id="r_aa394fe6bc19d57c4a9d89a303f7e664d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#aa394fe6bc19d57c4a9d89a303f7e664d">begin</a> ()</td></tr>
 <tr class="memdesc:aa394fe6bc19d57c4a9d89a303f7e664d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the PN532 module via the underlying driver.  <br /></td></tr>
 <tr class="separator:aa394fe6bc19d57c4a9d89a303f7e664d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -127,9 +127,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a5e31e6d45992e39db06b8a05ca70bddd" id="r_a5e31e6d45992e39db06b8a05ca70bddd"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a5e31e6d45992e39db06b8a05ca70bddd">openSecureChannel</a> (uint8_t *salt, uint8_t *clientPublicKey, uint8_t *clientPrivateKey, const uECC_Curve_t *sessionCurve)</td></tr>
 <tr class="memdesc:a5e31e6d45992e39db06b8a05ca70bddd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the initial 32-byte salt from the card for starting a secure channel.  <br /></td></tr>
 <tr class="separator:a5e31e6d45992e39db06b8a05ca70bddd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a48010290fb260713c1afca2e6ea7fd2b" id="r_a48010290fb260713c1afca2e6ea7fd2b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a48010290fb260713c1afca2e6ea7fd2b">mutuallyAuthenticate</a> (<a class="el" href="structCW__SecureSession.html">CW_SecureSession</a> &amp;session, const uint8_t *salt, uint8_t *clientPublicKey, uint8_t *clientPrivateKey, const uECC_Curve_t *sessionCurve, uint8_t *cardEphemeralPubKey)</td></tr>
-<tr class="memdesc:a48010290fb260713c1afca2e6ea7fd2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs the ECDH-based mutual authentication step of the secure channel.  <br /></td></tr>
-<tr class="separator:a48010290fb260713c1afca2e6ea7fd2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9afa77ec0b80823d2263dd0e4cfc7825" id="r_a9afa77ec0b80823d2263dd0e4cfc7825"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a9afa77ec0b80823d2263dd0e4cfc7825">mutuallyAuthenticate</a> (const uint8_t *salt, uint8_t *clientPublicKey, uint8_t *clientPrivateKey, const uECC_Curve_t *sessionCurve, uint8_t *cardEphemeralPubKey)</td></tr>
+<tr class="memdesc:a9afa77ec0b80823d2263dd0e4cfc7825"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs the ECDH-based mutual authentication step of the secure channel.  <br /></td></tr>
+<tr class="separator:a9afa77ec0b80823d2263dd0e4cfc7825"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae435d13a1a21b8a4f5cdbc00f9d2d24e" id="r_ae435d13a1a21b8a4f5cdbc00f9d2d24e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#ae435d13a1a21b8a4f5cdbc00f9d2d24e">extractCardEphemeralKey</a> (const uint8_t *cardCertificate, uint8_t *cardEphemeralPubKey, uint8_t *fullEphemeralPubKey65=nullptr)</td></tr>
 <tr class="memdesc:ae435d13a1a21b8a4f5cdbc00f9d2d24e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts the card's ephemeral EC P-256 public key from the certificate.  <br /></td></tr>
 <tr class="separator:ae435d13a1a21b8a4f5cdbc00f9d2d24e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -139,25 +139,25 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a96067e53c3bb3d04e77a03f822676949" id="r_a96067e53c3bb3d04e77a03f822676949"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a96067e53c3bb3d04e77a03f822676949">checkStatusWord</a> (const uint8_t *response, uint8_t responseLength, uint8_t sw1Expected, uint8_t sw2Expected)</td></tr>
 <tr class="memdesc:a96067e53c3bb3d04e77a03f822676949"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks the status word (SW1/SW2) at the end of an APDU response.  <br /></td></tr>
 <tr class="separator:a96067e53c3bb3d04e77a03f822676949"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a14a8f392e44c6960205aa6514f99b34f" id="r_a14a8f392e44c6960205aa6514f99b34f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a14a8f392e44c6960205aa6514f99b34f">getCardInfo</a> (<a class="el" href="structCW__SecureSession.html">CW_SecureSession</a> &amp;session)</td></tr>
-<tr class="memdesc:a14a8f392e44c6960205aa6514f99b34f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a secured GET CARD INFO APDU.  <br /></td></tr>
-<tr class="separator:a14a8f392e44c6960205aa6514f99b34f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af2a97d9d9db0adefe49f09488d8b3d31" id="r_af2a97d9d9db0adefe49f09488d8b3d31"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#af2a97d9d9db0adefe49f09488d8b3d31">verifyPin</a> (<a class="el" href="structCW__SecureSession.html">CW_SecureSession</a> &amp;session)</td></tr>
-<tr class="memdesc:af2a97d9d9db0adefe49f09488d8b3d31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verifies the PIN code.  <br /></td></tr>
-<tr class="separator:af2a97d9d9db0adefe49f09488d8b3d31"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acba0403fdf8112bc12469a76937175ce" id="r_acba0403fdf8112bc12469a76937175ce"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#acba0403fdf8112bc12469a76937175ce">aes_cbc_encrypt</a> (<a class="el" href="structCW__SecureSession.html">CW_SecureSession</a> &amp;session, const uint8_t apdu[], uint16_t apduLength, const uint8_t data[], uint16_t dataLength)</td></tr>
-<tr class="memdesc:acba0403fdf8112bc12469a76937175ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypts data and sends a secured APDU using AES-CBC and MAC.  <br /></td></tr>
-<tr class="separator:acba0403fdf8112bc12469a76937175ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8fe8714471d3cf32aad08a6aa035ba76" id="r_a8fe8714471d3cf32aad08a6aa035ba76"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a8fe8714471d3cf32aad08a6aa035ba76">aes_cbc_decrypt</a> (<a class="el" href="structCW__SecureSession.html">CW_SecureSession</a> &amp;session, uint8_t *response, size_t response_len, uint8_t *mac_value)</td></tr>
-<tr class="memdesc:a8fe8714471d3cf32aad08a6aa035ba76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrypts data from a secured APDU using AES-CBC and verifies the MAC.  <br /></td></tr>
-<tr class="separator:a8fe8714471d3cf32aad08a6aa035ba76"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0a6bc5d989fd875f19714cc9196508e" id="r_af0a6bc5d989fd875f19714cc9196508e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#af0a6bc5d989fd875f19714cc9196508e">getCardInfo</a> ()</td></tr>
+<tr class="memdesc:af0a6bc5d989fd875f19714cc9196508e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a secured GET CARD INFO APDU.  <br /></td></tr>
+<tr class="separator:af0a6bc5d989fd875f19714cc9196508e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f313ab332d85ae6bb10ffceb489a1a1" id="r_a2f313ab332d85ae6bb10ffceb489a1a1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a2f313ab332d85ae6bb10ffceb489a1a1">verifyPin</a> ()</td></tr>
+<tr class="memdesc:a2f313ab332d85ae6bb10ffceb489a1a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verifies the PIN code.  <br /></td></tr>
+<tr class="separator:a2f313ab332d85ae6bb10ffceb489a1a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9eb8af7880a0c78bf50197c8553edec2" id="r_a9eb8af7880a0c78bf50197c8553edec2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a9eb8af7880a0c78bf50197c8553edec2">aes_cbc_encrypt</a> (const uint8_t apdu[], uint16_t apduLength, const uint8_t data[], uint16_t dataLength)</td></tr>
+<tr class="memdesc:a9eb8af7880a0c78bf50197c8553edec2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypts data and sends a secured APDU using AES-CBC and MAC.  <br /></td></tr>
+<tr class="separator:a9eb8af7880a0c78bf50197c8553edec2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7c45d6c2e6d2cad47e29a3e2b6311980" id="r_a7c45d6c2e6d2cad47e29a3e2b6311980"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a7c45d6c2e6d2cad47e29a3e2b6311980">aes_cbc_decrypt</a> (uint8_t *response, size_t response_len, uint8_t *mac_value)</td></tr>
+<tr class="memdesc:a7c45d6c2e6d2cad47e29a3e2b6311980"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrypts data from a secured APDU using AES-CBC and verifies the MAC.  <br /></td></tr>
+<tr class="separator:a7c45d6c2e6d2cad47e29a3e2b6311980"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>High-level interface for interacting with a PN532-based wallet. </p>
 <p>This class encapsulates NFC card operations specific to the Cryptnox wallet, including sending APDUs, retrieving the card certificate, and reading the UID. It supports all bus types provided by Adafruit_PN532 (I2C, SPI, Software SPI, UART) via constructor overloading. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ab1de25a91595a9c250ba84da2edc7012" name="ab1de25a91595a9c250ba84da2edc7012"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab1de25a91595a9c250ba84da2edc7012">&#9670;&#160;</a></span>CryptnoxWallet()</h2>
+<a id="a515beb0af1cdc3e57dbfe4c3bfce594d" name="a515beb0af1cdc3e57dbfe4c3bfce594d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a515beb0af1cdc3e57dbfe4c3bfce594d">&#9670;&#160;</a></span>CryptnoxWallet()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -169,23 +169,13 @@ Public Member Functions</h2></td></tr>
           <td class="memname">CryptnoxWallet::CryptnoxWallet </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classNFCDriver.html">NFCDriver</a> &amp;&#160;</td>
-          <td class="paramname"><em>driver</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>driver</em></td><td>)</td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classSerialDriver.html">SerialDriver</a> &amp;&#160;</td>
-          <td class="paramname"><em>serial</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -196,8 +186,6 @@ Public Member Functions</h2></td></tr>
     <tr><td class="paramname">irq</td><td>Pin number for PN532 IRQ (use -1 if unused). </td></tr>
     <tr><td class="paramname">reset</td><td>Pin number for PN532 RESET (use -1 if unused). </td></tr>
     <tr><td class="paramname">theWire</td><td>TwoWire instance (default is &amp;Wire). </td></tr>
-    <tr><td class="paramname">driver</td><td>Reference to an <a class="el" href="classNFCDriver.html">NFCDriver</a> implementation for NFC communication. </td></tr>
-    <tr><td class="paramname">serial</td><td>Reference to a <a class="el" href="classSerialDriver.html" title="Abstract interface for serial communication.">SerialDriver</a> implementation for debug output. </td></tr>
   </table>
   </dd>
 </dl>
@@ -205,8 +193,8 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a8fe8714471d3cf32aad08a6aa035ba76" name="a8fe8714471d3cf32aad08a6aa035ba76"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8fe8714471d3cf32aad08a6aa035ba76">&#9670;&#160;</a></span>aes_cbc_decrypt()</h2>
+<a id="a7c45d6c2e6d2cad47e29a3e2b6311980" name="a7c45d6c2e6d2cad47e29a3e2b6311980"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7c45d6c2e6d2cad47e29a3e2b6311980">&#9670;&#160;</a></span>aes_cbc_decrypt()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -214,12 +202,6 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">bool CryptnoxWallet::aes_cbc_decrypt </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structCW__SecureSession.html">CW_SecureSession</a> &amp;&#160;</td>
-          <td class="paramname"><em>session</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">uint8_t *&#160;</td>
           <td class="paramname"><em>response</em>, </td>
         </tr>
@@ -247,7 +229,6 @@ Public Member Functions</h2></td></tr>
 <p>Verifies the MAC and decrypts an AES-CBC encrypted APDU response.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">session</td><td>Reference to the secure session containing keys and IV. </td></tr>
     <tr><td class="paramdir">[in,out]</td><td class="paramname">response</td><td>Encrypted APDU response buffer (decrypted in place). </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">response_len</td><td>Length of the response buffer. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">mac_value</td><td>Computed MAC value. </td></tr>
@@ -258,7 +239,6 @@ Public Member Functions</h2></td></tr>
 <p>This function recomputes the MAC, compares it with the received MAC to ensure integrity and decrypts the response data with last MAC sent as as mac_iv.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">session</td><td>Reference to the secure session containing keys and IV. </td></tr>
     <tr><td class="paramdir">[in,out]</td><td class="paramname">response</td><td>Encrypted APDU response buffer. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">response_len</td><td>Length of the response buffer. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">mac_value</td><td>MAC from last sent message. </td></tr>
@@ -269,8 +249,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="acba0403fdf8112bc12469a76937175ce" name="acba0403fdf8112bc12469a76937175ce"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acba0403fdf8112bc12469a76937175ce">&#9670;&#160;</a></span>aes_cbc_encrypt()</h2>
+<a id="a9eb8af7880a0c78bf50197c8553edec2" name="a9eb8af7880a0c78bf50197c8553edec2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9eb8af7880a0c78bf50197c8553edec2">&#9670;&#160;</a></span>aes_cbc_encrypt()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -278,12 +258,6 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">void CryptnoxWallet::aes_cbc_encrypt </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structCW__SecureSession.html">CW_SecureSession</a> &amp;&#160;</td>
-          <td class="paramname"><em>session</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">const uint8_t&#160;</td>
           <td class="paramname"><em>apdu</em>[], </td>
         </tr>
@@ -317,7 +291,6 @@ Public Member Functions</h2></td></tr>
 <p>Encrypts data using AES-CBC, computes a MAC, and sends the APDU to the smartcard.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">session</td><td>Reference to the secure session containing keys and IV. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">apdu</td><td>APDU header (CLA, INS, P1, P2). </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">apduLength</td><td>Length of the APDU header. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>Plaintext data to encrypt and send. </td></tr>
@@ -328,7 +301,6 @@ Public Member Functions</h2></td></tr>
 <p>This function performs AES-CBC encryption of the given data with padding (ISO/IEC 9797-1 Method 2), computes a MAC over the APDU header and encrypted payload, and constructs the final APDU to send. The response IV is updated from the last APDU response.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">session</td><td>Reference to the secure session containing keys and IV. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">apdu</td><td>Pointer to the APDU header bytes. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">apduLength</td><td>Length of the APDU header. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>Pointer to the plaintext data to encrypt. </td></tr>
@@ -337,9 +309,9 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section note"><dt>Note</dt><dd><ul>
-<li>AES CBC encryption is performed with <code>session.aesKey</code> and current <code>session.iv</code>.</li>
-<li>MAC is computed with <code>session.macKey</code> using AES-CBC with no padding.</li>
-<li><code>session.iv</code> is updated after successful APDU response for rolling IV. </li>
+<li>AES CBC encryption is performed with <code>_aesKey</code> and current <code>_iv</code>.</li>
+<li>MAC is computed with <code>_macKey</code> using AES-CBC with no padding.</li>
+<li><code>_iv</code> is updated after successful APDU response for rolling IV. </li>
 </ul>
 </dd></dl>
 
@@ -550,8 +522,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a14a8f392e44c6960205aa6514f99b34f" name="a14a8f392e44c6960205aa6514f99b34f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a14a8f392e44c6960205aa6514f99b34f">&#9670;&#160;</a></span>getCardInfo()</h2>
+<a id="af0a6bc5d989fd875f19714cc9196508e" name="af0a6bc5d989fd875f19714cc9196508e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af0a6bc5d989fd875f19714cc9196508e">&#9670;&#160;</a></span>getCardInfo()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -559,25 +531,18 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">void CryptnoxWallet::getCardInfo </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structCW__SecureSession.html">CW_SecureSession</a> &amp;&#160;</td>
-          <td class="paramname"><em>session</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Sends a secured GET CARD INFO APDU. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">session</td><td>Reference to the secure session containing keys and IV. </td></tr>
-  </table>
-  </dd>
-</dl>
 
 </div>
 </div>
-<a id="a48010290fb260713c1afca2e6ea7fd2b" name="a48010290fb260713c1afca2e6ea7fd2b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a48010290fb260713c1afca2e6ea7fd2b">&#9670;&#160;</a></span>mutuallyAuthenticate()</h2>
+<a id="a9afa77ec0b80823d2263dd0e4cfc7825" name="a9afa77ec0b80823d2263dd0e4cfc7825"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9afa77ec0b80823d2263dd0e4cfc7825">&#9670;&#160;</a></span>mutuallyAuthenticate()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -585,12 +550,6 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">bool CryptnoxWallet::mutuallyAuthenticate </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structCW__SecureSession.html">CW_SecureSession</a> &amp;&#160;</td>
-          <td class="paramname"><em>session</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">const uint8_t *&#160;</td>
           <td class="paramname"><em>salt</em>, </td>
         </tr>
@@ -859,8 +818,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="af2a97d9d9db0adefe49f09488d8b3d31" name="af2a97d9d9db0adefe49f09488d8b3d31"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af2a97d9d9db0adefe49f09488d8b3d31">&#9670;&#160;</a></span>verifyPin()</h2>
+<a id="a2f313ab332d85ae6bb10ffceb489a1a1" name="a2f313ab332d85ae6bb10ffceb489a1a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2f313ab332d85ae6bb10ffceb489a1a1">&#9670;&#160;</a></span>verifyPin()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -868,8 +827,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">void CryptnoxWallet::verifyPin </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structCW__SecureSession.html">CW_SecureSession</a> &amp;&#160;</td>
-          <td class="paramname"><em>session</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -877,19 +835,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Verifies the PIN code. </p>
 <p>Verifies the PIN code on the smartcard.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">session</td><td>Reference to the secure session containing keys and IV.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>This function constructs the APDU for the "Verify PIN" command and encrypts it using <code>aes_cbc_encrypt</code>.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">session</td><td>Reference to the secure session containing keys and IV. </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>This function constructs the APDU for the "Verify PIN" command and encrypts it using <code>aes_cbc_encrypt</code>. </p>
 
 </div>
 </div>

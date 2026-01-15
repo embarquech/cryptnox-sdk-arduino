@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['mackey_0',['macKey',['../structCW__SecureSession.html#a1ed577efda4e4071cd585fbf1e922f88',1,'CW_SecureSession']]],
-  ['max_5fmac_5fdata_5flen_1',['MAX_MAC_DATA_LEN',['../CryptnoxWallet_8cpp.html#a8ed6716688e9a986a27784d937607b98',1,'CryptnoxWallet.cpp']]],
-  ['mutuallyauthenticate_2',['mutuallyAuthenticate',['../classCryptnoxWallet.html#a48010290fb260713c1afca2e6ea7fd2b',1,'CryptnoxWallet']]]
+  ['max_5fmac_5fdata_5flen_0',['MAX_MAC_DATA_LEN',['../CryptnoxWallet_8cpp.html#a8ed6716688e9a986a27784d937607b98',1,'CryptnoxWallet.cpp']]],
+  ['mutuallyauthenticate_1',['mutuallyAuthenticate',['../classCryptnoxWallet.html#a9afa77ec0b80823d2263dd0e4cfc7825',1,'CryptnoxWallet']]]
 ];

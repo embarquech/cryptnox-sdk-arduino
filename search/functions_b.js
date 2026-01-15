@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['verifypin_0',['verifyPin',['../classCryptnoxWallet.html#af2a97d9d9db0adefe49f09488d8b3d31',1,'CryptnoxWallet']]]
+  ['verifypin_0',['verifyPin',['../classCryptnoxWallet.html#a2f313ab332d85ae6bb10ffceb489a1a1',1,'CryptnoxWallet']]]
 ];
