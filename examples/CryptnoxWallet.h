@@ -1,9 +1,58 @@
 #ifndef CRYPTNOXWALLET_H
 #define CRYPTNOXWALLET_H
 
-#include "NFCDriver.h"
+/******************************************************************
+ * 1. Included files (microcontroller ones then user defined ones)
+ ******************************************************************/
+
 #include <Arduino.h>
+#include "NFCDriver.h"
+#include "SerialDriver.h"
 #include "uECC.h"
+
+/******************************************************************
+ * 2. Constants / define declarations
+ ******************************************************************/
+
+#define CW_AESKEY_SIZE    (32U)  /**< AES-256 session encryption key size in bytes */
+#define CW_MACKEY_SIZE    (32U)  /**< AES-256 session MAC key size in bytes */
+#define CW_IV_SIZE        (16U)  /**< AES-CBC IV size in bytes */
+
+/******************************************************************
+ * 3. Typedefs / enum / structs
+ ******************************************************************/
+
+/**
+ * @struct CW_SecureSession
+ * @brief Holds cryptographic session state for reentrant secure channel operations.
+ *
+ * This struct encapsulates all session-specific cryptographic material,
+ * allowing functions to be reentrant by passing session state as a parameter
+ * rather than storing it as class member variables.
+ */
+struct CW_SecureSession {
+    uint8_t aesKey[CW_AESKEY_SIZE];  /**< AES-256 session encryption key (Kenc) */
+    uint8_t macKey[CW_MACKEY_SIZE];  /**< AES-256 session MAC key (Kmac) */
+    uint8_t iv[CW_IV_SIZE];          /**< Current AES-CBC IV (rolling IV for secure messaging) */
+
+    /** @brief Initialize all session keys and IV to zero. */
+    CW_SecureSession() {
+        memset(aesKey, 0U, sizeof(aesKey));
+        memset(macKey, 0U, sizeof(macKey));
+        memset(iv, 0U, sizeof(iv));
+    }
+
+    /** @brief Securely clear all session keys and IV. */
+    void clear() {
+        memset(aesKey, 0U, sizeof(aesKey));
+        memset(macKey, 0U, sizeof(macKey));
+        memset(iv, 0U, sizeof(iv));
+    }
+};
+
+/******************************************************************
+ * 4. Free functions / file-scope functions
+ ******************************************************************/
 
 /**
  * @class CryptnoxWallet
@@ -22,8 +71,10 @@ public:
      * @param irq Pin number for PN532 IRQ (use -1 if unused).
      * @param reset Pin number for PN532 RESET (use -1 if unused).
      * @param theWire TwoWire instance (default is &Wire).
+     * @param driver Reference to an NFCDriver implementation for NFC communication.
+     * @param serial Reference to a SerialDriver implementation for debug output.
      */
-    explicit CryptnoxWallet(NFCDriver& driver) : driver(driver) {}
+    CryptnoxWallet(NFCDriver& driver, SerialDriver& serial) : driver(driver), serial(serial) {}
 
     /**
      * @brief Initialize the PN532 module via the underlying driver.
@@ -95,7 +146,7 @@ public:
     */
     bool openSecureChannel(uint8_t* salt, uint8_t* clientPublicKey, uint8_t* clientPrivateKey, const uECC_Curve_t* sessionCurve);
 
-    bool mutuallyAuthenticate(const uint8_t* salt, uint8_t* clientPublicKey, uint8_t* clientPrivateKey, const uECC_Curve_t* sessionCurve, uint8_t* cardEphemeralPubKey);
+    bool mutuallyAuthenticate(CW_SecureSession& session, const uint8_t* salt, uint8_t* clientPublicKey, uint8_t* clientPrivateKey, const uECC_Curve_t* sessionCurve, uint8_t* cardEphemeralPubKey);
 
     /**
     * @brief Extracts the card's ephemeral EC P-256 public key from the certificate.
@@ -129,39 +180,41 @@ public:
 
     /**
     * @brief Sends a secured GET CARD INFO APDU.
+    * @param[in,out] session Reference to the secure session containing keys and IV.
     */
-    void getCardInfo();
+    void getCardInfo(CW_SecureSession& session);
 
     /**
     * @brief Verifies the PIN code.
+    * @param[in,out] session Reference to the secure session containing keys and IV.
     */
-    void verifyPin();
+    void verifyPin(CW_SecureSession& session);
 
     /**
     * @brief Encrypts data and sends a secured APDU using AES-CBC and MAC.
     *
-    * @param[in] apdu        APDU header (CLA, INS, P1, P2).
-    * @param[in] apduLength Length of the APDU header.
-    * @param[in] data        Plaintext data to encrypt and send.
-    * @param[in] dataLength  Length of the plaintext data.
+    * @param[in,out] session    Reference to the secure session containing keys and IV.
+    * @param[in] apdu           APDU header (CLA, INS, P1, P2).
+    * @param[in] apduLength     Length of the APDU header.
+    * @param[in] data           Plaintext data to encrypt and send.
+    * @param[in] dataLength     Length of the plaintext data.
     */
-    void aes_cbc_encrypt(const uint8_t apdu[], uint16_t apduLength, const uint8_t data[], uint16_t dataLength);
+    void aes_cbc_encrypt(CW_SecureSession& session, const uint8_t apdu[], uint16_t apduLength, const uint8_t data[], uint16_t dataLength);
 
     /**
     * @brief Decrypts data from a secured APDU using AES-CBC and verifies the MAC.
     *
+    * @param[in,out] session      Reference to the secure session containing keys and IV.
     * @param[in,out] response     Encrypted APDU response buffer (decrypted in place).
     * @param[in]     response_len Length of the response buffer.
     * @param[out]    mac_value    Computed MAC value.
     * @return true if MAC verification succeeds, false otherwise.
     */
-    bool aes_cbc_decrypt(uint8_t *response, size_t response_len, uint8_t * mac_value);
+    bool aes_cbc_decrypt(CW_SecureSession& session, uint8_t *response, size_t response_len, uint8_t * mac_value);
 
 private:
     NFCDriver& driver; /**< PN532 driver for low-level NFC operations */
-    uint8_t _aesKey[32U] = { 0U }; /**< AES-256 session encryption key (Kenc) */
-    uint8_t _macKey[32U] = { 0U }; /**< AES-256 session MAC key (Kmac) */
-    uint8_t _iv[16U] = { 0U }; /**< Current AES-CBC IV (rolling IV for secure messaging) */
+    SerialDriver& serial; /**< Serial driver for debug output */
 
     /**
      * @brief RNG callback for micro-ecc library.

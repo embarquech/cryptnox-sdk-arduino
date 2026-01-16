@@ -5,49 +5,60 @@
 /**
  * @brief Construct a PN532Adapter using hardware SPI.
  *
+ * @param serialDriver Reference to SerialDriver for debug output.
  * @param ssPin SPI slave select pin connected to the PN532 module.
  * @param theSPI Pointer to SPIClass instance (default: &SPI).
  */
-PN532Adapter::PN532Adapter(uint8_t ssPin, SPIClass *theSPI)
-    : interface(PN532Interface::SPI_HARDWARE)
+PN532Adapter::PN532Adapter(SerialDriver& serialDriver, uint8_t ssPin, SPIClass *theSPI)
 {
-    nfc = new Adafruit_PN532(ssPin, theSPI);
+    serial    = &serialDriver;
+    interface = PN532Interface::SPI_HARDWARE;
+    nfc       = new Adafruit_PN532(ssPin, theSPI);
 }
 
 /**
  * @brief Construct a PN532Adapter using software SPI (bit-banged).
  *
+ * @param serialDriver Reference to SerialDriver for debug output.
  * @param clk Clock pin.
  * @param miso MISO pin.
  * @param mosi MOSI pin.
  * @param ss SPI slave select pin.
  */
-PN532Adapter::PN532Adapter(uint8_t clk, uint8_t miso, uint8_t mosi, uint8_t ss)
-    : interface(PN532Interface::SPI_SOFTWARE) {
-    nfc = new Adafruit_PN532(clk, miso, mosi, ss);
+PN532Adapter::PN532Adapter(SerialDriver& serialDriver, uint8_t clk, uint8_t miso, uint8_t mosi, uint8_t ss)
+{
+    serial    = &serialDriver;
+    interface = PN532Interface::SPI_SOFTWARE;
+    nfc       = new Adafruit_PN532(clk, miso, mosi, ss);
 }
 
 /**
  * @brief Construct a PN532Adapter using I2C.
  *
+ * @param serialDriver Reference to SerialDriver for debug output.
  * @param irqPin IRQ pin (if applicable).
  * @param resetPin Reset pin of PN532.
  * @param wire Pointer to TwoWire instance (default: &Wire).
  */
-PN532Adapter::PN532Adapter(uint8_t irqPin, uint8_t resetPin, TwoWire *wire)
-    : interface(PN532Interface::I2C) {
-    nfc = new Adafruit_PN532(irqPin, resetPin, wire);
+PN532Adapter::PN532Adapter(SerialDriver& serialDriver, uint8_t irqPin, uint8_t resetPin, TwoWire *wire)
+{
+    serial    = &serialDriver;
+    interface = PN532Interface::I2C;
+    nfc       = new Adafruit_PN532(irqPin, resetPin, wire);
 }
 
 /**
  * @brief Construct a PN532Adapter using UART.
  *
+ * @param serialDriver Reference to SerialDriver for debug output.
  * @param resetPin Reset pin of PN532.
- * @param serial Pointer to HardwareSerial instance to use.
+ * @param uartSerial Pointer to HardwareSerial instance to use.
  */
-PN532Adapter::PN532Adapter(uint8_t resetPin, HardwareSerial *serial)
-    : interface(PN532Interface::UART) {
-    nfc = new Adafruit_PN532(resetPin, serial);
+PN532Adapter::PN532Adapter(SerialDriver& serialDriver, uint8_t resetPin, HardwareSerial *uartSerial)
+{
+    serial    = &serialDriver;
+    interface = PN532Interface::UART;
+    nfc       = new Adafruit_PN532(resetPin, uartSerial);
 }
 
 /**
@@ -100,22 +111,22 @@ bool PN532Adapter::sendAPDU(const uint8_t* apdu, uint16_t apduLength,
     bool success = nfc->inDataExchange(const_cast<uint8_t*>(apdu), apduLength, response, &responseLength);
 
     if (!success) {
-        Serial.println(F("APDU exchange failed!"));
+        serial->println(F("APDU exchange failed!"));
         return false;
     }
 
-    Serial.print(F("APDU response ("));
-    Serial.print(responseLength);
-    Serial.println(F(" bytes):"));
+    serial->print(F("APDU response ("));
+    serial->print(responseLength);
+    serial->println(F(" bytes):"));
 
     for (uint8_t i = 0; i < responseLength; i++) {
-        Serial.print(F("0x"));
-        if (response[i] < 16) Serial.print(F("0"));
-        Serial.print(response[i], HEX);
-        Serial.print(F(" "));
-        if ((i + 1) % 16 == 0 && (i + 1) != responseLength) Serial.println();
+        serial->print(F("0x"));
+        if (response[i] < 16) serial->print(F("0"));
+        serial->print(response[i], HEX);
+        serial->print(F(" "));
+        if ((i + 1) % 16 == 0 && (i + 1) != responseLength) serial->println();
     }
-    Serial.println();
+    serial->println();
 
     return true;
 }
@@ -155,59 +166,59 @@ bool PN532Adapter::printFirmwareVersion() {
         uint8_t flags    =  versionData        & 0xFFU;
         bool first       = true;
 
-        Serial.println(F("PN532 information"));
-        Serial.print(F(" ├─ Raw firmware: 0x"));
-        Serial.println(versionData, HEX);
+        serial->println(F("PN532 information"));
+        serial->print(F(" ├─ Raw firmware: 0x"));
+        serial->println(versionData, HEX);
 
-        Serial.print(F(" ├─ IC Chip: "));
+        serial->print(F(" ├─ IC Chip: "));
         if (ic == 0x32U)
         {
-            Serial.println(F("PN532"));
+            serial->println(F("PN532"));
         }
         else
         {
-            Serial.println(F("Unknown"));
+            serial->println(F("Unknown"));
         }
 
-        Serial.print(F(" ├─ Firmware: "));
-        Serial.print(verMajor);
-        Serial.print(F("."));
-        Serial.println(verMinor);
+        serial->print(F(" ├─ Firmware: "));
+        serial->print(verMajor);
+        serial->print(F("."));
+        serial->println(verMinor);
 
-        Serial.print(F(" └─ Features: "));
+        serial->print(F(" └─ Features: "));
         if ((flags & 0x01U) != 0U) {
-            Serial.print(F("MIFARE"));
+            serial->print(F("MIFARE"));
             first = false;
         }
         if ((flags & 0x02U) != 0U) {
             if (!first)
             {
-                Serial.print(F(" + "));
+                serial->print(F(" + "));
             }
-            Serial.print(F("ISO-DEP"));
+            serial->print(F("ISO-DEP"));
             first = false;
         }
         if ((flags & 0x04U) != 0U) {
             if (!first)
             {
-                Serial.print(F(" + "));
+                serial->print(F(" + "));
             }
-            Serial.print(F("FeliCa"));
+            serial->print(F("FeliCa"));
             first = false;
         }
         if (first) {
-            Serial.print(F("Unknown"));
+            serial->print(F("Unknown"));
         }
 
-        Serial.print(F(" (0x"));
-        Serial.print(flags, HEX);
-        Serial.println(F(")"));
+        serial->print(F(" (0x"));
+        serial->print(flags, HEX);
+        serial->println(F(")"));
 
         nfc->SAMConfig(); /* Configure the PN532 for normal operation */
         result = true;
     }
     else {
-        Serial.println(F("PN532 not found!"));
+        serial->println(F("PN532 not found!"));
         result = false;
     }
 

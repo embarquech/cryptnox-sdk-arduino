@@ -9,6 +9,7 @@
 
 #include "PN532Adapter.h"
 #include "CryptnoxWallet.h"
+#include "ArduinoSerialAdapter.h"
 
 /**
  * @def PN532_SS
@@ -16,8 +17,9 @@
  */
 #define PN532_SS   (10U)
 
-PN532Adapter nfc(PN532_SS, &SPI);
-CryptnoxWallet wallet(nfc);
+ArduinoSerialAdapter serialAdapter;
+PN532Adapter nfc(serialAdapter, PN532_SS, &SPI);
+CryptnoxWallet wallet(nfc, serialAdapter);
 
 /**
  * @brief Arduino setup function.
@@ -26,7 +28,7 @@ CryptnoxWallet wallet(nfc);
  * The actual PN532 initialization is performed later in loop().
  */
 void setup() {
-    Serial.begin(115200);
+    serialAdapter.begin(115200);
     
     /* Arduino R4: Wait 1s to get Serial ready */
     delay(1000);
@@ -36,10 +38,10 @@ void setup() {
 
     /* Initialize the PN532 module */
     if (wallet.begin()) {
-        Serial.println(F("PN532 initialized"));
+        serialAdapter.println(F("PN532 initialized"));
         wallet.printPN532FirmwareVersion();
     } else {
-        Serial.println(F("PN532 init failed"));
+        serialAdapter.println(F("PN532 init failed"));
         /* Halt program if initialization fails */
         while(1);
     }
