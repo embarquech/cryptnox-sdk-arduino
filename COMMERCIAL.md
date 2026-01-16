@@ -2,7 +2,7 @@
   <img src="https://github.com/user-attachments/assets/6ce54a27-8fb6-48e6-9d1f-da144f43425a"/>
 </p>
 
-<h3 align="center">cryptnox-cli</h3>
+<h3 align="center">cryptnox-sdk-arduino</h3>
 <p align="center">Commercial license</p>
 
 <br/>
@@ -10,7 +10,7 @@
 
 # Commercial license
 
-`cryptnox-cli` is distributed under a dual-licensing model:
+`cryptnox-sdk-arduino` is distributed under a dual-licensing model:
 
 - **GNU LGPLv3**
 - **Commercial license**
@@ -36,7 +36,7 @@ For standard Python usage through regular imports, the LGPLv3 terms generally pe
 
 The commercial license provides the following rights:
 
-- Use of `cryptnox-cli` without any obligation imposed by the LGPLv3  
+- Use of `cryptnox-sdk-arduino` without any obligation imposed by the LGPLv3  
 - Distribution or embedding of the SDK under any technical, commercial, or contractual conditions  
 - Internal modification of the SDK without publication requirements  
 - Exemption from all obligations related to library replacement, user relinking, or source availability  
