@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['nfcdriver_0',['NFCDriver',['../classNFCDriver.html',1,'']]],
-  ['nfcdriver_2eh_1',['NFCDriver.h',['../NFCDriver_8h.html',1,'']]]
+  ['mackey_0',['macKey',['../structCW__SecureSession.html#a1ed577efda4e4071cd585fbf1e922f88',1,'CW_SecureSession']]],
+  ['max_5fmac_5fdata_5flen_1',['MAX_MAC_DATA_LEN',['../CryptnoxWallet_8cpp.html#a8ed6716688e9a986a27784d937607b98',1,'CryptnoxWallet.cpp']]],
+  ['mutuallyauthenticate_2',['mutuallyAuthenticate',['../classCryptnoxWallet.html#a48010290fb260713c1afca2e6ea7fd2b',1,'CryptnoxWallet']]]
 ];
