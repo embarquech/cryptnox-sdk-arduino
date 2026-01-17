@@ -567,6 +567,14 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Sends a secured GET CARD INFO APDU. </p>
+<p>Sends a secured GET CARD INFO APDU to retrieve card information.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">session</td><td>Reference to the secure session containing keys and IV.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>This function sends a GET DATA APDU (INS=0xFA) to retrieve card status and information from the Cryptnox card over the secure channel.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">session</td><td>Reference to the secure session containing keys and IV. </td></tr>
