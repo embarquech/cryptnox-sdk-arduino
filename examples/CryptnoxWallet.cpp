@@ -605,6 +605,7 @@ void CryptnoxWallet::verifyPin(CW_SecureSession& session) {
  *
  * @param[in,out] session Reference to the secure session containing keys and IV.
  */
+// cppcheck-suppress unusedFunction
 void CryptnoxWallet::getCardInfo(CW_SecureSession& session) {
     uint8_t data[] = { 0x00 };  /* Empty data field */
     uint8_t apdu[] = {0x80, 0xFA, 0x00, 0x00};  /* GET DATA APDU */
