@@ -102,7 +102,6 @@ bool CryptnoxWallet::readUID(uint8_t* uidBuffer, uint8_t &uidLength) {
 /* Print PN532 firmware version via driver */
 /* MISRA C:2012 Rule 8.9 deviation:
    printPN532FirmwareVersion() is called externally via PN532 driver/library */
-// cppcheck-suppress unusedPrivateFunction
 bool CryptnoxWallet::printPN532FirmwareVersion() {
     return driver.printFirmwareVersion();
 }

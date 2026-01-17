@@ -79,12 +79,16 @@ public:
     /**
      * @brief Initialize the PN532 module via the underlying driver.
      *
-     * Performs SAM configuration and checks firmware version.
+     * Performs SAM configuration and prints firmware version.
      *
      * @return true if the module was successfully initialized, false otherwise.
      */
     bool begin() {
-        return driver.begin();
+        bool ret = driver.begin();
+        if (ret) {
+            printPN532FirmwareVersion();
+        }
+        return ret;
     }
 
     /**
