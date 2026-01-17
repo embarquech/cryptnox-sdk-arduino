@@ -577,6 +577,7 @@ bool CryptnoxWallet::extractCardEphemeralKey(const uint8_t* cardCertificate, uin
         }
 
         serial.println();
+        ret = true;  /* Success */
     }
 
     return ret;
@@ -593,6 +594,20 @@ bool CryptnoxWallet::extractCardEphemeralKey(const uint8_t* cardCertificate, uin
 void CryptnoxWallet::verifyPin(CW_SecureSession& session) {
     uint8_t data[] = { 0x31, 0x32, 0x33, 0x34 }; /* PIN code 1234 */
     uint8_t apdu[] = {0x80, 0x20, 0x00, 0x00};
+    aes_cbc_encrypt(session, apdu, sizeof(apdu), data, sizeof(data));
+}
+
+/**
+ * @brief Sends a secured GET CARD INFO APDU to retrieve card information.
+ *
+ * This function sends a GET DATA APDU (INS=0xFA) to retrieve card status
+ * and information from the Cryptnox card over the secure channel.
+ *
+ * @param[in,out] session Reference to the secure session containing keys and IV.
+ */
+void CryptnoxWallet::getCardInfo(CW_SecureSession& session) {
+    uint8_t data[] = { 0x00 };  /* Empty data field */
+    uint8_t apdu[] = {0x80, 0xFA, 0x00, 0x00};  /* GET DATA APDU */
     aes_cbc_encrypt(session, apdu, sizeof(apdu), data, sizeof(data));
 }
 
