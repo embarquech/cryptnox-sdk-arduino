@@ -2,9 +2,9 @@
  * @file examples.ino
  * @brief Example demonstrating the use of CryptnoxWallet with a PN532 module on Arduino.
  *
- * This sketch initializes the I2C bus and the PN532 NFC reader using the
+ * This sketch initializes the SPI bus and the PN532 NFC reader using the
  * CryptnoxWallet class. It continuously detects NFC/ISO-DEP cards and
- * processes wallet-specific APDU commands.
+ * processes wallet-specific APDU commands with granular step-by-step control.
  */
 
 #include "PN532Adapter.h"
@@ -24,8 +24,8 @@ CryptnoxWallet wallet(nfc, serialAdapter);
 /**
  * @brief Arduino setup function.
  *
- * Initializes the serial port for debugging and the I2C bus.
- * The actual PN532 initialization is performed later in loop().
+ * Initializes the serial port for debugging and the SPI bus.
+ * The PN532 module is initialized via wallet.begin().
  */
 void setup() {
     serialAdapter.begin(115200);
@@ -39,7 +39,6 @@ void setup() {
     /* Initialize the PN532 module */
     if (wallet.begin()) {
         serialAdapter.println(F("PN532 initialized"));
-        wallet.printPN532FirmwareVersion();
     } else {
         serialAdapter.println(F("PN532 init failed"));
         /* Halt program if initialization fails */
@@ -50,18 +49,45 @@ void setup() {
 /**
  * @brief Arduino main loop.
  *
- * The CryptnoxWallet object is declared static so that it persists
- * between iterations. The PN532 module is initialized only once
- * using a static 'initialized' flag.
+ * Demonstrates granular step-by-step card processing:
+ * 1. Detect ISO-DEP capable card
+ * 2. Establish secure channel (handles app selection, certificate, ECDH, mutual auth)
+ * 3. Verify PIN
+ * 4. Get card information
+ * 5. Clear session and reset reader
  *
- * On each loop iteration, the code checks for the presence of a
- * passive NFC/ISO-DEP card and processes wallet APDU commands.
+ * Users can customize each step or add their own logic between operations.
  */
 void loop() {
     
-    /* Process any detected NFC card */
-    (void)wallet.processCard();
-
-    /* Wait 1 second before next loop iteration */
+    /* Step 1: Check for ISO-DEP capable card (APDU-capable) */
+    if (wallet.detectCard()) {
+        serialAdapter.println(F("ISO-DEP card detected"));
+        
+        /* Step 2: Establish secure channel with the card */
+        CW_SecureSession session;
+        if (wallet.establishSecureChannel(session)) {
+            serialAdapter.println(F("Session keys established"));
+            
+            /* Step 3: Verify PIN */
+            serialAdapter.println(F("Verifying PIN..."));
+            wallet.verifyPin(session);
+            
+            /* Step 4: Get card information */
+            serialAdapter.println(F("Getting card information..."));
+            wallet.getCardInfo(session);
+            
+            /* Step 5: Securely clear session keys */
+            session.clear();
+            serialAdapter.println(F("Session cleared"));
+            
+            serialAdapter.println(F("Card processed successfully"));
+        }
+    }
+    
+    /* Reset reader for next card detection */
+    wallet.resetReader();
+    
+    /* Wait before next iteration */
     delay(1000);
 }

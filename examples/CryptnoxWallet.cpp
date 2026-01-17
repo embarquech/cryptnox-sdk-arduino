@@ -62,6 +62,7 @@ bool CryptnoxWallet::processCard() {
             openSecureChannel(openSecureChannelSalt, clientPublicKey, clientPrivateKey, sessionCurve);
             mutuallyAuthenticate(session, openSecureChannelSalt, clientPublicKey, clientPrivateKey, sessionCurve, cardEphemeralPubKey);
             verifyPin(session);
+            getCardInfo(session);
             
             /* Securely clear session keys before leaving scope */
             session.clear();
@@ -101,9 +102,74 @@ bool CryptnoxWallet::readUID(uint8_t* uidBuffer, uint8_t &uidLength) {
 /* Print PN532 firmware version via driver */
 /* MISRA C:2012 Rule 8.9 deviation:
    printPN532FirmwareVersion() is called externally via PN532 driver/library */
-// cppcheck-suppress unusedFunction
 bool CryptnoxWallet::printPN532FirmwareVersion() {
     return driver.printFirmwareVersion();
+}
+
+/**
+ * @brief Detect if an ISO-DEP capable card is present.
+ * @return true if an ISO-DEP card is detected, false otherwise.
+ */
+// cppcheck-suppress unusedFunction
+bool CryptnoxWallet::detectCard() {
+    return driver.inListPassiveTarget();
+}
+
+/**
+ * @brief Establish a secure channel with the Cryptnox card.
+ *
+ * Handles application selection, certificate retrieval, ECDH key exchange,
+ * and mutual authentication to establish session keys.
+ *
+ * @param[out] session Reference to the secure session to be populated.
+ * @return true if secure channel was established, false otherwise.
+ */
+// cppcheck-suppress unusedFunction
+bool CryptnoxWallet::establishSecureChannel(CW_SecureSession& session) {
+    bool ret = false;
+
+    /* Try selecting Cryptnox app */
+    if (selectApdu()) {
+        /* Local buffers for certificate */
+        uint8_t cardCertificate[GETCARDCERTIFICATE_IN_BYTES];
+        uint8_t cardCertificateLength = 0U;
+
+        /* Get certificate and establish secure channel */
+        if (getCardCertificate(cardCertificate, cardCertificateLength)) {
+            uint8_t cardEphemeralPubKey[CARDEPHEMERALPUBKEY_SIZE];
+            if (extractCardEphemeralKey(cardCertificate, cardEphemeralPubKey)) {
+                uint8_t openSecureChannelSalt[OPENSECURECHANNEL_SALT_IN_BYTES];
+                uint8_t clientPrivateKey[32];
+                uint8_t clientPublicKey[64];
+                const uECC_Curve_t* sessionCurve = uECC_secp256r1();
+                if (openSecureChannel(openSecureChannelSalt, clientPublicKey, clientPrivateKey, sessionCurve)) {
+                    if (mutuallyAuthenticate(session, openSecureChannelSalt, clientPublicKey, clientPrivateKey, sessionCurve, cardEphemeralPubKey)) {
+                        serial.println(F("Secure channel established"));
+                        ret = true;
+                    } else {
+                        serial.println(F("Mutual authentication failed"));
+                    }
+                } else {
+                    serial.println(F("Failed to open secure channel"));
+                }
+            } else {
+                serial.println(F("Failed to extract card ephemeral key"));
+            }
+        } else {
+            serial.println(F("Failed to get card certificate"));
+        }
+    } else {
+        serial.println(F("Failed to select Cryptnox application"));
+    }
+
+    return ret;
+}
+
+/**
+ * @brief Reset the NFC reader for next card detection.
+ */
+void CryptnoxWallet::resetReader() {
+    driver.resetReader();
 }
 
 /* SELECT APDU to activate Cryptnox application */
@@ -577,6 +643,7 @@ bool CryptnoxWallet::extractCardEphemeralKey(const uint8_t* cardCertificate, uin
         }
 
         serial.println();
+        ret = true;  /* Success */
     }
 
     return ret;
@@ -593,6 +660,20 @@ bool CryptnoxWallet::extractCardEphemeralKey(const uint8_t* cardCertificate, uin
 void CryptnoxWallet::verifyPin(CW_SecureSession& session) {
     uint8_t data[] = { 0x31, 0x32, 0x33, 0x34 }; /* PIN code 1234 */
     uint8_t apdu[] = {0x80, 0x20, 0x00, 0x00};
+    aes_cbc_encrypt(session, apdu, sizeof(apdu), data, sizeof(data));
+}
+
+/**
+ * @brief Sends a secured GET CARD INFO APDU to retrieve card information.
+ *
+ * This function sends a GET DATA APDU (INS=0xFA) to retrieve card status
+ * and information from the Cryptnox card over the secure channel.
+ *
+ * @param[in,out] session Reference to the secure session containing keys and IV.
+ */
+void CryptnoxWallet::getCardInfo(CW_SecureSession& session) {
+    uint8_t data[] = { 0x00 };  /* Empty data field */
+    uint8_t apdu[] = {0x80, 0xFA, 0x00, 0x00};  /* GET DATA APDU */
     aes_cbc_encrypt(session, apdu, sizeof(apdu), data, sizeof(data));
 }
 
