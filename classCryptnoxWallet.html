@@ -112,45 +112,21 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aa4ce170f582927c6e8e8d4e9dc4d412d" id="r_aa4ce170f582927c6e8e8d4e9dc4d412d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#aa4ce170f582927c6e8e8d4e9dc4d412d">processCard</a> ()</td></tr>
 <tr class="memdesc:aa4ce170f582927c6e8e8d4e9dc4d412d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Detect and process an NFC card for Cryptnox wallet operations.  <br /></td></tr>
 <tr class="separator:aa4ce170f582927c6e8e8d4e9dc4d412d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a67b951c652d29c940a16867e9a0d8c3d" id="r_a67b951c652d29c940a16867e9a0d8c3d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a67b951c652d29c940a16867e9a0d8c3d">selectApdu</a> ()</td></tr>
-<tr class="memdesc:a67b951c652d29c940a16867e9a0d8c3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send the SELECT APDU to select the wallet application.  <br /></td></tr>
-<tr class="separator:a67b951c652d29c940a16867e9a0d8c3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a629e48c198d3bace45603bf335d43f09" id="r_a629e48c198d3bace45603bf335d43f09"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a629e48c198d3bace45603bf335d43f09">getCardCertificate</a> (uint8_t *cardEphemeralPubKey, uint8_t &amp;cardEphemeralPubKeyLength)</td></tr>
-<tr class="memdesc:a629e48c198d3bace45603bf335d43f09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the card's ephemeral public key with a GET CARD CERTIFICATE APDU.  <br /></td></tr>
-<tr class="separator:a629e48c198d3bace45603bf335d43f09"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2e90b4ce65336ba84d371deab5144274" id="r_a2e90b4ce65336ba84d371deab5144274"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a2e90b4ce65336ba84d371deab5144274">readUID</a> (uint8_t *uidBuffer, uint8_t &amp;uidLength)</td></tr>
-<tr class="memdesc:a2e90b4ce65336ba84d371deab5144274"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the UID of a detected card.  <br /></td></tr>
-<tr class="separator:a2e90b4ce65336ba84d371deab5144274"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9342637fe7352965de1aefb74f082a6c" id="r_a9342637fe7352965de1aefb74f082a6c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a9342637fe7352965de1aefb74f082a6c">printPN532FirmwareVersion</a> ()</td></tr>
-<tr class="memdesc:a9342637fe7352965de1aefb74f082a6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print detailed firmware information of the PN532 module.  <br /></td></tr>
-<tr class="separator:a9342637fe7352965de1aefb74f082a6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5e31e6d45992e39db06b8a05ca70bddd" id="r_a5e31e6d45992e39db06b8a05ca70bddd"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a5e31e6d45992e39db06b8a05ca70bddd">openSecureChannel</a> (uint8_t *salt, uint8_t *clientPublicKey, uint8_t *clientPrivateKey, const uECC_Curve_t *sessionCurve)</td></tr>
-<tr class="memdesc:a5e31e6d45992e39db06b8a05ca70bddd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the initial 32-byte salt from the card for starting a secure channel.  <br /></td></tr>
-<tr class="separator:a5e31e6d45992e39db06b8a05ca70bddd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a48010290fb260713c1afca2e6ea7fd2b" id="r_a48010290fb260713c1afca2e6ea7fd2b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a48010290fb260713c1afca2e6ea7fd2b">mutuallyAuthenticate</a> (<a class="el" href="structCW__SecureSession.html">CW_SecureSession</a> &amp;session, const uint8_t *salt, uint8_t *clientPublicKey, uint8_t *clientPrivateKey, const uECC_Curve_t *sessionCurve, uint8_t *cardEphemeralPubKey)</td></tr>
-<tr class="memdesc:a48010290fb260713c1afca2e6ea7fd2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs the ECDH-based mutual authentication step of the secure channel.  <br /></td></tr>
-<tr class="separator:a48010290fb260713c1afca2e6ea7fd2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae435d13a1a21b8a4f5cdbc00f9d2d24e" id="r_ae435d13a1a21b8a4f5cdbc00f9d2d24e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#ae435d13a1a21b8a4f5cdbc00f9d2d24e">extractCardEphemeralKey</a> (const uint8_t *cardCertificate, uint8_t *cardEphemeralPubKey, uint8_t *fullEphemeralPubKey65=nullptr)</td></tr>
-<tr class="memdesc:ae435d13a1a21b8a4f5cdbc00f9d2d24e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts the card's ephemeral EC P-256 public key from the certificate.  <br /></td></tr>
-<tr class="separator:ae435d13a1a21b8a4f5cdbc00f9d2d24e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0c4d176b4cfb46e8705db2eae661635d" id="r_a0c4d176b4cfb46e8705db2eae661635d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a0c4d176b4cfb46e8705db2eae661635d">printApdu</a> (const uint8_t *apdu, uint8_t length, const char *label=&quot;APDU to send&quot;)</td></tr>
-<tr class="memdesc:a0c4d176b4cfb46e8705db2eae661635d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print an APDU in hex format with optional label.  <br /></td></tr>
-<tr class="separator:a0c4d176b4cfb46e8705db2eae661635d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a96067e53c3bb3d04e77a03f822676949" id="r_a96067e53c3bb3d04e77a03f822676949"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a96067e53c3bb3d04e77a03f822676949">checkStatusWord</a> (const uint8_t *response, uint8_t responseLength, uint8_t sw1Expected, uint8_t sw2Expected)</td></tr>
-<tr class="memdesc:a96067e53c3bb3d04e77a03f822676949"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks the status word (SW1/SW2) at the end of an APDU response.  <br /></td></tr>
-<tr class="separator:a96067e53c3bb3d04e77a03f822676949"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2be0791a38aa70aaa1ee06f75e0f1704" id="r_a2be0791a38aa70aaa1ee06f75e0f1704"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a2be0791a38aa70aaa1ee06f75e0f1704">detectCard</a> ()</td></tr>
+<tr class="memdesc:a2be0791a38aa70aaa1ee06f75e0f1704"><td class="mdescLeft">&#160;</td><td class="mdescRight">Detect if an ISO-DEP capable card (APDU-capable) is present.  <br /></td></tr>
+<tr class="separator:a2be0791a38aa70aaa1ee06f75e0f1704"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8584e36b3c8c088ad1ee18358246262e" id="r_a8584e36b3c8c088ad1ee18358246262e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a8584e36b3c8c088ad1ee18358246262e">establishSecureChannel</a> (<a class="el" href="structCW__SecureSession.html">CW_SecureSession</a> &amp;session)</td></tr>
+<tr class="memdesc:a8584e36b3c8c088ad1ee18358246262e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Establish a secure channel with the Cryptnox card.  <br /></td></tr>
+<tr class="separator:a8584e36b3c8c088ad1ee18358246262e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a14a8f392e44c6960205aa6514f99b34f" id="r_a14a8f392e44c6960205aa6514f99b34f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a14a8f392e44c6960205aa6514f99b34f">getCardInfo</a> (<a class="el" href="structCW__SecureSession.html">CW_SecureSession</a> &amp;session)</td></tr>
 <tr class="memdesc:a14a8f392e44c6960205aa6514f99b34f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a secured GET CARD INFO APDU.  <br /></td></tr>
 <tr class="separator:a14a8f392e44c6960205aa6514f99b34f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af2a97d9d9db0adefe49f09488d8b3d31" id="r_af2a97d9d9db0adefe49f09488d8b3d31"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#af2a97d9d9db0adefe49f09488d8b3d31">verifyPin</a> (<a class="el" href="structCW__SecureSession.html">CW_SecureSession</a> &amp;session)</td></tr>
 <tr class="memdesc:af2a97d9d9db0adefe49f09488d8b3d31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verifies the PIN code.  <br /></td></tr>
 <tr class="separator:af2a97d9d9db0adefe49f09488d8b3d31"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acba0403fdf8112bc12469a76937175ce" id="r_acba0403fdf8112bc12469a76937175ce"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#acba0403fdf8112bc12469a76937175ce">aes_cbc_encrypt</a> (<a class="el" href="structCW__SecureSession.html">CW_SecureSession</a> &amp;session, const uint8_t apdu[], uint16_t apduLength, const uint8_t data[], uint16_t dataLength)</td></tr>
-<tr class="memdesc:acba0403fdf8112bc12469a76937175ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypts data and sends a secured APDU using AES-CBC and MAC.  <br /></td></tr>
-<tr class="separator:acba0403fdf8112bc12469a76937175ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8fe8714471d3cf32aad08a6aa035ba76" id="r_a8fe8714471d3cf32aad08a6aa035ba76"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a8fe8714471d3cf32aad08a6aa035ba76">aes_cbc_decrypt</a> (<a class="el" href="structCW__SecureSession.html">CW_SecureSession</a> &amp;session, uint8_t *response, size_t response_len, uint8_t *mac_value)</td></tr>
-<tr class="memdesc:a8fe8714471d3cf32aad08a6aa035ba76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrypts data from a secured APDU using AES-CBC and verifies the MAC.  <br /></td></tr>
-<tr class="separator:a8fe8714471d3cf32aad08a6aa035ba76"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ff890db8c53c5dd07e5dd30856b6a36" id="r_a1ff890db8c53c5dd07e5dd30856b6a36"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a1ff890db8c53c5dd07e5dd30856b6a36">resetReader</a> ()</td></tr>
+<tr class="memdesc:a1ff890db8c53c5dd07e5dd30856b6a36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the NFC reader for next card detection.  <br /></td></tr>
+<tr class="separator:a1ff890db8c53c5dd07e5dd30856b6a36"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>High-level interface for interacting with a PN532-based wallet. </p>
@@ -205,146 +181,6 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a8fe8714471d3cf32aad08a6aa035ba76" name="a8fe8714471d3cf32aad08a6aa035ba76"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8fe8714471d3cf32aad08a6aa035ba76">&#9670;&#160;</a></span>aes_cbc_decrypt()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool CryptnoxWallet::aes_cbc_decrypt </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structCW__SecureSession.html">CW_SecureSession</a> &amp;&#160;</td>
-          <td class="paramname"><em>session</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>response</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>response_len</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>mac_value</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Decrypts data from a secured APDU using AES-CBC and verifies the MAC. </p>
-<p>Verifies the MAC and decrypts an AES-CBC encrypted APDU response.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">session</td><td>Reference to the secure session containing keys and IV. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">response</td><td>Encrypted APDU response buffer (decrypted in place). </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">response_len</td><td>Length of the response buffer. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">mac_value</td><td>Computed MAC value. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>true if MAC verification succeeds, false otherwise.</dd></dl>
-<p>This function recomputes the MAC, compares it with the received MAC to ensure integrity and decrypts the response data with last MAC sent as as mac_iv.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">session</td><td>Reference to the secure session containing keys and IV. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">response</td><td>Encrypted APDU response buffer. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">response_len</td><td>Length of the response buffer. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">mac_value</td><td>MAC from last sent message. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>true if MAC verification succeeds, false otherwise. </dd></dl>
-
-</div>
-</div>
-<a id="acba0403fdf8112bc12469a76937175ce" name="acba0403fdf8112bc12469a76937175ce"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acba0403fdf8112bc12469a76937175ce">&#9670;&#160;</a></span>aes_cbc_encrypt()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void CryptnoxWallet::aes_cbc_encrypt </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structCW__SecureSession.html">CW_SecureSession</a> &amp;&#160;</td>
-          <td class="paramname"><em>session</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t&#160;</td>
-          <td class="paramname"><em>apdu</em>[], </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>apduLength</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t&#160;</td>
-          <td class="paramname"><em>data</em>[], </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>dataLength</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Encrypts data and sends a secured APDU using AES-CBC and MAC. </p>
-<p>Encrypts data using AES-CBC, computes a MAC, and sends the APDU to the smartcard.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">session</td><td>Reference to the secure session containing keys and IV. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">apdu</td><td>APDU header (CLA, INS, P1, P2). </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">apduLength</td><td>Length of the APDU header. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>Plaintext data to encrypt and send. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">dataLength</td><td>Length of the plaintext data.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>This function performs AES-CBC encryption of the given data with padding (ISO/IEC 9797-1 Method 2), computes a MAC over the APDU header and encrypted payload, and constructs the final APDU to send. The response IV is updated from the last APDU response.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">session</td><td>Reference to the secure session containing keys and IV. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">apdu</td><td>Pointer to the APDU header bytes. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">apduLength</td><td>Length of the APDU header. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>Pointer to the plaintext data to encrypt. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">dataLength</td><td>Length of the plaintext data.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd><ul>
-<li>AES CBC encryption is performed with <code>session.aesKey</code> and current <code>session.iv</code>.</li>
-<li>MAC is computed with <code>session.macKey</code> using AES-CBC with no padding.</li>
-<li><code>session.iv</code> is updated after successful APDU response for rolling IV. </li>
-</ul>
-</dd></dl>
-
-</div>
-</div>
 <a id="aa394fe6bc19d57c4a9d89a303f7e664d" name="aa394fe6bc19d57c4a9d89a303f7e664d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa394fe6bc19d57c4a9d89a303f7e664d">&#9670;&#160;</a></span>begin()</h2>
 
@@ -374,179 +210,65 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a96067e53c3bb3d04e77a03f822676949" name="a96067e53c3bb3d04e77a03f822676949"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a96067e53c3bb3d04e77a03f822676949">&#9670;&#160;</a></span>checkStatusWord()</h2>
+<a id="a2be0791a38aa70aaa1ee06f75e0f1704" name="a2be0791a38aa70aaa1ee06f75e0f1704"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2be0791a38aa70aaa1ee06f75e0f1704">&#9670;&#160;</a></span>detectCard()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool CryptnoxWallet::checkStatusWord </td>
+          <td class="memname">bool CryptnoxWallet::detectCard </td>
           <td>(</td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>response</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>responseLength</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>sw1Expected</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>sw2Expected</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Checks the status word (SW1/SW2) at the end of an APDU response. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">response</td><td>Pointer to the APDU response buffer. </td></tr>
-    <tr><td class="paramname">responseLength</td><td>Actual length of the response buffer. </td></tr>
-    <tr><td class="paramname">sw1Expected</td><td>Expected value for SW1 (e.g., 0x90). </td></tr>
-    <tr><td class="paramname">sw2Expected</td><td>Expected value for SW2 (e.g., 0x00). </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>true if the last two bytes match SW1/SW2, false otherwise. </dd></dl>
+<p>Detect if an ISO-DEP capable card (APDU-capable) is present. </p>
+<p>Detect if an ISO-DEP capable card is present.</p>
+<dl class="section return"><dt>Returns</dt><dd>true if an ISO-DEP card is detected, false otherwise. </dd></dl>
 
 </div>
 </div>
-<a id="ae435d13a1a21b8a4f5cdbc00f9d2d24e" name="ae435d13a1a21b8a4f5cdbc00f9d2d24e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae435d13a1a21b8a4f5cdbc00f9d2d24e">&#9670;&#160;</a></span>extractCardEphemeralKey()</h2>
+<a id="a8584e36b3c8c088ad1ee18358246262e" name="a8584e36b3c8c088ad1ee18358246262e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8584e36b3c8c088ad1ee18358246262e">&#9670;&#160;</a></span>establishSecureChannel()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool CryptnoxWallet::extractCardEphemeralKey </td>
+          <td class="memname">bool CryptnoxWallet::establishSecureChannel </td>
           <td>(</td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>cardCertificate</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype"><a class="el" href="structCW__SecureSession.html">CW_SecureSession</a> &amp;&#160;</td>
+          <td class="paramname"><em>session</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>cardEphemeralPubKey</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>fullEphemeralPubKey65</em> = <code>nullptr</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Extracts the card's ephemeral EC P-256 public key from the certificate. </p>
+<p>Establish a secure channel with the Cryptnox card. </p>
+<p>This function handles all the steps required to establish a secure session:</p><ul>
+<li>Selects the Cryptnox application</li>
+<li>Retrieves the card certificate</li>
+<li>Performs ECDH key exchange</li>
+<li>Mutually authenticates with the card</li>
+</ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">cardCertificate</td><td>Pointer to the full card certificate response. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">cardEphemeralPubKey</td><td>Buffer to store <b>64 bytes</b> (X||Y coordinates only, no 0x04 prefix) for use with uECC_shared_secret. Must be at least 64 bytes. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">fullEphemeralPubKey65</td><td>Optional buffer to store <b>65 bytes</b> including the 0x04 prefix. Can be nullptr if not needed.</td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">session</td><td>Reference to the secure session to be populated with keys and IV. </td></tr>
   </table>
   </dd>
 </dl>
-<p>Certificate layout (0-based): </p><table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadNone">Field   </th><th class="markdownTableHeadNone">Size   </th><th class="markdownTableHeadNone">Offset    </th></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">'C'   </td><td class="markdownTableBodyNone">1 byte   </td><td class="markdownTableBodyNone">0    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">Nonce   </td><td class="markdownTableBodyNone">8 bytes   </td><td class="markdownTableBodyNone">1–8    </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Session Public Key   </td><td class="markdownTableBodyNone">65 bytes   </td><td class="markdownTableBodyNone">9–73    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">ASN.1 DER Signature   </td><td class="markdownTableBodyNone">70–72 bytes   </td><td class="markdownTableBodyNone">74+   </td></tr>
-</table>
+<dl class="section return"><dt>Returns</dt><dd>true if secure channel was established successfully, false otherwise.</dd></dl>
+<p>Handles application selection, certificate retrieval, ECDH key exchange, and mutual authentication to establish session keys.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">cardCertificate</td><td>Pointer to the full card certificate response. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">cardEphemeralPubKey</td><td>Buffer to store <b>64 bytes</b> (X||Y coordinates only, no 0x04 prefix) for use with uECC_shared_secret. Must be at least 64 bytes. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">fullEphemeralPubKey65</td><td>Optional buffer to store <b>65 bytes</b> including the 0x04 prefix. Can be nullptr if not needed. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">session</td><td>Reference to the secure session to be populated. </td></tr>
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a id="a629e48c198d3bace45603bf335d43f09" name="a629e48c198d3bace45603bf335d43f09"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a629e48c198d3bace45603bf335d43f09">&#9670;&#160;</a></span>getCardCertificate()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool CryptnoxWallet::getCardCertificate </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>cardCertificate</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t &amp;&#160;</td>
-          <td class="paramname"><em>cardCertificateLength</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Retrieves the card's ephemeral public key with a GET CARD CERTIFICATE APDU. </p>
-<p>Sends a GET CARD CERTIFICATE command to the card, validates the response, and extracts the ephemeral EC P-256 public key used for ECDH in the secure channel.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">cardEphemeralPubKey</td><td>Buffer to store the 65-byte card ephemeral public key. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">cardEphemeralPubKeyLength</td><td>Input: size of the buffer; Output: actual key length (65 bytes). </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>true if the APDU exchange and key extraction succeeded, false otherwise.</dd></dl>
-<p>Sends a GET CARD CERTIFICATE command to the card, validates the response, and extracts the ephemeral EC P-256 public key used for ECDH in the secure channel.</p>
-<table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadNone">Field   </th><th class="markdownTableHeadNone">Size   </th><th class="markdownTableHeadNone">Description    </th></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">'C'   </td><td class="markdownTableBodyNone">1 byte   </td><td class="markdownTableBodyNone">Certificate format identifier    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">Nonce   </td><td class="markdownTableBodyNone">8 bytes (64 bits)   </td><td class="markdownTableBodyNone">Random challenge sent by the client    </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Session Public Key   </td><td class="markdownTableBodyNone">65 bytes   </td><td class="markdownTableBodyNone">Card's ephemeral EC P-256 public key for ECDH    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">ASN.1 DER Signature   </td><td class="markdownTableBodyNone">70–72 bytes   </td><td class="markdownTableBodyNone">Signature over the previous fields using the card's permanent private key   </td></tr>
-</table>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">cardEphemeralPubKey</td><td>Buffer to store the 65-byte card ephemeral public key. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">cardEphemeralPubKeyLength</td><td>Input: size of the buffer; Output: actual key length (65 bytes). </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>true if the APDU exchange and key extraction succeeded, false otherwise. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>true if secure channel was established, false otherwise. </dd></dl>
 
 </div>
 </div>
@@ -584,207 +306,6 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a48010290fb260713c1afca2e6ea7fd2b" name="a48010290fb260713c1afca2e6ea7fd2b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a48010290fb260713c1afca2e6ea7fd2b">&#9670;&#160;</a></span>mutuallyAuthenticate()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool CryptnoxWallet::mutuallyAuthenticate </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structCW__SecureSession.html">CW_SecureSession</a> &amp;&#160;</td>
-          <td class="paramname"><em>session</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>salt</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>clientPublicKey</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>clientPrivateKey</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uECC_Curve_t *&#160;</td>
-          <td class="paramname"><em>sessionCurve</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>cardEphemeralPubKey</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Performs the ECDH-based mutual authentication step of the secure channel. </p>
-<p>This function computes the shared secret between the client's private key and the card's ephemeral public key using the specified ECC curve.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">salt</td><td>Pointer to the 32-byte salt received from the card. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">clientPublicKey</td><td>Pointer to the 64-byte client public key. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">clientPrivateKey</td><td>Pointer to the 32-byte client private key. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">sessionCurve</td><td>Pointer to the ECC curve (e.g., uECC_secp256r1()). </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">cardEphemeralPubKey</td><td>Pointer to the 65-byte card ephemeral public key ('0x04' prefix + X||Y). </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>true if the shared secret was successfully generated, false otherwise. </dd></dl>
-
-</div>
-</div>
-<a id="a5e31e6d45992e39db06b8a05ca70bddd" name="a5e31e6d45992e39db06b8a05ca70bddd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5e31e6d45992e39db06b8a05ca70bddd">&#9670;&#160;</a></span>openSecureChannel()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool CryptnoxWallet::openSecureChannel </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>salt</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>sessionPublicKey</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>sessionPrivateKey</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uECC_Curve_t *&#160;</td>
-          <td class="paramname"><em>sessionCurve</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Retrieves the initial 32-byte salt from the card for starting a secure channel. </p>
-<p>This function sends the APDU command to the card to get the session salt, which is required for the subsequent key derivation in the secure channel setup.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">salt</td><td>Pointer to a 32-byte buffer where the card-provided salt will be stored. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>true if the APDU exchange succeeded and the salt was retrieved, false otherwise.</dd></dl>
-<p>This function sends the APDU command to the card to get the session salt, which is required for the subsequent key derivation in the secure channel setup.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">salt</td><td>Pointer to a 32-byte buffer where the card-provided salt will be stored. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">clientPublicKey</td><td>Buffer to store the client's generated 64-byte public key. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">clientPrivateKey</td><td>Buffer to store the client's generated 32-byte private key. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">sessionCurve</td><td>Pointer to the uECC curve object used for key generation (e.g., uECC_secp256r1()). </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>true if the APDU exchange succeeded and the salt was retrieved, false otherwise. </dd></dl>
-
-</div>
-</div>
-<a id="a0c4d176b4cfb46e8705db2eae661635d" name="a0c4d176b4cfb46e8705db2eae661635d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0c4d176b4cfb46e8705db2eae661635d">&#9670;&#160;</a></span>printApdu()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void CryptnoxWallet::printApdu </td>
-          <td>(</td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>apdu</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>length</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>label</em> = <code>&quot;APDU&#160;to&#160;send&quot;</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Print an APDU in hex format with optional label. </p>
-<p>Print an APDU in hexadecimal format to Serial for debugging.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">apdu</td><td>Pointer to the APDU bytes. </td></tr>
-    <tr><td class="paramname">length</td><td>Number of bytes in the APDU. </td></tr>
-    <tr><td class="paramname">label</td><td>Optional label for printing (default: "APDU to send").</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>Each byte is printed as 0xXX. Lines wrap every 16 bytes for readability. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">apdu</td><td>Pointer to the APDU byte array. </td></tr>
-    <tr><td class="paramname">length</td><td>Number of bytes in the APDU. </td></tr>
-    <tr><td class="paramname">label</td><td>Optional label to prepend (default: "APDU to send"). </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a9342637fe7352965de1aefb74f082a6c" name="a9342637fe7352965de1aefb74f082a6c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9342637fe7352965de1aefb74f082a6c">&#9670;&#160;</a></span>printPN532FirmwareVersion()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool CryptnoxWallet::printPN532FirmwareVersion </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Print detailed firmware information of the PN532 module. </p>
-<p>Retrieves the firmware version, parses IC type, major/minor versions, and supported features, then prints all details to the Serial console.</p>
-<dl class="section return"><dt>Returns</dt><dd>true if the PN532 module was detected and information printed, false otherwise. </dd></dl>
-
-</div>
-</div>
 <a id="aa4ce170f582927c6e8e8d4e9dc4d412d" name="aa4ce170f582927c6e8e8d4e9dc4d412d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa4ce170f582927c6e8e8d4e9dc4d412d">&#9670;&#160;</a></span>processCard()</h2>
 
@@ -809,52 +330,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a2e90b4ce65336ba84d371deab5144274" name="a2e90b4ce65336ba84d371deab5144274"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2e90b4ce65336ba84d371deab5144274">&#9670;&#160;</a></span>readUID()</h2>
+<a id="a1ff890db8c53c5dd07e5dd30856b6a36" name="a1ff890db8c53c5dd07e5dd30856b6a36"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1ff890db8c53c5dd07e5dd30856b6a36">&#9670;&#160;</a></span>resetReader()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool CryptnoxWallet::readUID </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>uidBuffer</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t &amp;&#160;</td>
-          <td class="paramname"><em>uidLength</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Read the UID of a detected card. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">uidBuffer</td><td>Pointer to buffer to store the UID. </td></tr>
-    <tr><td class="paramname">uidLength</td><td>Reference to variable to store UID length. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>true if the UID was read successfully, false otherwise. </dd></dl>
-
-</div>
-</div>
-<a id="a67b951c652d29c940a16867e9a0d8c3d" name="a67b951c652d29c940a16867e9a0d8c3d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a67b951c652d29c940a16867e9a0d8c3d">&#9670;&#160;</a></span>selectApdu()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool CryptnoxWallet::selectApdu </td>
+          <td class="memname">void CryptnoxWallet::resetReader </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -862,8 +345,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Send the SELECT APDU to select the wallet application. </p>
-<dl class="section return"><dt>Returns</dt><dd>true if the APDU exchange succeeded, false otherwise. </dd></dl>
+<p>Reset the NFC reader for next card detection. </p>
 
 </div>
 </div>
