@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['extractcardephemeralkey_0',['extractCardEphemeralKey',['../classCryptnoxWallet.html#ae435d13a1a21b8a4f5cdbc00f9d2d24e',1,'CryptnoxWallet']]]
+  ['getcardinfo_0',['getCardInfo',['../classCryptnoxWallet.html#a14a8f392e44c6960205aa6514f99b34f',1,'CryptnoxWallet']]]
 ];

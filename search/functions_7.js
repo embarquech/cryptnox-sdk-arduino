@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['opensecurechannel_0',['openSecureChannel',['../classCryptnoxWallet.html#a5e31e6d45992e39db06b8a05ca70bddd',1,'CryptnoxWallet']]],
-  ['operator_3d_1',['operator=',['../classArduinoSerialAdapter.html#aa528369d85e44789f2dfaab44eb19c99',1,'ArduinoSerialAdapter::operator=()'],['../classPN532Adapter.html#a5d7a62eca0c1763f5f1b7472be5a4741',1,'PN532Adapter::operator=()']]]
+  ['readuid_0',['readuid',['../classNFCDriver.html#ab1ac5eac6aa543c4b7d9586c7d39dba9',1,'NFCDriver::readUID()'],['../classPN532Adapter.html#a41f94628f4cc1441cf5391a165d3e9c6',1,'PN532Adapter::readUID()']]],
+  ['resetreader_1',['resetreader',['../classNFCDriver.html#aee0747ff468a79637af603245fa2b21f',1,'NFCDriver::resetReader()'],['../classPN532Adapter.html#a0aa02e9f1cb109f9faa7826e11b50b7c',1,'PN532Adapter::resetReader()']]]
 ];

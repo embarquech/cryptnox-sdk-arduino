@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['getcardcertificate_0',['getCardCertificate',['../classCryptnoxWallet.html#a629e48c198d3bace45603bf335d43f09',1,'CryptnoxWallet']]],
-  ['getcardcertificate_5fin_5fbytes_1',['GETCARDCERTIFICATE_IN_BYTES',['../CryptnoxWallet_8cpp.html#add6226a3b0f8dde62724922f00f0333a',1,'CryptnoxWallet.cpp']]],
-  ['getcardinfo_2',['getCardInfo',['../classCryptnoxWallet.html#a14a8f392e44c6960205aa6514f99b34f',1,'CryptnoxWallet']]]
+  ['i2c_0',['I2C',['../PN532Adapter_8h.html#a7e0449d50e07074f7465a9657f5601fdafb87bf1fc88386ca21395991f90fff95',1,'PN532Adapter.h']]],
+  ['inlistpassivetarget_1',['inlistpassivetarget',['../classNFCDriver.html#a9370430c2fffb8288a55f78c1ff5dcfd',1,'NFCDriver::inListPassiveTarget()'],['../classPN532Adapter.html#ac28bae87cad3c9c0d150d2cb4c04259b',1,'PN532Adapter::inListPassiveTarget()']]],
+  ['input_5fbuffer_5flimit_2',['INPUT_BUFFER_LIMIT',['../CryptnoxWallet_8cpp.html#a933c4568c34613285feefecab74ab596',1,'CryptnoxWallet.cpp']]],
+  ['iv_3',['iv',['../structCW__SecureSession.html#ace70404b860b19c6a961c993eedd469b',1,'CW_SecureSession']]]
 ];

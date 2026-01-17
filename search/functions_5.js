@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['inlistpassivetarget_0',['inlistpassivetarget',['../classNFCDriver.html#a9370430c2fffb8288a55f78c1ff5dcfd',1,'NFCDriver::inListPassiveTarget()'],['../classPN532Adapter.html#ac28bae87cad3c9c0d150d2cb4c04259b',1,'PN532Adapter::inListPassiveTarget()']]]
+  ['operator_3d_0',['operator=',['../classArduinoSerialAdapter.html#aa528369d85e44789f2dfaab44eb19c99',1,'ArduinoSerialAdapter::operator=()'],['../classPN532Adapter.html#a5d7a62eca0c1763f5f1b7472be5a4741',1,'PN532Adapter::operator=()']]]
 ];

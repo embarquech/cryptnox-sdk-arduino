@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['readuid_0',['readuid',['../classCryptnoxWallet.html#a2e90b4ce65336ba84d371deab5144274',1,'CryptnoxWallet::readUID()'],['../classNFCDriver.html#ab1ac5eac6aa543c4b7d9586c7d39dba9',1,'NFCDriver::readUID()'],['../classPN532Adapter.html#a41f94628f4cc1441cf5391a165d3e9c6',1,'PN532Adapter::readUID()']]],
-  ['resetreader_1',['resetreader',['../classNFCDriver.html#aee0747ff468a79637af603245fa2b21f',1,'NFCDriver::resetReader()'],['../classPN532Adapter.html#a0aa02e9f1cb109f9faa7826e11b50b7c',1,'PN532Adapter::resetReader()']]]
+  ['verifypin_0',['verifyPin',['../classCryptnoxWallet.html#af2a97d9d9db0adefe49f09488d8b3d31',1,'CryptnoxWallet']]]
 ];
