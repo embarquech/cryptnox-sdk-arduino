@@ -102,11 +102,17 @@ public:
     bool processCard();
 
     /**
-    * @brief Detect if an ISO-DEP capable card (APDU-capable) is present.
+    * @brief Connect to the Cryptnox card and establish a secure channel.
     *
-    * @return true if an ISO-DEP card is detected, false otherwise.
+    * The function first detects if an ISO-DEP capable card is present, then establishes a secure channel.
+    * It first detects if an ISO-DEP capable card is present, then establishes a secure channel
+    * by selecting the Cryptnox application, retrieving the card certificate, performing ECDH key
+    * exchange, and mutually authenticating with the card.
+    *
+    * @param[out] session Reference to the secure session to be populated with keys and IV.
+    * @return true if the card was detected and secure channel was established successfully, false otherwise.
     */
-    bool detectCard();
+    bool connect(CW_SecureSession& session);
 
     /**
     * @brief Establish a secure channel with the Cryptnox card.

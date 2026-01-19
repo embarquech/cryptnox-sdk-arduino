@@ -49,43 +49,35 @@ void setup() {
 /**
  * @brief Arduino main loop.
  *
- * Demonstrates granular step-by-step card processing:
- * 1. Detect ISO-DEP capable card
- * 2. Establish secure channel (handles app selection, certificate, ECDH, mutual auth)
- * 3. Verify PIN
- * 4. Get card information
- * 5. Clear session and reset reader
- *
- * Users can customize each step or add their own logic between operations.
+ * Demonstrates simplified card connection and processing:
+ * 1. Connect to card and establish secure channel (combines detection and channel setup)
+ * 2. Verify PIN
+ * 3. Get card information
+ * 4. Clear session and reset reader
  */
 void loop() {
     
-    /* Step 1: Check for ISO-DEP capable card (APDU-capable) */
-    if (wallet.detectCard()) {
-        serialAdapter.println(F("ISO-DEP card detected"));
+    /* Step 1: Connect to card and establish secure channel */
+    CW_SecureSession session;
+    if (wallet.connect(session)) {
+        if (wallet.isSecureChannelOpen(session)) {
+            serialAdapter.println(F("Card connected and secure channel established"));
         
-        /* Step 2: Establish secure channel with the card */
-        CW_SecureSession session;
-        if (wallet.establishSecureChannel(session)) {
-            if (wallet.isSecureChannelOpen(session)) {
-                serialAdapter.println(F("Secure channel established"));
-            
-                /* Step 3: Verify PIN */
-                serialAdapter.println(F("Verifying PIN..."));
-                wallet.verifyPin(session);
-            
-                /* Step 4: Get card information */
-                serialAdapter.println(F("Getting card information..."));
-                wallet.getCardInfo(session);
-            
-                /* Step 5: Securely clear session keys */
-                session.clear();
-                serialAdapter.println(F("Session cleared"));
-            
-                serialAdapter.println(F("Card processed successfully"));
-            } else {
-                serialAdapter.println(F("Secure channel not open"));
-            }
+            /* Step 2: Verify PIN */
+            serialAdapter.println(F("Verifying PIN..."));
+            wallet.verifyPin(session);
+        
+            /* Step 3: Get card information */
+            serialAdapter.println(F("Getting card information..."));
+            wallet.getCardInfo(session);
+        
+            /* Step 4: Securely clear session keys */
+            session.clear();
+            serialAdapter.println(F("Session cleared"));
+        
+            serialAdapter.println(F("Card processed successfully"));
+        } else {
+            serialAdapter.println(F("Secure channel not open"));
         }
     }
     

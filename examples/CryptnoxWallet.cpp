@@ -107,12 +107,24 @@ bool CryptnoxWallet::printPN532FirmwareVersion() {
 }
 
 /**
- * @brief Detect if an ISO-DEP capable card is present.
- * @return true if an ISO-DEP card is detected, false otherwise.
+ * @brief Connect to the Cryptnox card and establish a secure channel.
+ *
+ * The function first detects if an ISO-DEP capable card is present, then establishes a secure channel
+ * by selecting the Cryptnox application, retrieving the card certificate, performing ECDH key
+ * exchange, and mutually authenticating with the card.
+ *
+ * @param[out] session Reference to the secure session to be populated with keys and IV.
+ * @return true if the card was detected and secure channel was established successfully, false otherwise.
  */
 // cppcheck-suppress unusedFunction
-bool CryptnoxWallet::detectCard() {
-    return driver.inListPassiveTarget();
+ bool CryptnoxWallet::connect(CW_SecureSession& session) {
+    /* First, detect if an ISO-DEP capable card is present */
+    if (!driver.inListPassiveTarget()) {
+        return false;  /* No card detected */
+    }
+
+    /* If card is detected, establish secure channel */
+    return establishSecureChannel(session);
 }
 
 /**
