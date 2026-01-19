@@ -136,7 +136,6 @@ bool CryptnoxWallet::printPN532FirmwareVersion() {
  * @param[out] session Reference to the secure session to be populated.
  * @return true if secure channel was established, false otherwise.
  */
-// cppcheck-suppress unusedFunction
 bool CryptnoxWallet::establishSecureChannel(CW_SecureSession& session) {
     bool ret = false;
 
