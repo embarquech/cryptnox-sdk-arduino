@@ -67,21 +67,25 @@ void loop() {
         /* Step 2: Establish secure channel with the card */
         CW_SecureSession session;
         if (wallet.establishSecureChannel(session)) {
-            serialAdapter.println(F("Session keys established"));
+            if (wallet.isSecureChannelOpen(session)) {
+                serialAdapter.println(F("Secure channel established"));
             
-            /* Step 3: Verify PIN */
-            serialAdapter.println(F("Verifying PIN..."));
-            wallet.verifyPin(session);
+                /* Step 3: Verify PIN */
+                serialAdapter.println(F("Verifying PIN..."));
+                wallet.verifyPin(session);
             
-            /* Step 4: Get card information */
-            serialAdapter.println(F("Getting card information..."));
-            wallet.getCardInfo(session);
+                /* Step 4: Get card information */
+                serialAdapter.println(F("Getting card information..."));
+                wallet.getCardInfo(session);
             
-            /* Step 5: Securely clear session keys */
-            session.clear();
-            serialAdapter.println(F("Session cleared"));
+                /* Step 5: Securely clear session keys */
+                session.clear();
+                serialAdapter.println(F("Session cleared"));
             
-            serialAdapter.println(F("Card processed successfully"));
+                serialAdapter.println(F("Card processed successfully"));
+            } else {
+                serialAdapter.println(F("Secure channel not open"));
+            }
         }
     }
     

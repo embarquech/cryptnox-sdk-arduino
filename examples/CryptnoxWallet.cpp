@@ -166,6 +166,30 @@ bool CryptnoxWallet::establishSecureChannel(CW_SecureSession& session) {
 }
 
 /**
+ * @brief Check if the secure channel is open.
+ *
+ * This function checks if the secure channel has been established by verifying
+ * if the session keys have been initialized (non-zero). A secure channel is
+ * considered open if the AES key in the session is non-zero.
+ *
+ * The implementation follows the same pattern as the Python SDK, which checks
+ * if the AES key exists to determine if the secure channel is open.
+ *
+ * @param[in] session Reference to the secure session to check.
+ * @return true if the secure channel is open (session keys are initialized), false otherwise.
+ */
+bool CryptnoxWallet::isSecureChannelOpen(const CW_SecureSession& session) const {
+    /* Check if AES key is non-zero (initialized) */
+    /* If all bytes are zero, the secure channel is not open */
+    for (uint8_t i = 0U; i < CW_AESKEY_SIZE; i++) {
+        if (session.aesKey[i] != 0U) {
+            return true;  /* At least one non-zero byte found, channel is open */
+        }
+    }
+    return false;  /* All bytes are zero, channel is not open */
+}
+
+/**
  * @brief Reset the NFC reader for next card detection.
  */
 void CryptnoxWallet::resetReader() {
