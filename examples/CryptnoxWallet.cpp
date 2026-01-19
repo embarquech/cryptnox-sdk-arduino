@@ -178,6 +178,7 @@ bool CryptnoxWallet::establishSecureChannel(CW_SecureSession& session) {
  * @param[in] session Reference to the secure session to check.
  * @return true if the secure channel is open (session keys are initialized), false otherwise.
  */
+ // cppcheck-suppress unusedFunction
 bool CryptnoxWallet::isSecureChannelOpen(const CW_SecureSession& session) const {
     /* Check if AES key is non-zero (initialized) */
     /* If all bytes are zero, the secure channel is not open */
