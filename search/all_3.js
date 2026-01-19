@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['detectcard_0',['detectCard',['../classCryptnoxWallet.html#a2be0791a38aa70aaa1ee06f75e0f1704',1,'CryptnoxWallet']]]
+  ['establishsecurechannel_0',['establishSecureChannel',['../classCryptnoxWallet.html#a8584e36b3c8c088ad1ee18358246262e',1,'CryptnoxWallet']]]
 ];

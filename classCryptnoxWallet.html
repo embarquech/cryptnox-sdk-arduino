@@ -112,9 +112,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aa4ce170f582927c6e8e8d4e9dc4d412d" id="r_aa4ce170f582927c6e8e8d4e9dc4d412d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#aa4ce170f582927c6e8e8d4e9dc4d412d">processCard</a> ()</td></tr>
 <tr class="memdesc:aa4ce170f582927c6e8e8d4e9dc4d412d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Detect and process an NFC card for Cryptnox wallet operations.  <br /></td></tr>
 <tr class="separator:aa4ce170f582927c6e8e8d4e9dc4d412d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2be0791a38aa70aaa1ee06f75e0f1704" id="r_a2be0791a38aa70aaa1ee06f75e0f1704"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a2be0791a38aa70aaa1ee06f75e0f1704">detectCard</a> ()</td></tr>
-<tr class="memdesc:a2be0791a38aa70aaa1ee06f75e0f1704"><td class="mdescLeft">&#160;</td><td class="mdescRight">Detect if an ISO-DEP capable card (APDU-capable) is present.  <br /></td></tr>
-<tr class="separator:a2be0791a38aa70aaa1ee06f75e0f1704"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9231d6ed6a0634a8ab7c2a2710224a49" id="r_a9231d6ed6a0634a8ab7c2a2710224a49"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a9231d6ed6a0634a8ab7c2a2710224a49">connect</a> (<a class="el" href="structCW__SecureSession.html">CW_SecureSession</a> &amp;session)</td></tr>
+<tr class="memdesc:a9231d6ed6a0634a8ab7c2a2710224a49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connect to the Cryptnox card and establish a secure channel.  <br /></td></tr>
+<tr class="separator:a9231d6ed6a0634a8ab7c2a2710224a49"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8584e36b3c8c088ad1ee18358246262e" id="r_a8584e36b3c8c088ad1ee18358246262e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a8584e36b3c8c088ad1ee18358246262e">establishSecureChannel</a> (<a class="el" href="structCW__SecureSession.html">CW_SecureSession</a> &amp;session)</td></tr>
 <tr class="memdesc:a8584e36b3c8c088ad1ee18358246262e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Establish a secure channel with the Cryptnox card.  <br /></td></tr>
 <tr class="separator:a8584e36b3c8c088ad1ee18358246262e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -213,24 +213,39 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a2be0791a38aa70aaa1ee06f75e0f1704" name="a2be0791a38aa70aaa1ee06f75e0f1704"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2be0791a38aa70aaa1ee06f75e0f1704">&#9670;&#160;</a></span>detectCard()</h2>
+<a id="a9231d6ed6a0634a8ab7c2a2710224a49" name="a9231d6ed6a0634a8ab7c2a2710224a49"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9231d6ed6a0634a8ab7c2a2710224a49">&#9670;&#160;</a></span>connect()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool CryptnoxWallet::detectCard </td>
+          <td class="memname">bool CryptnoxWallet::connect </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype"><a class="el" href="structCW__SecureSession.html">CW_SecureSession</a> &amp;&#160;</td>
+          <td class="paramname"><em>session</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Detect if an ISO-DEP capable card (APDU-capable) is present. </p>
-<p>Detect if an ISO-DEP capable card is present.</p>
-<dl class="section return"><dt>Returns</dt><dd>true if an ISO-DEP card is detected, false otherwise. </dd></dl>
+<p>Connect to the Cryptnox card and establish a secure channel. </p>
+<p>The function first detects if an ISO-DEP capable card is present, then establishes a secure channel. It first detects if an ISO-DEP capable card is present, then establishes a secure channel by selecting the Cryptnox application, retrieving the card certificate, performing ECDH key exchange, and mutually authenticating with the card.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">session</td><td>Reference to the secure session to be populated with keys and IV. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if the card was detected and secure channel was established successfully, false otherwise.</dd></dl>
+<p>The function first detects if an ISO-DEP capable card is present, then establishes a secure channel by selecting the Cryptnox application, retrieving the card certificate, performing ECDH key exchange, and mutually authenticating with the card.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">session</td><td>Reference to the secure session to be populated with keys and IV. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if the card was detected and secure channel was established successfully, false otherwise. </dd></dl>
 
 </div>
 </div>
