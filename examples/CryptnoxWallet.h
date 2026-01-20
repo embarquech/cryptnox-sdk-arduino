@@ -119,6 +119,16 @@ public:
     bool establishSecureChannel(CW_SecureSession& session);
 
     /**
+    * @brief Disconnect from the Cryptnox card and clear the secure session.
+    *
+    * This function securely clears all session keys and resets the NFC reader
+    * for the next card detection. Should be called when done with card operations.
+    *
+    * @param[in,out] session Reference to the secure session to clear.
+    */
+    void disconnect(CW_SecureSession& session);
+
+    /**
     * @brief Check if the secure channel is open.
     *
     * This function checks if the secure channel has been established by verifying

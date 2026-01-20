@@ -109,6 +109,22 @@ bool CryptnoxWallet::establishSecureChannel(CW_SecureSession& session) {
 }
 
 /**
+ * @brief Disconnect from the Cryptnox card and clear the secure session.
+ *
+ * This function securely clears all session keys and resets the NFC reader
+ * for the next card detection. Should be called when done with card operations.
+ *
+ * @param[in,out] session Reference to the secure session to clear.
+ */
+void CryptnoxWallet::disconnect(CW_SecureSession& session) {
+    /* Securely clear all session keys */
+    session.clear();
+    
+    /* Reset reader for next card detection */
+    driver.resetReader();
+}
+
+/**
  * @brief Check if the secure channel is open.
  *
  * This function checks if the secure channel has been established by verifying
@@ -121,7 +137,7 @@ bool CryptnoxWallet::establishSecureChannel(CW_SecureSession& session) {
  * @param[in] session Reference to the secure session to check.
  * @return true if the secure channel is open (session keys are initialized), false otherwise.
  */
- // cppcheck-suppress unusedFunction
+// cppcheck-suppress unusedFunction
 bool CryptnoxWallet::isSecureChannelOpen(const CW_SecureSession& session) const {
     /* Check if AES key is non-zero (initialized) */
     /* If all bytes are zero, the secure channel is not open */
@@ -625,6 +641,7 @@ bool CryptnoxWallet::extractCardEphemeralKey(const uint8_t* cardCertificate, uin
  *
  * @param[in,out] session Reference to the secure session containing keys and IV.
  */
+// cppcheck-suppress unusedFunction
 void CryptnoxWallet::verifyPin(CW_SecureSession& session) {
     uint8_t data[] = { 0x31, 0x32, 0x33, 0x34 }; /* PIN code 1234 */
     uint8_t apdu[] = {0x80, 0x20, 0x00, 0x00};
@@ -639,6 +656,7 @@ void CryptnoxWallet::verifyPin(CW_SecureSession& session) {
  *
  * @param[in,out] session Reference to the secure session containing keys and IV.
  */
+// cppcheck-suppress unusedFunction
 void CryptnoxWallet::getCardInfo(CW_SecureSession& session) {
     uint8_t data[] = { 0x00 };  /* Empty data field */
     uint8_t apdu[] = {0x80, 0xFA, 0x00, 0x00};  /* GET DATA APDU */

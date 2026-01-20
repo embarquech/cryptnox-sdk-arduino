@@ -71,18 +71,19 @@ void loop() {
             serialAdapter.println(F("Getting card information..."));
             wallet.getCardInfo(session);
         
-            /* Step 4: Securely clear session keys */
-            session.clear();
-            serialAdapter.println(F("Session cleared"));
+            /* Step 4: Disconnect - clears session and resets reader */
+            wallet.disconnect(session);
+            serialAdapter.println(F("Disconnected"));
         
             serialAdapter.println(F("Card processed successfully"));
         } else {
             serialAdapter.println(F("Secure channel not open"));
+            wallet.disconnect(session);
         }
+    } else {
+        /* No card or connection failed - still reset reader */
+        wallet.resetReader();
     }
-    
-    /* Reset reader for next card detection */
-    wallet.resetReader();
     
     /* Wait before next iteration */
     delay(1000);
