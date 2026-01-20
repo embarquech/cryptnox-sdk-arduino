@@ -109,9 +109,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aa394fe6bc19d57c4a9d89a303f7e664d" id="r_aa394fe6bc19d57c4a9d89a303f7e664d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#aa394fe6bc19d57c4a9d89a303f7e664d">begin</a> ()</td></tr>
 <tr class="memdesc:aa394fe6bc19d57c4a9d89a303f7e664d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the PN532 module via the underlying driver.  <br /></td></tr>
 <tr class="separator:aa394fe6bc19d57c4a9d89a303f7e664d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa4ce170f582927c6e8e8d4e9dc4d412d" id="r_aa4ce170f582927c6e8e8d4e9dc4d412d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#aa4ce170f582927c6e8e8d4e9dc4d412d">processCard</a> ()</td></tr>
-<tr class="memdesc:aa4ce170f582927c6e8e8d4e9dc4d412d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Detect and process an NFC card for Cryptnox wallet operations.  <br /></td></tr>
-<tr class="separator:aa4ce170f582927c6e8e8d4e9dc4d412d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9231d6ed6a0634a8ab7c2a2710224a49" id="r_a9231d6ed6a0634a8ab7c2a2710224a49"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a9231d6ed6a0634a8ab7c2a2710224a49">connect</a> (<a class="el" href="structCW__SecureSession.html">CW_SecureSession</a> &amp;session)</td></tr>
 <tr class="memdesc:a9231d6ed6a0634a8ab7c2a2710224a49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connect to the Cryptnox card and establish a secure channel.  <br /></td></tr>
 <tr class="separator:a9231d6ed6a0634a8ab7c2a2710224a49"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -358,30 +355,6 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if the secure channel is open (session keys are initialized), false otherwise. </dd></dl>
-
-</div>
-</div>
-<a id="aa4ce170f582927c6e8e8d4e9dc4d412d" name="aa4ce170f582927c6e8e8d4e9dc4d412d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa4ce170f582927c6e8e8d4e9dc4d412d">&#9670;&#160;</a></span>processCard()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool CryptnoxWallet::processCard </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Detect and process an NFC card for Cryptnox wallet operations. </p>
-<p>Processes a detected NFC card.</p>
-<p>If an ISO-DEP card is detected, SELECT APDU is sent and certificate is retrieved. If only a passive card is detected, the UID is printed.</p>
-<dl class="section return"><dt>Returns</dt><dd>true if a card was successfully processed, false otherwise.</dd></dl>
-<p>Selects the Cryptnox application, establishes a secure channel, authenticates the card, and verifies the PIN.</p>
-<dl class="section return"><dt>Returns</dt><dd>true if the Cryptnox card was successfully processed, false otherwise. </dd></dl>
 
 </div>
 </div>
