@@ -115,6 +115,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a8584e36b3c8c088ad1ee18358246262e" id="r_a8584e36b3c8c088ad1ee18358246262e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a8584e36b3c8c088ad1ee18358246262e">establishSecureChannel</a> (<a class="el" href="structCW__SecureSession.html">CW_SecureSession</a> &amp;session)</td></tr>
 <tr class="memdesc:a8584e36b3c8c088ad1ee18358246262e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Establish a secure channel with the Cryptnox card.  <br /></td></tr>
 <tr class="separator:a8584e36b3c8c088ad1ee18358246262e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e52a31fba0f21862e588e1546ad1898" id="r_a5e52a31fba0f21862e588e1546ad1898"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a5e52a31fba0f21862e588e1546ad1898">disconnect</a> (<a class="el" href="structCW__SecureSession.html">CW_SecureSession</a> &amp;session)</td></tr>
+<tr class="memdesc:a5e52a31fba0f21862e588e1546ad1898"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disconnect from the Cryptnox card and clear the secure session.  <br /></td></tr>
+<tr class="separator:a5e52a31fba0f21862e588e1546ad1898"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a08c6fa72f255be4cff6113187f8e3218" id="r_a08c6fa72f255be4cff6113187f8e3218"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a08c6fa72f255be4cff6113187f8e3218">isSecureChannelOpen</a> (const <a class="el" href="structCW__SecureSession.html">CW_SecureSession</a> &amp;session) const</td></tr>
 <tr class="memdesc:a08c6fa72f255be4cff6113187f8e3218"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the secure channel is open.  <br /></td></tr>
 <tr class="separator:a08c6fa72f255be4cff6113187f8e3218"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -243,6 +246,33 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if the card was detected and secure channel was established successfully, false otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="a5e52a31fba0f21862e588e1546ad1898" name="a5e52a31fba0f21862e588e1546ad1898"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5e52a31fba0f21862e588e1546ad1898">&#9670;&#160;</a></span>disconnect()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CryptnoxWallet::disconnect </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structCW__SecureSession.html">CW_SecureSession</a> &amp;&#160;</td>
+          <td class="paramname"><em>session</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Disconnect from the Cryptnox card and clear the secure session. </p>
+<p>This function securely clears all session keys and resets the NFC reader for the next card detection. Should be called when done with card operations.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">session</td><td>Reference to the secure session to clear. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

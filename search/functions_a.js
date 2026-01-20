@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['verifypin_0',['verifyPin',['../classCryptnoxWallet.html#af2a97d9d9db0adefe49f09488d8b3d31',1,'CryptnoxWallet']]]
+  ['sendapdu_0',['sendapdu',['../classNFCDriver.html#a314f98a89a9c8b5f3f7c3cd186b071bb',1,'NFCDriver::sendAPDU()'],['../classPN532Adapter.html#a2a51721c2f9c8504328a5fad57792c67',1,'PN532Adapter::sendAPDU()']]]
 ];
