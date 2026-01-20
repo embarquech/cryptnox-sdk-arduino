@@ -116,6 +116,7 @@ bool CryptnoxWallet::establishSecureChannel(CW_SecureSession& session) {
  *
  * @param[in,out] session Reference to the secure session to clear.
  */
+// cppcheck-suppress unusedFunction
 void CryptnoxWallet::disconnect(CW_SecureSession& session) {
     /* Securely clear all session keys */
     session.clear();
