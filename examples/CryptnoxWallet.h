@@ -92,16 +92,6 @@ public:
     }
 
     /**
-     * @brief Detect and process an NFC card for Cryptnox wallet operations.
-     *
-     * If an ISO-DEP card is detected, SELECT APDU is sent and certificate is retrieved.
-     * If only a passive card is detected, the UID is printed.
-     *
-     * @return true if a card was successfully processed, false otherwise.
-     */
-    bool processCard();
-
-    /**
     * @brief Connect to the Cryptnox card and establish a secure channel.
     *
     * The function first detects if an ISO-DEP capable card is present, then establishes a secure channel.
