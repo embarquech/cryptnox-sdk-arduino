@@ -127,9 +127,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:af2a97d9d9db0adefe49f09488d8b3d31" id="r_af2a97d9d9db0adefe49f09488d8b3d31"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#af2a97d9d9db0adefe49f09488d8b3d31">verifyPin</a> (<a class="el" href="structCW__SecureSession.html">CW_SecureSession</a> &amp;session)</td></tr>
 <tr class="memdesc:af2a97d9d9db0adefe49f09488d8b3d31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verifies the PIN code.  <br /></td></tr>
 <tr class="separator:af2a97d9d9db0adefe49f09488d8b3d31"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1ff890db8c53c5dd07e5dd30856b6a36" id="r_a1ff890db8c53c5dd07e5dd30856b6a36"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a1ff890db8c53c5dd07e5dd30856b6a36">resetReader</a> ()</td></tr>
-<tr class="memdesc:a1ff890db8c53c5dd07e5dd30856b6a36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the NFC reader for next card detection.  <br /></td></tr>
-<tr class="separator:a1ff890db8c53c5dd07e5dd30856b6a36"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>High-level interface for interacting with a PN532-based wallet. </p>
@@ -266,6 +263,14 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Disconnect from the Cryptnox card and clear the secure session. </p>
+<p>This function securely clears all session keys and resets the NFC reader for the next card detection.</p>
+<p>IMPORTANT: This function MUST be called at the end of each card processing iteration, even if <a class="el" href="classCryptnoxWallet.html#a9231d6ed6a0634a8ab7c2a2710224a49" title="Connect to the Cryptnox card and establish a secure channel.">connect()</a> failed. Without calling <a class="el" href="classCryptnoxWallet.html#a5e52a31fba0f21862e588e1546ad1898" title="Disconnect from the Cryptnox card and clear the secure session.">disconnect()</a>, the reader will not reset and subsequent card detections will fail.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">session</td><td>Reference to the secure session to clear.</td></tr>
+  </table>
+  </dd>
+</dl>
 <p>This function securely clears all session keys and resets the NFC reader for the next card detection. Should be called when done with card operations.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -385,25 +390,6 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if the secure channel is open (session keys are initialized), false otherwise. </dd></dl>
-
-</div>
-</div>
-<a id="a1ff890db8c53c5dd07e5dd30856b6a36" name="a1ff890db8c53c5dd07e5dd30856b6a36"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1ff890db8c53c5dd07e5dd30856b6a36">&#9670;&#160;</a></span>resetReader()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void CryptnoxWallet::resetReader </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Reset the NFC reader for next card detection. </p>
 
 </div>
 </div>
