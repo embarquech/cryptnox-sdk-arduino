@@ -118,9 +118,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a5e52a31fba0f21862e588e1546ad1898" id="r_a5e52a31fba0f21862e588e1546ad1898"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a5e52a31fba0f21862e588e1546ad1898">disconnect</a> (<a class="el" href="structCW__SecureSession.html">CW_SecureSession</a> &amp;session)</td></tr>
 <tr class="memdesc:a5e52a31fba0f21862e588e1546ad1898"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disconnect from the Cryptnox card and clear the secure session.  <br /></td></tr>
 <tr class="separator:a5e52a31fba0f21862e588e1546ad1898"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a08c6fa72f255be4cff6113187f8e3218" id="r_a08c6fa72f255be4cff6113187f8e3218"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a08c6fa72f255be4cff6113187f8e3218">isSecureChannelOpen</a> (const <a class="el" href="structCW__SecureSession.html">CW_SecureSession</a> &amp;session) const</td></tr>
-<tr class="memdesc:a08c6fa72f255be4cff6113187f8e3218"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the secure channel is open.  <br /></td></tr>
-<tr class="separator:a08c6fa72f255be4cff6113187f8e3218"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a14a8f392e44c6960205aa6514f99b34f" id="r_a14a8f392e44c6960205aa6514f99b34f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a14a8f392e44c6960205aa6514f99b34f">getCardInfo</a> (<a class="el" href="structCW__SecureSession.html">CW_SecureSession</a> &amp;session)</td></tr>
 <tr class="memdesc:a14a8f392e44c6960205aa6514f99b34f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a secured GET CARD INFO APDU.  <br /></td></tr>
 <tr class="separator:a14a8f392e44c6960205aa6514f99b34f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -353,43 +350,6 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a id="a08c6fa72f255be4cff6113187f8e3218" name="a08c6fa72f255be4cff6113187f8e3218"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a08c6fa72f255be4cff6113187f8e3218">&#9670;&#160;</a></span>isSecureChannelOpen()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool CryptnoxWallet::isSecureChannelOpen </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="structCW__SecureSession.html">CW_SecureSession</a> &amp;&#160;</td>
-          <td class="paramname"><em>session</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Check if the secure channel is open. </p>
-<p>This function checks if the secure channel has been established by verifying if the session keys have been initialized (non-zero). A secure channel is considered open if the AES key in the session is non-zero.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">session</td><td>Reference to the secure session to check. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>true if the secure channel is open (session keys are initialized), false otherwise.</dd></dl>
-<p>This function checks if the secure channel has been established by verifying if the session keys have been initialized (non-zero). A secure channel is considered open if the AES key in the session is non-zero.</p>
-<p>The implementation follows the same pattern as the Python SDK, which checks if the AES key exists to determine if the secure channel is open.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">session</td><td>Reference to the secure session to check. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>true if the secure channel is open (session keys are initialized), false otherwise. </dd></dl>
 
 </div>
 </div>
