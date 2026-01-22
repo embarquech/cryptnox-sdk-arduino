@@ -60,21 +60,17 @@ void loop() {
     /* Step 1: Connect to card and establish secure channel */
     CW_SecureSession session;
     if (wallet.connect(session)) {
-        if (wallet.isSecureChannelOpen(session)) {
-            serialAdapter.println(F("Card connected and secure channel established"));
-        
-            /* Step 2: Verify PIN */
-            serialAdapter.println(F("Verifying PIN..."));
-            wallet.verifyPin(session);
-        
-            /* Step 3: Get card information */
-            serialAdapter.println(F("Getting card information..."));
-            wallet.getCardInfo(session);
-        
-            serialAdapter.println(F("Card processed successfully"));
-        } else {
-            serialAdapter.println(F("Secure channel not open"));
-        }
+        serialAdapter.println(F("Card connected and secure channel established"));
+    
+        /* Step 2: Verify PIN (checks secure channel internally) */
+        serialAdapter.println(F("Verifying PIN..."));
+        wallet.verifyPin(session);
+    
+        /* Step 3: Get card information (checks secure channel internally) */
+        serialAdapter.println(F("Getting card information..."));
+        wallet.getCardInfo(session);
+    
+        serialAdapter.println(F("Card processed successfully"));
     }
     
     /* Always disconnect to reset reader for next card detection */

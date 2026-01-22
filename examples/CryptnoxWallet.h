@@ -133,18 +133,6 @@ public:
     void disconnect(CW_SecureSession& session);
 
     /**
-    * @brief Check if the secure channel is open.
-    *
-    * This function checks if the secure channel has been established by verifying
-    * if the session keys have been initialized (non-zero). A secure channel is
-    * considered open if the AES key in the session is non-zero.
-    *
-    * @param[in] session Reference to the secure session to check.
-    * @return true if the secure channel is open (session keys are initialized), false otherwise.
-    */
-    bool isSecureChannelOpen(const CW_SecureSession& session) const;
-
-    /**
     * @brief Sends a secured GET CARD INFO APDU.
     * @param[in,out] session Reference to the secure session containing keys and IV.
     */
@@ -262,6 +250,18 @@ private:
     * @return true if MAC verification succeeds, false otherwise.
     */
     bool aes_cbc_decrypt(CW_SecureSession& session, uint8_t *response, size_t response_len, uint8_t * mac_value);
+
+    /**
+     * @brief Check if the secure channel is open.
+     *
+     * This function checks if the secure channel has been established by verifying
+     * if the session keys have been initialized (non-zero). A secure channel is
+     * considered open if the AES key in the session is non-zero.
+     *
+     * @param[in] session Reference to the secure session to check.
+     * @return true if the secure channel is open (session keys are initialized), false otherwise.
+     */
+    bool isSecureChannelOpen(const CW_SecureSession& session) const;
 
     /**
      * @brief RNG callback for micro-ecc library.

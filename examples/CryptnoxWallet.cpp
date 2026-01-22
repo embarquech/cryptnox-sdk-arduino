@@ -118,10 +118,12 @@ bool CryptnoxWallet::establishSecureChannel(CW_SecureSession& session) {
  */
 // cppcheck-suppress unusedFunction
 void CryptnoxWallet::disconnect(CW_SecureSession& session) {
-    /* Securely clear all session keys */
-    session.clear();
+    /* Only clear session keys if secure channel was open */
+    if (isSecureChannelOpen(session)) {
+        session.clear();
+    }
     
-    /* Reset reader for next card detection */
+    /* Always reset reader for next card detection */
     driver.resetReader();
 }
 
@@ -138,7 +140,6 @@ void CryptnoxWallet::disconnect(CW_SecureSession& session) {
  * @param[in] session Reference to the secure session to check.
  * @return true if the secure channel is open (session keys are initialized), false otherwise.
  */
-// cppcheck-suppress unusedFunction
 bool CryptnoxWallet::isSecureChannelOpen(const CW_SecureSession& session) const {
     /* Check if AES key is non-zero (initialized) */
     /* If all bytes are zero, the secure channel is not open */
@@ -637,6 +638,12 @@ bool CryptnoxWallet::extractCardEphemeralKey(const uint8_t* cardCertificate, uin
  */
 // cppcheck-suppress unusedFunction
 void CryptnoxWallet::verifyPin(CW_SecureSession& session) {
+    /* Verify secure channel is open before proceeding */
+    if (!isSecureChannelOpen(session)) {
+        serial.println(F("Error: Secure channel not open. Cannot verify PIN."));
+        return;
+    }
+    
     uint8_t data[] = { 0x31, 0x32, 0x33, 0x34 }; /* PIN code 1234 */
     uint8_t apdu[] = {0x80, 0x20, 0x00, 0x00};
     aes_cbc_encrypt(session, apdu, sizeof(apdu), data, sizeof(data));
@@ -652,6 +659,12 @@ void CryptnoxWallet::verifyPin(CW_SecureSession& session) {
  */
 // cppcheck-suppress unusedFunction
 void CryptnoxWallet::getCardInfo(CW_SecureSession& session) {
+    /* Verify secure channel is open before proceeding */
+    if (!isSecureChannelOpen(session)) {
+        serial.println(F("Error: Secure channel not open. Cannot get card info."));
+        return;
+    }
+    
     uint8_t data[] = { 0x00 };  /* Empty data field */
     uint8_t apdu[] = {0x80, 0xFA, 0x00, 0x00};  /* GET DATA APDU */
     aes_cbc_encrypt(session, apdu, sizeof(apdu), data, sizeof(data));
