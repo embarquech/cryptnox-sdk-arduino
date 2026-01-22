@@ -150,13 +150,6 @@ bool CryptnoxWallet::isSecureChannelOpen(const CW_SecureSession& session) const 
     return false;  /* All bytes are zero, channel is not open */
 }
 
-/**
- * @brief Reset the NFC reader for next card detection.
- */
-void CryptnoxWallet::resetReader() {
-    driver.resetReader();
-}
-
 /* SELECT APDU to activate Cryptnox application */
 bool CryptnoxWallet::selectApdu() {
     bool ret = false;

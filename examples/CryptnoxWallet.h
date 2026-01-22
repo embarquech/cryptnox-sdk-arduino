@@ -122,7 +122,11 @@ public:
     * @brief Disconnect from the Cryptnox card and clear the secure session.
     *
     * This function securely clears all session keys and resets the NFC reader
-    * for the next card detection. Should be called when done with card operations.
+    * for the next card detection. 
+    *
+    * IMPORTANT: This function MUST be called at the end of each card processing
+    * iteration, even if connect() failed. Without calling disconnect(), the
+    * reader will not reset and subsequent card detections will fail.
     *
     * @param[in,out] session Reference to the secure session to clear.
     */
@@ -151,11 +155,6 @@ public:
     * @param[in,out] session Reference to the secure session containing keys and IV.
     */
     void verifyPin(CW_SecureSession& session);
-
-    /**
-    * @brief Reset the NFC reader for next card detection.
-    */
-    void resetReader();
 
 private:
     NFCDriver& driver; /**< PN532 driver for low-level NFC operations */
